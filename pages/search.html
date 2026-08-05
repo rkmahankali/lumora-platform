@@ -458,6 +458,45 @@
       .search-submit{margin:4px;width:calc(100% - 8px)}
       .chat-panel{width:100%;right:0}
     }
+
+    /* ── Snappr-gap: new badges ───────────────────────────────────── */
+    .badge-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+    .b-badge{padding:2px 7px;border-radius:100px;font-size:.65rem;font-weight:700}
+    .b-rush{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:var(--green)}
+    .b-instant{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:var(--blue)}
+    .b-insured{background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:var(--gold)}
+    .b-discount{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple)}
+    .portfolio-score{position:absolute;bottom:8px;left:8px;background:rgba(7,8,13,.78);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:3px 8px;font-size:.68rem;font-weight:800;color:var(--gold);backdrop-filter:blur(8px);display:flex;align-items:center;gap:4px}
+    .card-langs{font-size:.68rem;color:var(--muted);margin-top:3px}
+    /* compare */
+    .compare-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--srf);border-top:1px solid var(--border);padding:12px 32px;align-items:center;gap:12px;flex-wrap:wrap}
+    .compare-bar.open{display:flex}
+    .compare-slots{display:flex;gap:8px}
+    .cmp-slot{width:44px;height:44px;border-radius:10px;border:1.5px dashed var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--muted)}
+    .cmp-slot.filled{border-style:solid;border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+    .cmp-btn{padding:9px 20px;border-radius:100px;background:var(--gold);color:#07080D;font-size:.85rem;font-weight:800;border:none;cursor:pointer}
+    .cmp-clear{padding:9px 16px;border-radius:100px;background:transparent;border:1px solid var(--border);color:var(--sub);font-size:.82rem;cursor:pointer}
+    /* city pills */
+    .city-chips{display:flex;flex-wrap:wrap;gap:5px}
+    .city-chip{padding:5px 11px;border-radius:100px;font-size:.75rem;font-weight:600;background:var(--srf2);border:1px solid var(--border);color:var(--sub);cursor:pointer;transition:all .15s}
+    .city-chip.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+    /* feature toggles */
+    .feat-toggles{display:flex;flex-direction:column;gap:7px}
+    .feat-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+    .feat-toggle label{font-size:.8rem;color:var(--sub);cursor:pointer}
+    .toggle-sw{width:32px;height:17px;background:var(--muted);border-radius:9px;position:relative;transition:background .2s;flex-shrink:0}
+    .toggle-sw::after{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
+    .toggle-sw.on{background:var(--gold)}
+    .toggle-sw.on::after{left:17px}
+    /* advantages */
+    .adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:14px 0}
+    .adv-card{background:var(--srf);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+    .adv-icon{font-size:1.1rem;margin-bottom:4px}
+    .adv-title{font-size:.78rem;font-weight:700;margin-bottom:2px}
+    .adv-desc{font-size:.68rem;color:var(--muted);line-height:1.5}
+    .adv-toggle{background:none;border:none;font-size:.75rem;color:var(--gold);cursor:pointer;margin-top:4px;padding:0}
+
+    .hidden{display:none!important}
   </style>
 </head>
 <body>
@@ -475,8 +514,8 @@
   </div>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-btn" aria-label="Toggle theme">☀️</button>
-    <button class="nav-btn nav-btn-outline">Log In</button>
-    <a href="onboarding.html" class="nav-btn nav-btn-gold" style="padding:8px 18px;border-radius:100px;font-size:.875rem;font-weight:600">Join as Creator</a>
+    <a href="login.html" class="nav-btn nav-btn-outline" style="padding:8px 18px;border-radius:100px;font-size:.875rem">Log In</a>
+    <a href="login.html?role=creator&mode=signup" class="nav-btn nav-btn-gold" style="padding:8px 18px;border-radius:100px;font-size:.875rem;font-weight:600">Join as Creator</a>
   </div>
 </nav>
 
@@ -575,7 +614,16 @@
         <button class="f-chip" data-spec="Real Estate">🏠 Real Estate</button>
         <button class="f-chip" data-spec="Social Content">📱 Social</button>
         <button class="f-chip" data-spec="Headshots">🤵 Headshots</button>
-        <button class="f-chip" data-spec="Food & Hospitality">🍽 Food</button>
+        <button class="f-chip" data-spec="Food">🍽 Food</button>
+        <button class="f-chip" data-spec="Music Videos">🎵 Music</button>
+        <button class="f-chip" data-spec="Documentary">🎞 Documentary</button>
+        <button class="f-chip" data-spec="Sports">⚽ Sports</button>
+        <button class="f-chip" data-spec="Newborn">👶 Newborn</button>
+        <button class="f-chip" data-spec="Architecture">🏛 Architecture</button>
+        <button class="f-chip" data-spec="Asian Weddings">🌸 Asian Wed.</button>
+        <button class="f-chip" data-spec="Aerial">🛸 Aerial</button>
+        <button class="f-chip" data-spec="Fitness">💪 Fitness</button>
+        <button class="f-chip" data-spec="Elopements">💑 Elopements</button>
       </div>
     </div>
 
@@ -609,7 +657,48 @@
         <option value="price-desc">Price: High to Low</option>
         <option value="popular">Most Booked</option>
         <option value="distance">Nearest First</option>
+        <option value="portfolio">Portfolio Score</option>
       </select>
+    </div>
+
+    <div class="filter-sec">
+      <div class="filter-title">City</div>
+      <div class="city-chips">
+        <button class="city-chip on" data-city="">All UK</button>
+        <button class="city-chip" data-city="London">London</button>
+        <button class="city-chip" data-city="Manchester">Manchester</button>
+        <button class="city-chip" data-city="Birmingham">Birmingham</button>
+        <button class="city-chip" data-city="Edinburgh">Edinburgh</button>
+        <button class="city-chip" data-city="Bristol">Bristol</button>
+        <button class="city-chip" data-city="Leeds">Leeds</button>
+        <button class="city-chip" data-city="Liverpool">Liverpool</button>
+      </div>
+    </div>
+
+    <div class="filter-sec">
+      <div class="filter-title">Features</div>
+      <div class="feat-toggles">
+        <div class="feat-toggle" onclick="toggleFeat('rush',this)">
+          <label>⚡ Rush / same-day booking</label>
+          <div class="toggle-sw" id="feat-rush"></div>
+        </div>
+        <div class="feat-toggle" onclick="toggleFeat('instantConfirm',this)">
+          <label>🟢 Instant confirm</label>
+          <div class="toggle-sw" id="feat-instantConfirm"></div>
+        </div>
+        <div class="feat-toggle" onclick="toggleFeat('insurance',this)">
+          <label>🛡 Insurance verified</label>
+          <div class="toggle-sw" id="feat-insurance"></div>
+        </div>
+        <div class="feat-toggle" onclick="toggleFeat('verified',this)">
+          <label>✓ Lumora Verified</label>
+          <div class="toggle-sw" id="feat-verified"></div>
+        </div>
+        <div class="feat-toggle" onclick="toggleFeat('discount',this)">
+          <label>🔄 Repeat client discount</label>
+          <div class="toggle-sw" id="feat-discount"></div>
+        </div>
+      </div>
     </div>
   </aside>
 
@@ -628,10 +717,19 @@
     <div class="ai-banner">
       <span class="ai-icon">✨</span>
       <div class="ai-text">
-        <strong>Lumora AI found 3 perfect matches for you</strong>
+        <strong>Lumora AI found <span id="ai-match-count">5</span> perfect matches for you</strong>
         <p>Based on your location, style preferences, and budget — these creators have the highest match score.</p>
       </div>
-      <button class="ai-btn">View Matches</button>
+      <button class="ai-btn" onclick="document.getElementById('adv-section').classList.toggle('hidden')">Why Lumora?</button>
+    </div>
+
+    <!-- Snappr gap: Lumora advantages -->
+    <div id="adv-section" class="hidden" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)">Lumora vs Snappr — what we do better</span>
+        <button class="adv-toggle" onclick="document.getElementById('adv-section').classList.add('hidden')">✕ Close</button>
+      </div>
+      <div class="adv-grid" id="adv-grid"></div>
     </div>
 
     <!-- meta row -->
@@ -653,6 +751,30 @@
       <button class="load-more" onclick="loadMore()">Show more creators</button>
     </div>
   </main>
+</div>
+
+<!-- compare bar -->
+<div class="compare-bar" id="compare-bar">
+  <div style="font-size:.82rem;font-weight:700;flex-shrink:0">Compare creators:</div>
+  <div class="compare-slots" id="compare-slots">
+    <div class="cmp-slot" id="cslot0">+</div>
+    <div class="cmp-slot" id="cslot1">+</div>
+    <div class="cmp-slot" id="cslot2">+</div>
+  </div>
+  <div style="font-size:.75rem;color:var(--sub);flex:1">Select up to 3 creators to compare side by side</div>
+  <button class="cmp-btn" onclick="openCompare()">Compare Now</button>
+  <button class="cmp-clear" onclick="clearCompare()">✕ Clear</button>
+</div>
+
+<!-- compare modal -->
+<div class="overlay" id="compare-overlay" onclick="if(event.target===this)closeCompare()" style="z-index:600">
+  <div style="background:var(--srf);border-radius:20px;width:min(92vw,820px);max-height:85vh;overflow-y:auto;padding:28px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <h2 style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700">Side-by-side comparison</h2>
+      <button onclick="closeCompare()" style="background:none;border:none;color:var(--sub);font-size:1.4rem;cursor:pointer">✕</button>
+    </div>
+    <div id="compare-content" style="overflow-x:auto"></div>
+  </div>
 </div>
 
 <!-- ── contact modal ─────────────────────────────────────────── -->
@@ -724,30 +846,21 @@
   </div>
 </div>
 
+<script src="../js/seed-data.js"></script>
 <script>
-/* ── data ─────────────────────────────────────────────────────── */
-const creators = [
-  {id:1,name:"Sophie Clarke",type:"Photographer",loc:"London, Shoreditch",dist:1.2,specs:["Weddings","Portraits","Events"],rating:4.9,reviews:127,price:280,avail:"today",verified:true,bookings:234,ig:"sophieclarke.photo",wa:"447700900001",c1:"#1a0d26",c2:"#e9b84a"},
-  {id:2,name:"Marcus Webb",type:"Videographer",loc:"London, Notting Hill",dist:2.8,specs:["Events","Corporate","Drone"],rating:4.8,reviews:89,price:350,avail:"tomorrow",verified:true,bookings:178,ig:"marcuswebb.films",wa:"447700900002",c1:"#0d1117",c2:"#a78bfa"},
-  {id:3,name:"Priya Sharma",type:"Both",loc:"Manchester",dist:5.2,specs:["Fashion","E-Commerce","Portraits"],rating:4.9,reviews:203,price:220,avail:"this-week",verified:true,bookings:312,ig:"priyasharma.visuals",wa:"447700900003",c1:"#0a0f0d",c2:"#34d399"},
-  {id:4,name:"James O'Brien",type:"Photographer",loc:"London, Chelsea",dist:3.1,specs:["Architecture","Corporate","Real Estate"],rating:4.7,reviews:64,price:320,avail:"today",verified:false,bookings:98,ig:"jobrien.photo",wa:"447700900004",c1:"#0d0a1a",c2:"#e9b84a"},
-  {id:5,name:"Aisha Patel",type:"Videographer",loc:"Birmingham",dist:12.4,specs:["Weddings","Social Content","Events"],rating:4.9,reviews:156,price:260,avail:"today",verified:true,bookings:289,ig:"aishapatfilms",wa:"447700900005",c1:"#120d0a",c2:"#fb923c"},
-  {id:6,name:"Tom Nielsen",type:"Photographer",loc:"London, Hackney",dist:4.5,specs:["Portraits","Headshots","Events"],rating:4.6,reviews:41,price:180,avail:"this-week",verified:false,bookings:67,ig:"tomnielsen.shoots",wa:"447700900006",c1:"#0a0d12",c2:"#38bdf8"},
-  {id:7,name:"Luna Vasquez",type:"Both",loc:"London, Brixton",dist:3.8,specs:["Drone","Events","Weddings"],rating:5.0,reviews:22,price:420,avail:"tomorrow",verified:true,bookings:44,ig:"lunavasquez.lens",wa:"447700900007",c1:"#0d0a1a",c2:"#c084fc"},
-  {id:8,name:"Ben Achterberg",type:"Videographer",loc:"Leeds",dist:18.9,specs:["Corporate","Social Content","E-Commerce"],rating:4.8,reviews:73,price:290,avail:"today",verified:true,bookings:134,ig:"benachter.films",wa:"447700900008",c1:"#0a1210",c2:"#4ade80"},
-  {id:9,name:"Zara Ali",type:"Photographer",loc:"London, Kensington",dist:2.3,specs:["Fashion","Portraits","Headshots"],rating:4.9,reviews:188,price:380,avail:"today",verified:true,bookings:267,ig:"zaraali.studio",wa:"447700900009",c1:"#120a0a",c2:"#f87171"},
-  {id:10,name:"Oliver Park",type:"Photographer",loc:"London, Bethnal Green",dist:1.9,specs:["Food & Hospitality","Architecture","Real Estate"],rating:4.7,reviews:55,price:240,avail:"this-week",verified:false,bookings:82,ig:"oliverpark.shoots",wa:"447700900010",c1:"#0a0c0d",c2:"#e9b84a"},
-  {id:11,name:"Maya Foster",type:"Both",loc:"Brighton",dist:28.5,specs:["Weddings","Drone","Events"],rating:4.9,reviews:142,price:310,avail:"today",verified:true,bookings:198,ig:"mayafoster.media",wa:"447700900011",c1:"#0a0d0f",c2:"#06b6d4"},
-  {id:12,name:"Kai Osei",type:"Videographer",loc:"London, Bermondsey",dist:2.1,specs:["Music Videos","Social Content","Events"],rating:4.8,reviews:96,price:360,avail:"tomorrow",verified:true,bookings:155,ig:"kaiosei.films",wa:"447700900012",c1:"#0d100a",c2:"#84cc16"},
-];
+/* ── data from seed-data.js ───────────────────────────────────── */
+const creators = window.LUMORA_CREATORS || [];
 
 /* ── filter state ─────────────────────────────────────────────── */
 let filters = {
-  avail:'', budgetMin:50, budgetMax:2000,
-  dist:50, specs:[], type:'', ratingMin:0, sort:'recommended'
+  avail:'', budgetMin:50, budgetMax:2000, dist:50,
+  specs:[], type:'', ratingMin:0, sort:'recommended',
+  city:'', rush:false, instantConfirm:false, insurance:false,
+  verified:false, discount:false
 };
 let activeContactCreator = null;
 let shownCount = 12;
+let compareList = [];
 
 /* ── init ─────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
@@ -758,8 +871,10 @@ window.addEventListener('DOMContentLoaded', () => {
   initAvailBtns();
   initSpecChips();
   initTypeToggle();
+  initCityChips();
   document.getElementById('sort-sel').addEventListener('change', e => { filters.sort = e.target.value; applyFilters(); });
   renderRebookStrip();
+  renderAdvantages();
   applyFilters();
   initTheme();
 });
@@ -864,7 +979,7 @@ function setSortPill(btn, sort) {
 
 /* ── clear ────────────────────────────────────────────────────── */
 function clearFilters() {
-  filters = { avail:'', budgetMin:50, budgetMax:2000, dist:50, specs:[], type:'', ratingMin:0, sort:'recommended' };
+  filters = { avail:'', budgetMin:50, budgetMax:2000, dist:50, specs:[], type:'', ratingMin:0, sort:'recommended', city:'', rush:false, instantConfirm:false, insurance:false, verified:false, discount:false };
   document.querySelectorAll('.avail-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.getElementById('b-low').value = 50; document.getElementById('b-high').value = 2000;
   document.getElementById('dist-range').value = 50;
@@ -873,6 +988,10 @@ function clearFilters() {
   document.querySelectorAll('.type-btn').forEach((b,i) => b.classList.toggle('on', i===0));
   document.querySelectorAll('.star-b').forEach(s => s.classList.remove('lit'));
   document.getElementById('sort-sel').value = 'recommended';
+  document.querySelectorAll('.city-chip').forEach((b,i) => b.classList.toggle('on', i===0));
+  ['rush','instantConfirm','insurance','verified','discount'].forEach(k => {
+    const sw = document.getElementById('feat-'+k); if(sw) sw.classList.remove('on');
+  });
   applyFilters();
 }
 
@@ -881,10 +1000,16 @@ function applyFilters() {
   let r = creators.filter(c => {
     if (filters.avail && c.avail !== filters.avail) return false;
     if (c.price < filters.budgetMin || c.price > filters.budgetMax) return false;
-    if (c.dist > filters.dist) return false;
-    if (filters.specs.length && !filters.specs.some(s => c.specs.includes(s))) return false;
+    if (filters.dist < 50 && c.dist > filters.dist) return false;
+    if (filters.specs.length && !filters.specs.some(s => c.specs.some(cs => cs.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(cs.toLowerCase())))) return false;
     if (filters.type && c.type !== filters.type) return false;
     if (c.rating < filters.ratingMin) return false;
+    if (filters.city && c.city !== filters.city) return false;
+    if (filters.rush && !c.rush) return false;
+    if (filters.instantConfirm && !c.instantConfirm) return false;
+    if (filters.insurance && !c.insurance) return false;
+    if (filters.verified && !c.verified) return false;
+    if (filters.discount && !(c.repeatDiscount > 0)) return false;
     return true;
   });
   r.sort((a,b) => {
@@ -894,10 +1019,14 @@ function applyFilters() {
       case 'price-desc': return b.price - a.price;
       case 'popular': return b.bookings - a.bookings;
       case 'distance': return a.dist - b.dist;
+      case 'portfolio': return (b.portfolioScore||0) - (a.portfolioScore||0);
       default: return (b.rating * Math.log(b.reviews+1)) - (a.rating * Math.log(a.reviews+1));
     }
   });
-  document.getElementById('res-count').innerHTML = `<strong>${r.length}</strong> creators near London`;
+  const locLabel = filters.city || 'UK';
+  document.getElementById('res-count').innerHTML = `<strong>${r.length}</strong> creators in ${locLabel}`;
+  const matchCount = Math.max(1, Math.min(5, Math.floor(r.length * 0.1)));
+  document.getElementById('ai-match-count').textContent = matchCount;
   renderGrid(r.slice(0, shownCount));
   renderActiveChips();
 }
@@ -916,12 +1045,18 @@ function renderGrid(list) {
 function cardHTML(c) {
   const initials = c.name.split(' ').map(n=>n[0]).join('');
   const availCls = c.avail==='today'?'av-today':c.avail==='tomorrow'?'av-tomorrow':'av-week';
-  const availTxt = c.avail==='today'?'Available Today':c.avail==='tomorrow'?'Available Tomorrow':'This Week';
+  const availTxt = c.avail==='today'?'Today':c.avail==='tomorrow'?'Tomorrow':'This Week';
   const starsN = Math.floor(c.rating);
-  const stars = '★'.repeat(starsN) + (c.rating%1>=0.5?'½':'') + '☆'.repeat(5-Math.ceil(c.rating));
-  const popPct = Math.min(100, c.bookings / 3.5);
+  const popPct = Math.min(100, c.bookings / 4.5);
+  const inCompare = compareList.includes(c.id);
+  const score = c.portfolioScore || 0;
+  const scoreColor = score>=95?'#4ade80':score>=85?'#e9b84a':'#9A9CAA';
+  const langStr = (c.languages||[]).slice(0,2).join(' · ');
   return `
-    <article class="creator-card" onclick="window.location='profile.html?id=${c.id}'">
+    <article class="creator-card" onclick="window.open('profile.html?id=${c.id}','_blank')"
+      title="View ${c.name}'s profile"
+      style="cursor:pointer"
+    >
       <div class="card-media">
         <div class="card-img" style="background:linear-gradient(145deg,${c.c1} 0%,${hexA(c.c2,0.22)} 100%)">
           <span class="card-initial">${initials}</span>
@@ -930,9 +1065,8 @@ function cardHTML(c) {
             <circle cx="160" cy="89" r="70" fill="none" stroke="${c.c2}" stroke-width="0.6" opacity="0.14"/>
             <circle cx="160" cy="89" r="44" fill="none" stroke="${c.c2}" stroke-width="0.6" opacity="0.10"/>
             ${[0,1,2,3,4,5,6].map(i=>`<line x1="160" y1="89" x2="${160+110*Math.cos(i*Math.PI*2/7-Math.PI/2)}" y2="${89+110*Math.sin(i*Math.PI*2/7-Math.PI/2)}" stroke="${c.c2}" stroke-width="0.5" opacity="0.12"/>`).join('')}
-            <circle cx="${100+Math.random()*120}" cy="${40+Math.random()*60}" r="${3+Math.random()*5}" fill="${c.c2}" opacity="0.08"/>
-            <circle cx="${50+Math.random()*80}" cy="${80+Math.random()*60}" r="${4+Math.random()*8}" fill="${c.c2}" opacity="0.06"/>
           </svg>
+          ${score>0?`<div class="portfolio-score" title="AI Portfolio Score">🏆 ${score}</div>`:''}
         </div>
         <span class="avail-badge ${availCls}">${availTxt}</span>
         <button class="save-btn" onclick="event.stopPropagation();this.classList.toggle('saved');this.textContent=this.classList.contains('saved')?'♥':'♡'" aria-label="Save">♡</button>
@@ -942,9 +1076,15 @@ function cardHTML(c) {
           <span class="card-name">${c.name}</span>
           ${c.verified?'<span class="v-badge" title="Lumora Verified">✓</span>':''}
         </div>
-        <p class="card-type">${c.type}</p>
-        <p class="card-loc">📍 ${c.loc} · ${c.dist} mi</p>
+        <p class="card-type">${c.type} · 📍 ${c.city}</p>
+        <div class="badge-row">
+          ${c.rush?'<span class="b-badge b-rush">⚡ Rush</span>':''}
+          ${c.instantConfirm?'<span class="b-badge b-instant">🟢 Instant</span>':''}
+          ${c.insurance?'<span class="b-badge b-insured">🛡 Insured</span>':''}
+          ${c.repeatDiscount>0?`<span class="b-badge b-discount">🔄 ${c.repeatDiscount}% off</span>`:''}
+        </div>
         <div class="card-specs">${c.specs.slice(0,3).map(s=>`<span class="card-spec">${s}</span>`).join('')}</div>
+        ${langStr?`<p class="card-langs">🌐 ${langStr}</p>`:''}
         <div class="pop-row">
           <span>${c.bookings} bookings</span>
           <div class="pop-bar"><div class="pop-fill" style="width:${popPct}%"></div></div>
@@ -958,8 +1098,9 @@ function cardHTML(c) {
           <div class="card-price">£${c.price}<em>/hr</em></div>
         </div>
         <div class="card-actions">
-          <button class="btn-profile" onclick="event.stopPropagation();window.location='profile.html?id=${c.id}'">View Profile</button>
+          <button class="btn-profile" onclick="event.stopPropagation();window.open('profile.html?id=${c.id}','_blank')">View Profile</button>
           <button class="btn-chat-q" onclick="event.stopPropagation();openContact(${c.id})">💬 Chat</button>
+          <button class="btn-chat-q" style="background:${inCompare?'rgba(233,184,74,.15)':''};border-color:${inCompare?'var(--gold)':''}" onclick="event.stopPropagation();toggleCompare(${c.id})">${inCompare?'✓ Added':'+ Compare'}</button>
         </div>
       </div>
     </article>`;
@@ -970,13 +1111,89 @@ function hexA(hex, a) {
   return `rgba(${r},${g},${b},${a})`;
 }
 
+/* ── city chips ───────────────────────────────────────────────── */
+function initCityChips() {
+  document.querySelectorAll('.city-chip').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.city-chip').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on'); filters.city = btn.dataset.city; applyFilters();
+  }));
+}
+
+/* ── feature toggles (Snappr gaps) ───────────────────────────── */
+function toggleFeat(key, row) {
+  filters[key] = !filters[key];
+  row.querySelector('.toggle-sw').classList.toggle('on', filters[key]);
+  applyFilters();
+}
+
+/* ── compare ──────────────────────────────────────────────────── */
+function toggleCompare(id) {
+  if (compareList.includes(id)) {
+    compareList = compareList.filter(x => x !== id);
+  } else {
+    if (compareList.length >= 3) { alert('You can compare up to 3 creators at a time.'); return; }
+    compareList.push(id);
+  }
+  updateCompareBar();
+  applyFilters();
+}
+function updateCompareBar() {
+  const bar = document.getElementById('compare-bar');
+  bar.classList.toggle('open', compareList.length > 0);
+  for (let i = 0; i < 3; i++) {
+    const slot = document.getElementById('cslot'+i);
+    if (compareList[i]) {
+      const c = creators.find(x=>x.id===compareList[i]);
+      slot.textContent = c ? c.name.split(' ').map(n=>n[0]).join('') : '';
+      slot.className = 'cmp-slot filled';
+    } else { slot.textContent = '+'; slot.className = 'cmp-slot'; }
+  }
+}
+function clearCompare() { compareList = []; updateCompareBar(); applyFilters(); }
+function openCompare() {
+  if (!compareList.length) return;
+  const items = compareList.map(id => creators.find(c=>c.id===id)).filter(Boolean);
+  const rows = [
+    ['Type', c=>c.type],
+    ['City', c=>c.city],
+    ['Rating', c=>'★ '+c.rating+' ('+c.reviews+' reviews)'],
+    ['Price/hr', c=>'£'+c.price],
+    ['Bookings', c=>c.bookings],
+    ['Portfolio Score', c=>c.portfolioScore ? '🏆 '+c.portfolioScore+'/100' : '—'],
+    ['Rush booking', c=>c.rush?'⚡ Yes':'No'],
+    ['Instant confirm', c=>c.instantConfirm?'🟢 Yes':'No'],
+    ['Insurance', c=>c.insurance?'🛡 Verified':'Unverified'],
+    ['Repeat discount', c=>c.repeatDiscount>0?c.repeatDiscount+'%':'—'],
+    ['Languages', c=>(c.languages||['English']).join(', ')],
+    ['Equipment', c=>(c.equipment||[]).slice(0,2).join(', ')],
+    ['Availability', c=>c.avail==='today'?'Today':c.avail==='tomorrow'?'Tomorrow':'This week'],
+  ];
+  const th = items.map(c=>`<th style="padding:10px 16px;text-align:left;font-size:.84rem;font-weight:700;border-bottom:1px solid var(--border)"><div style="background:${hexA(c.c2,.15)};color:${c.c2};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:6px">${c.name.split(' ').map(n=>n[0]).join('')}</div>${c.name}</th>`).join('');
+  const trs = rows.map(([label, fn])=>`<tr><td style="padding:9px 16px;font-size:.78rem;color:var(--sub);font-weight:600;white-space:nowrap;border-bottom:1px solid var(--border)">${label}</td>${items.map(c=>`<td style="padding:9px 16px;font-size:.82rem;border-bottom:1px solid var(--border)">${fn(c)}</td>`).join('')}</tr>`).join('');
+  const bookBtns = items.map(c=>`<td style="padding:12px 16px"><button onclick="window.location='profile.html?id=${c.id}'" style="width:100%;padding:9px;border-radius:9px;background:var(--gold);color:#07080D;font-weight:700;border:none;cursor:pointer;font-size:.82rem">Book ${c.name.split(' ')[0]}</button></td>`).join('');
+  document.getElementById('compare-content').innerHTML = `<table style="width:100%;border-collapse:collapse;min-width:400px"><thead><tr><th style="padding:10px 16px;text-align:left;font-size:.78rem;color:var(--sub);border-bottom:1px solid var(--border)">Feature</th>${th}</tr></thead><tbody>${trs}<tr><td></td>${bookBtns}</tr></tbody></table>`;
+  document.getElementById('compare-overlay').classList.add('open');
+}
+function closeCompare() { document.getElementById('compare-overlay').classList.remove('open'); }
+
+/* ── advantages vs Snappr ─────────────────────────────────────── */
+function renderAdvantages() {
+  const adv = window.LUMORA_ADVANTAGES || [];
+  document.getElementById('adv-grid').innerHTML = adv.map(a=>`
+    <div class="adv-card">
+      <div class="adv-icon">${a.icon}</div>
+      <div class="adv-title">${a.title}</div>
+      <div class="adv-desc">${a.desc}</div>
+    </div>`).join('');
+}
+
 /* ── rebook strip ─────────────────────────────────────────────── */
 function renderRebookStrip() {
   const top3 = [...creators].sort((a,b)=>b.bookings-a.bookings).slice(0,3);
   document.getElementById('rebook-strip').innerHTML = top3.map(c => {
     const initials = c.name.split(' ').map(n=>n[0]).join('');
     return `
-      <div class="rebook-card" onclick="window.location='profile.html?id=${c.id}'">
+      <div class="rebook-card" onclick="window.open('profile.html?id=${c.id}','_blank')">
         <div class="rb-avatar" style="background:${hexA(c.c2,0.2)};color:${c.c2}">${initials}</div>
         <div class="rb-info">
           <div class="rb-name">${c.name}</div>
@@ -997,6 +1214,12 @@ function renderActiveChips() {
   filters.specs.forEach(s => chips.push({label:s, key:`spec:${s}`}));
   if (filters.type) chips.push({label:filters.type, key:'type'});
   if (filters.ratingMin > 0) chips.push({label:`${filters.ratingMin}★+`, key:'rating'});
+  if (filters.city) chips.push({label:filters.city, key:'city'});
+  if (filters.rush) chips.push({label:'⚡ Rush', key:'rush'});
+  if (filters.instantConfirm) chips.push({label:'🟢 Instant', key:'instantConfirm'});
+  if (filters.insurance) chips.push({label:'🛡 Insured', key:'insurance'});
+  if (filters.verified) chips.push({label:'✓ Verified', key:'verified'});
+  if (filters.discount) chips.push({label:'🔄 Discount', key:'discount'});
   document.getElementById('active-chips').innerHTML = chips.map(ch => `
     <span class="act-chip">${ch.label}
       <button onclick="removeFilter('${ch.key}')">✕</button>
@@ -1008,6 +1231,10 @@ function removeFilter(key) {
   else if (key==='dist') { filters.dist=50; document.getElementById('dist-range').value=50; document.getElementById('dist-val').textContent='Within 50 miles'; }
   else if (key==='type') { filters.type=''; document.querySelectorAll('.type-btn').forEach((b,i)=>b.classList.toggle('on',i===0)); }
   else if (key==='rating') { filters.ratingMin=0; document.querySelectorAll('.star-b').forEach(s=>s.classList.remove('lit')); }
+  else if (key==='city') { filters.city=''; document.querySelectorAll('.city-chip').forEach((b,i)=>b.classList.toggle('on',i===0)); }
+  else if (['rush','instantConfirm','insurance','verified','discount'].includes(key)) {
+    filters[key]=false; const sw=document.getElementById('feat-'+key); if(sw) sw.classList.remove('on');
+  }
   else if (key.startsWith('spec:')) {
     const s = key.slice(5); filters.specs=filters.specs.filter(x=>x!==s);
     document.querySelectorAll('.f-chip').forEach(c=>{ if(c.dataset.spec===s) c.classList.remove('on'); });

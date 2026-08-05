@@ -360,6 +360,7 @@
   </style>
 </head>
 <body>
+<script src="../js/seed-data.js"></script>
 
 <!-- ── nav ──────────────────────────────────────────────────────── -->
 <nav>
@@ -824,7 +825,65 @@ window.addEventListener('DOMContentLoaded', () => {
   renderCal('bs-cal-grid');
   selectPkg(1);
   initTheme();
+  loadCreatorProfile();
 });
+
+/* ── dynamic profile loader from ?id param ────────────────────── */
+function loadCreatorProfile() {
+  const id = parseInt(new URLSearchParams(location.search).get('id'));
+  if (!id || !window.LUMORA_CREATORS) return; // default: Sophie Clarke
+  const c = window.LUMORA_CREATORS.find(x => x.id === id);
+  if (!c) return;
+  const initials = c.name.split(' ').map(n=>n[0]).join('');
+  // page title
+  document.title = c.name + ' — Lumora';
+  // breadcrumb
+  const bc = document.querySelector('.hero-breadcrumb');
+  if (bc) bc.innerHTML = `<a href="search.html">← Creators</a> / ${c.city} / ${c.type}s / ${c.name}`;
+  // hero name
+  const hn = document.querySelector('.hi-name');
+  if (hn) hn.textContent = c.name;
+  // type badge
+  document.querySelectorAll('.hi-type, .spec-badge').forEach(el => { el.textContent = el.textContent.replace('Photographer','').replace('Videographer','').replace('Both',''); });
+  // rating
+  document.querySelectorAll('.rev-num, .hi-rating-n').forEach(el => { el.textContent = c.rating; });
+  document.querySelectorAll('.hi-reviews, .rev-total').forEach(el => { el.innerHTML = el.innerHTML.replace(/[\d\.]+\s*(reviews?)?/g, m => m.includes('review') ? c.reviews + ' reviews' : c.rating); });
+  // location
+  document.querySelectorAll('.hi-loc, .hi-location').forEach(el => { el.textContent = '📍 ' + c.loc; });
+  // bio
+  const bioEl = document.querySelector('.creator-bio, .about-text, .bio-text');
+  if (bioEl) bioEl.textContent = c.bio || '';
+  // specs
+  document.querySelectorAll('.spec-tag, .hi-spec').forEach((el, i) => { if (c.specs[i]) el.textContent = c.specs[i]; });
+  // price in booking widget
+  document.querySelectorAll('.price-per-hr, .pkg-rate').forEach(el => { el.textContent = '£'+c.price+'/hr'; });
+  // sidebar name + meta
+  const bsName = document.querySelector('.bs-name');
+  if (bsName) bsName.textContent = c.name;
+  const bsMeta = document.querySelector('.bs-meta');
+  if (bsMeta) bsMeta.textContent = '📍 ' + (c.loc||c.city) + ' · ★ ' + c.rating + ' (' + c.reviews + ')';
+  // WhatsApp
+  const waLink = document.querySelector('.cb.wa');
+  if (waLink && c.wa) waLink.href = `https://wa.me/${c.wa}?text=Hi ${c.name.split(' ')[0]}, I found you on Lumora and I'd love to discuss a booking!`;
+  // Instagram
+  const igLink = document.querySelector('.cb.ig');
+  if (igLink && c.ig) { igLink.href = `https://instagram.com/${c.ig}`; const igHandle = igLink.querySelector('span:last-child'); if (igHandle) igHandle.textContent = '@' + c.ig; }
+  // chat panel name
+  const cpName = document.getElementById('cp-name'); if (cpName) cpName.textContent = c.name;
+  // verified badge
+  const vBadge = document.querySelector('.lumora-verified');
+  if (vBadge) vBadge.style.display = c.verified ? '' : 'none';
+  // insurance / rush badges
+  const heroBadges = document.querySelector('.hi-badges, .creator-badges');
+  if (heroBadges) {
+    let extra = '';
+    if (c.rush) extra += '<span style="padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:#4ade80">⚡ Rush available</span>';
+    if (c.insurance) extra += '<span style="padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:#E9B84A">🛡 Insured</span>';
+    heroBadges.insertAdjacentHTML('beforeend', extra);
+  }
+  // window creator cache for booking flow
+  window._currentCreator = c;
+}
 
 /* ── logo ─────────────────────────────────────────────────────── */
 function drawLogo() {
@@ -958,19 +1017,24 @@ function startBookingFlow() {
   const pkgName = pkgEl ? pkgEl.querySelector('.pkg-name').textContent : 'Full Day';
   const totalEl = document.getElementById('pb-total');
   const totalText = totalEl ? totalEl.textContent : '£1,882';
+  // Use dynamic creator data if loaded from URL param, else fall back to Sophie
+  const cr = window._currentCreator || {
+    id:1, name:'Sophie Clarke', type:'Photographer', loc:'Shoreditch, London',
+    rating:4.9, ig:'sophieclarke.photo', wa:'447700900001', c1:'#1a0d26', c2:'#e9b84a'
+  };
   const draft = {
-    creatorId: 1,
-    creatorName: 'Sophie Clarke',
-    creatorType: 'Photographer',
-    creatorLoc: 'Shoreditch, London',
-    creatorRating: 4.9,
-    creatorIg: 'sophieclarke.photo',
-    creatorWa: '447700900001',
-    avatarC1: '#1a0d26', avatarC2: '#e9b84a',
+    creatorId: cr.id,
+    creatorName: cr.name,
+    creatorType: cr.type,
+    creatorLoc: cr.loc || cr.city,
+    creatorRating: cr.rating,
+    creatorIg: cr.ig,
+    creatorWa: cr.wa,
+    avatarC1: cr.c1, avatarC2: cr.c2,
     package: pkgName,
     date: '14 August 2026',
     slot: selectedDay <= 5 ? '9am – 5pm (Full Day)' : '2pm – 6pm (Half Day)',
-    location: 'Kew Gardens, London',
+    location: 'TBD',
     total: totalText,
     deposit: '£' + Math.round(parseInt(totalText.replace(/[^0-9]/g,'')) / 2).toLocaleString(),
     createdAt: new Date().toISOString()

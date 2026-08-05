@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log In — Lumora</title>
+<style>
+:root{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--gold:#E9B84A;--gold-bg:rgba(233,184,74,.10);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;--green:#4ade80;--blue:#38bdf8;--nav-h:64px}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}}
+:root[data-theme="light"]{--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}
+:root[data-theme="dark"]{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none} button{cursor:pointer;font-family:inherit}
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem}
+.nav-logo canvas{width:28px;height:28px}
+.theme-toggle{background:var(--srf2);border:1px solid var(--border);border-radius:100px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer}
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.auth-wrap{width:100%;max-width:440px}
+.auth-title{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;text-align:center;margin-bottom:6px}
+.auth-sub{font-size:.875rem;color:var(--sub);text-align:center;margin-bottom:28px}
+/* role picker */
+.role-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.role-card{background:var(--srf);border:2px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;transition:all .2s}
+.role-card:hover,.role-card.active{border-color:var(--gold);background:var(--gold-bg)}
+.role-icon{font-size:2rem;margin-bottom:8px}
+.role-label{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.role-desc{font-size:.72rem;color:var(--sub)}
+/* form */
+.auth-form{display:flex;flex-direction:column;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:.78rem;font-weight:700;color:var(--sub);letter-spacing:.04em}
+.form-input{padding:11px 14px;background:var(--srf2);border:1px solid var(--border);border-radius:11px;color:var(--text);font-size:.9rem;font-family:inherit;outline:none;transition:border-color .15s}
+.form-input:focus{border-color:var(--gold)}
+.form-input::placeholder{color:var(--muted)}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+.forgot{font-size:.78rem;color:var(--gold);text-align:right;margin-top:-8px;cursor:pointer}
+.submit-btn{padding:13px;background:var(--gold);color:#07080D;font-size:.95rem;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:opacity .15s;margin-top:4px}
+.submit-btn:hover{opacity:.88}
+/* divider */
+.or-div{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.78rem;margin:4px 0}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border)}
+/* social */
+.social-btns{display:flex;gap:8px}
+.social-btn{flex:1;padding:11px;background:var(--srf2);border:1px solid var(--border);border-radius:11px;font-size:.85rem;font-weight:600;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:border-color .15s}
+.social-btn:hover{border-color:var(--gold)}
+/* footer */
+.auth-footer{text-align:center;font-size:.82rem;color:var(--sub);margin-top:20px}
+.auth-footer a{color:var(--gold);font-weight:600;cursor:pointer}
+/* success */
+.success-screen{display:none;text-align:center;padding:30px}
+.success-icon{font-size:3rem;margin-bottom:14px}
+.success-title{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.success-sub{font-size:.875rem;color:var(--sub);margin-bottom:24px;line-height:1.6}
+.success-btn{display:inline-block;padding:12px 28px;background:var(--gold);color:#07080D;border-radius:100px;font-weight:700;font-size:.9rem;cursor:pointer;border:none}
+/* tabs */
+.auth-tabs{display:flex;background:var(--srf2);border-radius:12px;padding:3px;margin-bottom:22px}
+.auth-tab{flex:1;padding:9px;border-radius:9px;font-size:.85rem;font-weight:700;text-align:center;cursor:pointer;color:var(--sub);transition:all .15s}
+.auth-tab.active{background:var(--srf);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Lumora</a>
+  <button class="theme-toggle" id="theme-btn">☀️</button>
+</nav>
+
+<div class="main">
+  <div class="auth-wrap">
+
+    <!-- Login/Signup tabs -->
+    <div class="auth-tabs" id="auth-tabs">
+      <div class="auth-tab active" onclick="setTab('login',this)">Log In</div>
+      <div class="auth-tab" onclick="setTab('signup',this)">Sign Up</div>
+    </div>
+
+    <!-- Who are you? -->
+    <div class="auth-title" id="auth-title">Welcome back</div>
+    <div class="auth-sub" id="auth-sub">Log in to your Lumora account</div>
+
+    <!-- Role picker (signup only) -->
+    <div class="role-picker" id="role-picker" style="display:none">
+      <div class="role-card active" id="role-client" onclick="setRole('client')">
+        <div class="role-icon">📸</div>
+        <div class="role-label">I'm a Client</div>
+        <div class="role-desc">Book photographers & videographers</div>
+      </div>
+      <div class="role-card" id="role-creator" onclick="setRole('creator')">
+        <div class="role-icon">🎬</div>
+        <div class="role-label">I'm a Creator</div>
+        <div class="role-desc">Offer your photography & video services</div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form class="auth-form" id="auth-form" onsubmit="submitAuth(event)">
+      <div class="form-row" id="name-row" style="display:none">
+        <div class="form-group"><div class="form-label">First name</div><input class="form-input" type="text" placeholder="Emma" id="first-name"></div>
+        <div class="form-group"><div class="form-label">Last name</div><input class="form-input" type="text" placeholder="Rivera" id="last-name"></div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Email address</div>
+        <input class="form-input" type="email" placeholder="you@example.com" id="email-input" required>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Password</div>
+        <input class="form-input" type="password" placeholder="••••••••" id="pw-input" required>
+      </div>
+      <div class="form-group" id="confirm-pw-row" style="display:none">
+        <div class="form-label">Confirm password</div>
+        <input class="form-input" type="password" placeholder="••••••••" id="pw-confirm">
+      </div>
+      <div class="forgot" id="forgot-link">Forgot password?</div>
+      <button type="submit" class="submit-btn" id="submit-btn">Log In</button>
+    </form>
+
+    <div class="or-div">or continue with</div>
+    <div class="social-btns">
+      <button class="social-btn" onclick="socialLogin('Google')">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google
+      </button>
+      <button class="social-btn" onclick="socialLogin('Apple')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Apple
+      </button>
+    </div>
+
+    <div class="auth-footer" id="auth-footer">
+      Don't have an account? <a onclick="setTab('signup',document.querySelectorAll('.auth-tab')[1])">Sign up free</a>
+    </div>
+
+    <!-- Success screen -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon" id="success-icon">🎉</div>
+      <div class="success-title" id="success-title">Welcome to Lumora!</div>
+      <div class="success-sub" id="success-sub">Taking you to your dashboard…</div>
+      <button class="success-btn" id="success-btn" onclick="goToDashboard()">Go to Dashboard →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => { drawLogo(); initTheme(); checkRole(); });
+let currentTab = 'login';
+let currentRole = 'client';
+
+function setTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const isLogin = tab === 'login';
+  document.getElementById('auth-title').textContent = isLogin ? 'Welcome back' : 'Create your account';
+  document.getElementById('auth-sub').textContent = isLogin ? 'Log in to your Lumora account' : 'Join thousands of creators and clients';
+  document.getElementById('role-picker').style.display = isLogin ? 'none' : 'grid';
+  document.getElementById('name-row').style.display = isLogin ? 'none' : 'flex';
+  document.getElementById('confirm-pw-row').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('forgot-link').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('submit-btn').textContent = isLogin ? 'Log In' : 'Create Account';
+  document.getElementById('auth-footer').innerHTML = isLogin
+    ? 'Don\'t have an account? <a onclick="setTab(\'signup\',document.querySelectorAll(\'.auth-tab\')[1])">Sign up free</a>'
+    : 'Already have an account? <a onclick="setTab(\'login\',document.querySelectorAll(\'.auth-tab\')[0])">Log in</a>';
+}
+
+function setRole(role) {
+  currentRole = role;
+  document.getElementById('role-client').classList.toggle('active', role==='client');
+  document.getElementById('role-creator').classList.toggle('active', role==='creator');
+}
+
+function checkRole() {
+  const params = new URLSearchParams(location.search);
+  if (params.get('role') === 'creator') { setTab('signup', document.querySelectorAll('.auth-tab')[1]); setRole('creator'); }
+  if (params.get('mode') === 'signup') setTab('signup', document.querySelectorAll('.auth-tab')[1]);
+}
+
+function submitAuth(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  if (!email) return;
+  document.getElementById('auth-form').style.display = 'none';
+  document.getElementById('auth-tabs').style.display = 'none';
+  document.getElementById('auth-title').style.display = 'none';
+  document.getElementById('auth-sub').style.display = 'none';
+  document.getElementById('role-picker').style.display = 'none';
+  document.getElementById('forgot-link').style.display = 'none';
+  const orDiv = document.querySelector('.or-div'); if(orDiv) orDiv.style.display='none';
+  const socialBtns = document.querySelector('.social-btns'); if(socialBtns) socialBtns.style.display='none';
+  document.getElementById('auth-footer').style.display = 'none';
+  const ss = document.getElementById('success-screen');
+  ss.style.display = 'block';
+  if (currentTab === 'login') {
+    const isCreator = email.toLowerCase().includes('creator') || currentRole === 'creator';
+    document.getElementById('success-icon').textContent = isCreator ? '🎬' : '📸';
+    document.getElementById('success-title').textContent = 'Welcome back!';
+    document.getElementById('success-sub').textContent = `Logged in as ${email}. Taking you to your ${isCreator?'Creator Studio':'Client Dashboard'}…`;
+    setTimeout(goToDashboard, 1800);
+  } else {
+    document.getElementById('success-icon').textContent = currentRole==='creator'?'🎬':'📸';
+    document.getElementById('success-title').textContent = 'Account created!';
+    document.getElementById('success-sub').textContent = currentRole==='creator'
+      ? 'Welcome to Lumora! Complete your creator profile to start receiving bookings.'
+      : 'Welcome to Lumora! Start exploring photographers and videographers near you.';
+    document.getElementById('success-btn').textContent = currentRole==='creator'?'Set Up Creator Profile →':'Start Exploring →';
+    setTimeout(goToDashboard, 1800);
+  }
+}
+
+function goToDashboard() {
+  if (currentRole === 'creator' || (currentTab==='signup'&&currentRole==='creator')) {
+    window.location.href = currentTab==='signup' ? 'onboarding.html' : 'dashboard-creator.html';
+  } else {
+    window.location.href = currentTab==='signup' ? 'search.html' : 'dashboard-client.html';
+  }
+}
+
+function socialLogin(provider) {
+  document.getElementById('auth-form').style.display = 'none';
+  document.getElementById('auth-tabs').style.display = 'none';
+  document.getElementById('auth-title').style.display = 'none';
+  document.getElementById('auth-sub').style.display = 'none';
+  document.getElementById('role-picker').style.display = 'none';
+  document.querySelector('.or-div').style.display = 'none';
+  document.querySelector('.social-btns').style.display = 'none';
+  document.getElementById('auth-footer').style.display = 'none';
+  document.getElementById('forgot-link').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  document.getElementById('success-icon').textContent = '✅';
+  document.getElementById('success-title').textContent = `Signed in with ${provider}`;
+  document.getElementById('success-sub').textContent = `Your Lumora account is ready. Taking you to your dashboard…`;
+  setTimeout(goToDashboard, 1400);
+}
+
+function drawLogo(){const c=document.getElementById('logo-canvas');if(!c)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,28,28);ctx.strokeStyle='#E9B84A';ctx.lineWidth=1.5;for(let i=0;i<7;i++){ctx.save();ctx.translate(14,14);ctx.rotate(i*Math.PI*2/7);ctx.beginPath();ctx.moveTo(-6,0);ctx.lineTo(0,-11);ctx.lineTo(6,0);ctx.closePath();ctx.fillStyle=`rgba(233,184,74,${.55+i*.07})`;ctx.fill();ctx.stroke();ctx.restore();}}
+function initTheme(){const btn=document.getElementById('theme-btn');let isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';btn.addEventListener('click',()=>{isDark=!isDark;document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';});}
+</script>
+</body>
+</html>
