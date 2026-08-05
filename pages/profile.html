@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sophie Clarke — Lumora</title>
+  <style>
+    /* ── tokens ──────────────────────────────────────────────── */
+    :root {
+      --bg:#07080D; --srf:#111318; --srf2:#1A1D26;
+      --border:rgba(255,255,255,0.07); --gold:#E9B84A; --gold-bg:rgba(233,184,74,0.10);
+      --text:#E8E6DF; --sub:#9A9CAA; --muted:#4A4D5E;
+      --green:#4ade80; --amber:#fbbf24; --red:#f87171; --blue:#38bdf8; --purple:#a78bfa;
+      --r:12px; --nav-h:64px;
+    }
+    @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+      --bg:#F5F4F0;--srf:#FFF;--srf2:#ECEAE3;--border:rgba(0,0,0,0.08);
+      --text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,0.13);
+    }}
+    :root[data-theme="light"]{--bg:#F5F4F0;--srf:#FFF;--srf2:#ECEAE3;--border:rgba(0,0,0,0.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,0.13);}
+    :root[data-theme="dark"]{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,0.07);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit;text-decoration:none} button{cursor:pointer;font-family:inherit}
+
+    /* ── nav ─────────────────────────────────────────────────── */
+    nav{
+      position:sticky;top:0;z-index:100;height:var(--nav-h);
+      display:flex;align-items:center;justify-content:space-between;padding:0 32px;
+      background:rgba(7,8,13,0.88);backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem}
+    .nav-logo canvas{width:28px;height:28px}
+    .nav-back{display:flex;align-items:center;gap:5px;font-size:.875rem;color:var(--sub);transition:color .15s}
+    .nav-back:hover{color:var(--text)}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .nav-btn{padding:8px 18px;border-radius:100px;font-size:.875rem;font-weight:600;border:none}
+    .nav-btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+    .nav-btn-gold{background:var(--gold);color:#07080D}
+    .theme-toggle{background:var(--srf2);border:1px solid var(--border);border-radius:100px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+
+    /* ── portfolio hero ──────────────────────────────────────── */
+    .portfolio-hero{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      grid-template-rows:220px 160px;
+      gap:3px;cursor:pointer;
+    }
+    .pt{position:relative;overflow:hidden}
+    .pt:first-child{grid-row:1/3}
+    .pt-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .4s}
+    .pt:hover .pt-bg{transform:scale(1.04)}
+    .pt-label{
+      position:absolute;bottom:10px;left:12px;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
+      padding:3px 8px;border-radius:6px;font-size:.7rem;color:#fff;font-weight:600;
+    }
+    .pt-count{
+      position:absolute;bottom:10px;right:12px;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
+      padding:3px 8px;border-radius:6px;font-size:.7rem;color:var(--gold);font-weight:700;
+    }
+
+    /* info overlay on hero */
+    .hero-overlay{
+      position:relative;padding:20px 32px;
+      background:linear-gradient(to right,var(--bg),transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .hero-breadcrumb{font-size:.78rem;color:var(--sub);margin-bottom:10px}
+    .hero-breadcrumb a{color:var(--gold)}
+    .hero-info{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .hi-left{}
+    .hi-name{font-family:Georgia,serif;font-size:2rem;font-weight:700;letter-spacing:-.5px;margin-bottom:4px}
+    .hi-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+    .hi-type{font-size:.82rem;color:var(--sub)}
+    .hi-loc{font-size:.82rem;color:var(--sub);display:flex;align-items:center;gap:4px}
+    .hi-rating{display:flex;align-items:center;gap:5px;font-size:.9rem}
+    .stars-gold{color:var(--gold);font-size:.95rem;letter-spacing:1px}
+    .v-chip{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:3px 10px;border-radius:100px;
+      background:var(--gold-bg);border:1px solid rgba(233,184,74,.3);
+      color:var(--gold);font-size:.72rem;font-weight:700;
+    }
+    .hi-specs{display:flex;flex-wrap:wrap;gap:6px}
+    .hi-spec{padding:4px 10px;border-radius:100px;background:var(--srf2);border:1px solid var(--border);font-size:.78rem;color:var(--sub)}
+    .hi-right{display:flex;gap:10px;align-items:flex-start;flex-shrink:0}
+    .share-btn{padding:9px 16px;border-radius:100px;background:var(--srf2);border:1px solid var(--border);font-size:.82rem;font-weight:600;color:var(--text)}
+    .share-btn:hover{border-color:var(--gold)}
+    .save-hero-btn{padding:9px 16px;border-radius:100px;background:var(--srf2);border:1px solid var(--border);font-size:.82rem;font-weight:600;color:var(--text)}
+    .save-hero-btn:hover{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+
+    /* ── profile body ─────────────────────────────────────────── */
+    .profile-body{
+      display:grid;grid-template-columns:1fr 340px;
+      gap:28px;max-width:1200px;margin:0 auto;padding:28px 32px 60px;
+    }
+
+    /* ── left column ─────────────────────────────────────────── */
+    .profile-left{}
+    .section{margin-bottom:32px}
+    .sec-title{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--sub);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+
+    /* stats row */
+    .stats-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+    .stat{text-align:center;padding:14px 20px;background:var(--srf);border:1px solid var(--border);border-radius:var(--r);min-width:90px}
+    .stat-n{font-size:1.5rem;font-weight:800;color:var(--gold);font-family:Georgia,serif}
+    .stat-l{font-size:.72rem;color:var(--sub);margin-top:2px}
+
+    /* about */
+    .about-text{font-size:.9rem;line-height:1.7;color:var(--sub);margin-bottom:14px}
+    .about-text strong{color:var(--text)}
+
+    /* gear chips */
+    .gear-chips{display:flex;flex-wrap:wrap;gap:6px}
+    .gear-chip{padding:5px 12px;border-radius:100px;background:var(--srf2);border:1px solid var(--border);font-size:.78rem;color:var(--sub)}
+
+    /* ── availability calendar ───────────────────────────────── */
+    .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .cal-month{font-size:1rem;font-weight:700}
+    .cal-arrow{background:var(--srf2);border:1px solid var(--border);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer}
+    .cal-arrow:hover{border-color:var(--gold)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+    .cal-dow{text-align:center;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:4px 0;margin-bottom:2px}
+    .cal-day{
+      aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+      font-size:.82rem;font-weight:600;cursor:pointer;position:relative;
+      transition:all .15s;
+    }
+    .cal-day.empty{pointer-events:none}
+    .cal-day.past{color:var(--muted);pointer-events:none}
+    .cal-day.booked{color:var(--muted);background:rgba(248,113,113,.06);pointer-events:none;text-decoration:line-through}
+    .cal-day.partial{color:var(--amber)}
+    .cal-day.partial::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--amber)}
+    .cal-day.available{color:var(--text)}
+    .cal-day.available::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--green)}
+    .cal-day.available:hover{background:var(--srf2);border:1px solid var(--border)}
+    .cal-day.selected{background:var(--gold)!important;color:#07080D!important;font-weight:800}
+    .cal-day.selected::after{display:none}
+    .cal-day.today-day{border:1.5px solid rgba(233,184,74,.4)}
+
+    /* legend */
+    .cal-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+    .cal-leg-item{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--sub)}
+    .leg-dot{width:8px;height:8px;border-radius:50%}
+
+    /* time slots */
+    .time-slots-section{margin-top:18px;display:none}
+    .ts-title{font-size:.8rem;font-weight:700;color:var(--sub);margin-bottom:10px}
+    .time-slots{display:flex;gap:8px;flex-wrap:wrap}
+    .ts-slot{
+      padding:8px 14px;border-radius:10px;font-size:.82rem;font-weight:600;
+      background:var(--srf2);border:1px solid var(--border);color:var(--text);
+      cursor:pointer;transition:all .15s;
+    }
+    .ts-slot:hover{border-color:var(--gold);color:var(--gold)}
+    .ts-slot.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+    .ts-slot.unavail{color:var(--muted);pointer-events:none;text-decoration:line-through}
+    .ts-note{font-size:.72rem;color:var(--sub);margin-top:8px}
+
+    /* ── reviews ─────────────────────────────────────────────── */
+    .review-summary{display:flex;gap:28px;align-items:flex-start;margin-bottom:22px;flex-wrap:wrap}
+    .rev-big{text-align:center}
+    .rev-num{font-size:3rem;font-weight:900;font-family:Georgia,serif;color:var(--gold);line-height:1}
+    .rev-stars-lg{color:var(--gold);font-size:1.1rem;margin-top:4px;letter-spacing:2px}
+    .rev-total{font-size:.78rem;color:var(--sub);margin-top:4px}
+    .rev-bars{flex:1;display:flex;flex-direction:column;gap:5px}
+    .rev-bar-row{display:flex;align-items:center;gap:8px;font-size:.78rem}
+    .rev-bar-label{color:var(--sub);width:16px;text-align:right;flex-shrink:0}
+    .rev-bar-track{flex:1;height:6px;background:var(--srf2);border-radius:3px;overflow:hidden}
+    .rev-bar-fill{height:100%;background:var(--gold);border-radius:3px}
+    .rev-bar-pct{color:var(--sub);width:26px;text-align:right;flex-shrink:0}
+    .review-cards{display:flex;flex-direction:column;gap:14px}
+    .review-card{padding:16px;background:var(--srf);border:1px solid var(--border);border-radius:14px}
+    .rc-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .rc-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+    .rc-name{font-size:.875rem;font-weight:700}
+    .rc-date{font-size:.72rem;color:var(--sub)}
+    .rc-stars{margin-left:auto;color:var(--gold);font-size:.85rem}
+    .rc-body{font-size:.85rem;line-height:1.6;color:var(--sub)}
+    .rc-tag{display:inline-block;padding:2px 7px;border-radius:4px;background:var(--srf2);font-size:.7rem;color:var(--sub);margin-top:8px}
+    .see-more-btn{background:none;border:1px solid var(--border);border-radius:100px;padding:9px 20px;font-size:.82rem;font-weight:600;color:var(--sub);margin-top:12px;cursor:pointer;transition:all .15s}
+    .see-more-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* ── similar ─────────────────────────────────────────────── */
+    .similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .sim-card{background:var(--srf);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .15s}
+    .sim-card:hover{border-color:rgba(233,184,74,.3);transform:translateY(-2px)}
+    .sim-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:900;opacity:.18;position:relative;overflow:hidden}
+    .sim-body{padding:10px 12px}
+    .sim-name{font-size:.82rem;font-weight:700;margin-bottom:2px}
+    .sim-sub{font-size:.72rem;color:var(--sub);margin-bottom:6px}
+    .sim-footer{display:flex;justify-content:space-between;font-size:.75rem}
+    .sim-stars{color:var(--gold)}
+    .sim-price{color:var(--sub)}
+
+    /* ── booking sidebar ─────────────────────────────────────── */
+    .booking-sidebar{
+      position:sticky;top:calc(var(--nav-h) + 16px);
+      align-self:flex-start;
+      background:var(--srf);border:1px solid var(--border);border-radius:20px;
+      overflow:hidden;
+    }
+    .bs-mini-profile{
+      display:flex;align-items:center;gap:10px;padding:16px 18px;
+      border-bottom:1px solid var(--border);background:var(--srf2);
+    }
+    .bs-av{width:40px;height:40px;border-radius:50%;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;color:var(--gold);flex-shrink:0}
+    .bs-name{font-size:.9rem;font-weight:700}
+    .bs-meta{font-size:.72rem;color:var(--sub)}
+    .bs-v{margin-left:auto;width:18px;height:18px;border-radius:50%;background:var(--gold);color:#07080D;font-size:.6rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+
+    .bs-body{padding:16px 18px}
+
+    /* package tabs */
+    .pkg-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:16px}
+    .pkg-tab{
+      padding:8px 4px;border-radius:9px;text-align:center;
+      background:var(--srf2);border:1.5px solid var(--border);
+      cursor:pointer;transition:all .15s;
+    }
+    .pkg-tab.on{background:var(--gold-bg);border-color:var(--gold)}
+    .pkg-tab-name{font-size:.72rem;font-weight:700;display:block;margin-bottom:2px}
+    .pkg-tab.on .pkg-tab-name{color:var(--gold)}
+    .pkg-tab-hrs{font-size:.68rem;color:var(--sub);display:block;margin-bottom:1px}
+    .pkg-tab-price{font-size:.75rem;font-weight:800;display:block}
+    .pkg-tab.on .pkg-tab-price{color:var(--gold)}
+
+    /* date button */
+    .date-picker-btn{
+      width:100%;display:flex;align-items:center;gap:8px;
+      padding:11px 14px;border-radius:var(--r);margin-bottom:10px;
+      background:var(--srf2);border:1px solid var(--border);
+      cursor:pointer;text-align:left;color:var(--text);font-size:.85rem;
+      transition:border-color .15s;
+    }
+    .date-picker-btn:hover,.date-picker-btn.active{border-color:var(--gold)}
+    .dpb-icon{font-size:1rem;flex-shrink:0}
+    .dpb-text{flex:1}
+    .dpb-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--sub);display:block;margin-bottom:1px}
+
+    /* mini calendar in sidebar */
+    .bs-cal{margin-bottom:12px;display:none}
+
+    /* selected slot display */
+    .sel-slot{
+      display:none;align-items:center;gap:8px;
+      padding:9px 12px;border-radius:var(--r);margin-bottom:12px;
+      background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);
+      font-size:.82rem;color:var(--green);
+    }
+    .sel-slot.show{display:flex}
+
+    /* price breakdown */
+    .price-breakdown{margin-bottom:14px}
+    .pb-row{display:flex;justify-content:space-between;font-size:.82rem;padding:5px 0;color:var(--sub)}
+    .pb-row strong{color:var(--text)}
+    .pb-divider{border:none;border-top:1px solid var(--border);margin:8px 0}
+    .pb-total{display:flex;justify-content:space-between;font-size:1rem;font-weight:800;padding:4px 0}
+    .pb-total .pb-price{color:var(--gold);font-size:1.1rem;font-family:Georgia,serif}
+    .pb-note{font-size:.7rem;color:var(--muted);margin-top:4px}
+
+    /* book button */
+    .book-btn{
+      width:100%;padding:14px;border-radius:14px;
+      background:var(--gold);color:#07080D;
+      font-size:.95rem;font-weight:800;border:none;
+      transition:opacity .15s;margin-bottom:12px;letter-spacing:.02em;
+    }
+    .book-btn:hover{opacity:.88}
+    .book-btn:disabled{opacity:.4;pointer-events:none}
+
+    /* response time */
+    .resp-time{text-align:center;font-size:.72rem;color:var(--sub);margin-bottom:14px}
+
+    /* chat divider */
+    .chat-divider{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .chat-divider::before,.chat-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .chat-divider-text{font-size:.72rem;color:var(--muted);white-space:nowrap}
+
+    /* contact buttons */
+    .contact-btns{display:flex;flex-direction:column;gap:7px}
+    .cb{
+      display:flex;align-items:center;gap:10px;
+      padding:11px 14px;border-radius:12px;border:1px solid var(--border);
+      font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text);
+      text-decoration:none;
+    }
+    .cb-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .cb.wa{background:rgba(37,211,102,.07);border-color:rgba(37,211,102,.2)}
+    .cb.wa:hover{background:rgba(37,211,102,.14);border-color:rgba(37,211,102,.42)}
+    .cb.wa .cb-icon{background:rgba(37,211,102,.18)}
+    .cb.ig{background:rgba(225,48,108,.07);border-color:rgba(225,48,108,.2)}
+    .cb.ig:hover{background:rgba(225,48,108,.14);border-color:rgba(225,48,108,.42)}
+    .cb.ig .cb-icon{background:rgba(225,48,108,.18)}
+    .cb.lm{background:var(--gold-bg);border-color:rgba(233,184,74,.25)}
+    .cb.lm:hover{background:rgba(233,184,74,.18)}
+    .cb.lm .cb-icon{background:rgba(233,184,74,.2)}
+
+    /* ── booking success modal ───────────────────────────────── */
+    .overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px}
+    .overlay.open{display:flex}
+    .success-modal{background:var(--srf);border:1px solid var(--border);border-radius:22px;padding:32px;width:100%;max-width:400px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+    .success-icon{font-size:3rem;margin-bottom:14px}
+    .success-title{font-size:1.4rem;font-weight:800;margin-bottom:8px;font-family:Georgia,serif}
+    .success-body{font-size:.88rem;line-height:1.6;color:var(--sub);margin-bottom:20px}
+    .success-details{background:var(--srf2);border-radius:var(--r);padding:14px;margin-bottom:20px;text-align:left}
+    .sd-row{display:flex;justify-content:space-between;font-size:.82rem;padding:4px 0}
+    .sd-row strong{color:var(--text)} .sd-row span{color:var(--sub)}
+    .success-btn{width:100%;padding:12px;border-radius:12px;background:var(--gold);color:#07080D;font-size:.9rem;font-weight:800;border:none;cursor:pointer}
+    .success-btn:hover{opacity:.88}
+
+    /* ── chat panel ──────────────────────────────────────────── */
+    .chat-panel{display:none;position:fixed;bottom:0;right:24px;z-index:400;width:350px;height:510px;background:var(--srf);border:1px solid var(--border);border-radius:18px 18px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.45);flex-direction:column;overflow:hidden}
+    .chat-panel.open{display:flex}
+    .cp-header{display:flex;align-items:center;gap:9px;padding:12px 15px;border-bottom:1px solid var(--border);background:var(--srf2)}
+    .cp-av{width:34px;height:34px;border-radius:50%;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0}
+    .cp-name{font-size:.875rem;font-weight:700}
+    .cp-status{font-size:.7rem;color:var(--green)}
+    .cp-close{margin-left:auto;background:none;border:none;color:var(--sub);font-size:1.2rem;cursor:pointer}
+    .chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
+    .chat-msgs::-webkit-scrollbar{width:3px}
+    .chat-msgs::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+    .chat-msg{display:flex;flex-direction:column;max-width:80%}
+    .chat-msg.in{align-self:flex-start}
+    .chat-msg.out{align-self:flex-end}
+    .bubble{padding:9px 13px;border-radius:16px;font-size:.84rem;line-height:1.5}
+    .chat-msg.in .bubble{background:var(--srf2);border-bottom-left-radius:4px}
+    .chat-msg.out .bubble{background:var(--gold);color:#07080D;border-bottom-right-radius:4px}
+    .chat-time{font-size:.68rem;color:var(--muted);margin-top:3px}
+    .chat-msg.out .chat-time{text-align:right}
+    .chat-input-row{display:flex;align-items:center;gap:7px;padding:10px 13px;border-top:1px solid var(--border)}
+    .chat-in{flex:1;background:var(--srf2);border:1px solid var(--border);border-radius:100px;padding:9px 14px;font-size:.84rem;color:var(--text);outline:none}
+    .chat-in:focus{border-color:var(--gold)}
+    .chat-send{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#07080D;border:none;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .chat-send:hover{opacity:.85}
+    .ai-suggest{padding:8px 13px;border-top:1px solid var(--border);display:flex;gap:6px;overflow-x:auto}
+    .ai-suggest::-webkit-scrollbar{height:0}
+    .sug-chip{padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:600;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple);white-space:nowrap;cursor:pointer;flex-shrink:0}
+    .sug-chip:hover{background:rgba(167,139,250,.22)}
+
+    /* ── responsive ──────────────────────────────────────────── */
+    @media(max-width:960px){
+      .profile-body{grid-template-columns:1fr;padding:16px}
+      .booking-sidebar{position:static}
+      .similar-grid{grid-template-columns:repeat(2,1fr)}
+      nav{padding:0 16px}
+      .hero-overlay{padding:14px 16px}
+    }
+    @media(max-width:600px){
+      .portfolio-hero{grid-template-columns:1fr 1fr;grid-template-rows:160px 120px 100px}
+      .pt:first-child{grid-row:1/1;grid-column:1/3}
+      .similar-grid{grid-template-columns:1fr}
+      .chat-panel{width:100%;right:0}
+      .stats-row{gap:10px}
+      .stat{padding:10px 14px;min-width:70px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── nav ──────────────────────────────────────────────────────── -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <canvas id="logo-canvas" width="28" height="28"></canvas>
+    Lumora
+  </a>
+  <a href="search.html" class="nav-back">← Back to results</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-btn">☀️</button>
+    <button class="nav-btn nav-btn-outline">Log In</button>
+    <button class="nav-btn nav-btn-gold" onclick="document.querySelector('.book-btn').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  </div>
+</nav>
+
+<!-- ── portfolio hero ────────────────────────────────────────────── -->
+<div class="portfolio-hero">
+  <!-- tile 1: large wedding -->
+  <div class="pt">
+    <div class="pt-bg" style="background:linear-gradient(145deg,#1a0d20 0%,rgba(233,184,74,0.28) 60%,#0d0814 100%)">
+      <svg width="100%" height="100%" viewBox="0 0 400 380" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+        <circle cx="200" cy="190" r="160" fill="none" stroke="#e9b84a" stroke-width="0.8" opacity="0.1"/>
+        <circle cx="200" cy="190" r="110" fill="none" stroke="#e9b84a" stroke-width="0.6" opacity="0.08"/>
+        <circle cx="200" cy="190" r="65" fill="none" stroke="#e9b84a" stroke-width="0.5" opacity="0.06"/>
+        <!-- bokeh circles -->
+        <circle cx="80" cy="80" r="22" fill="rgba(233,184,74,0.06)"/>
+        <circle cx="320" cy="300" r="35" fill="rgba(233,184,74,0.05)"/>
+        <circle cx="340" cy="60" r="16" fill="rgba(233,184,74,0.08)"/>
+        <circle cx="60" cy="300" r="28" fill="rgba(233,184,74,0.05)"/>
+        <!-- couple silhouette hint -->
+        <ellipse cx="170" cy="290" rx="18" ry="60" fill="rgba(233,184,74,0.07)"/>
+        <ellipse cx="230" cy="290" rx="16" ry="58" fill="rgba(233,184,74,0.07)"/>
+        <ellipse cx="170" cy="225" rx="14" ry="14" fill="rgba(233,184,74,0.06)"/>
+        <ellipse cx="230" cy="227" rx="13" ry="13" fill="rgba(233,184,74,0.06)"/>
+      </svg>
+    </div>
+    <span class="pt-label">Weddings</span>
+    <span class="pt-count">📸 +127 photos</span>
+  </div>
+  <!-- tile 2: portrait -->
+  <div class="pt">
+    <div class="pt-bg" style="background:linear-gradient(135deg,#0d1117 0%,rgba(56,189,248,0.2) 100%)">
+      <svg width="100%" height="100%" viewBox="0 0 200 220" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+        <circle cx="100" cy="85" r="32" fill="rgba(56,189,248,0.08)"/>
+        <ellipse cx="100" cy="165" rx="38" ry="55" fill="rgba(56,189,248,0.06)"/>
+        <circle cx="40" cy="40" r="15" fill="rgba(56,189,248,0.06)"/>
+        <circle cx="170" cy="180" r="20" fill="rgba(56,189,248,0.05)"/>
+      </svg>
+    </div>
+    <span class="pt-label">Portraits</span>
+  </div>
+  <!-- tile 3: events -->
+  <div class="pt">
+    <div class="pt-bg" style="background:linear-gradient(135deg,#0a0d12 0%,rgba(167,139,250,0.22) 100%)">
+      <svg width="100%" height="100%" viewBox="0 0 200 220" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+        <circle cx="100" cy="110" r="70" fill="none" stroke="#a78bfa" stroke-width="0.6" opacity="0.12"/>
+        <circle cx="50" cy="60" r="12" fill="rgba(167,139,250,0.08)"/>
+        <circle cx="150" cy="40" r="9" fill="rgba(167,139,250,0.1)"/>
+        <circle cx="160" cy="170" r="18" fill="rgba(167,139,250,0.07)"/>
+      </svg>
+    </div>
+    <span class="pt-label">Events</span>
+  </div>
+  <!-- tile 4: golden hour -->
+  <div class="pt">
+    <div class="pt-bg" style="background:linear-gradient(135deg,#120d06 0%,rgba(251,146,60,0.25) 100%)">
+      <svg width="100%" height="100%" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+        <line x1="0" y1="100" x2="200" y2="100" stroke="rgba(251,146,60,0.12)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="50" fill="rgba(251,146,60,0.07)"/>
+        <circle cx="100" cy="100" r="30" fill="rgba(251,146,60,0.06)"/>
+        ${[0,1,2,3,4,5,6,7,8].map(i=>`<line x1="100" y1="100" x2="${100+80*Math.cos((i-4)*Math.PI/8)}" y2="${100+80*Math.sin((i-4)*Math.PI/8)}" stroke="rgba(251,146,60,0.07)" stroke-width="1"/>`).join('')}
+      </svg>
+    </div>
+    <span class="pt-label">Golden Hour</span>
+  </div>
+  <!-- tile 5: lifestyle -->
+  <div class="pt">
+    <div class="pt-bg" style="background:linear-gradient(135deg,#0d1208 0%,rgba(74,222,128,0.2) 100%)">
+      <svg width="100%" height="100%" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+        <rect x="60" y="40" width="80" height="80" rx="12" fill="none" stroke="rgba(74,222,128,0.12)" stroke-width="1"/>
+        <rect x="80" y="60" width="40" height="40" rx="6" fill="rgba(74,222,128,0.07)"/>
+        <circle cx="30" cy="30" r="10" fill="rgba(74,222,128,0.07)"/>
+        <circle cx="170" cy="130" r="14" fill="rgba(74,222,128,0.06)"/>
+      </svg>
+    </div>
+    <span class="pt-label">Lifestyle</span>
+  </div>
+</div>
+
+<!-- ── hero info bar ──────────────────────────────────────────────── -->
+<div class="hero-overlay">
+  <p class="hero-breadcrumb"><a href="search.html">← Creators</a> / London / Photographers / Sophie Clarke</p>
+  <div class="hero-info">
+    <div class="hi-left">
+      <h1 class="hi-name">Sophie Clarke</h1>
+      <div class="hi-row">
+        <span class="hi-type">Photographer</span>
+        <span style="color:var(--border)">·</span>
+        <span class="hi-loc">📍 Shoreditch, London · 1.2 mi</span>
+        <span style="color:var(--border)">·</span>
+        <div class="hi-rating">
+          <span class="stars-gold">★★★★★</span>
+          <strong>4.9</strong>
+          <span style="color:var(--sub)">(127 reviews)</span>
+        </div>
+        <span class="v-chip">✓ Lumora Verified</span>
+      </div>
+      <div class="hi-specs">
+        <span class="hi-spec">💍 Weddings</span>
+        <span class="hi-spec">👤 Portraits</span>
+        <span class="hi-spec">🎉 Events</span>
+        <span class="hi-spec">🌅 Golden Hour</span>
+        <span class="hi-spec">🏙 Lifestyle</span>
+      </div>
+    </div>
+    <div class="hi-right">
+      <button class="share-btn" onclick="navigator.share&&navigator.share({title:'Sophie Clarke on Lumora',url:location.href})">🔗 Share</button>
+      <button class="save-hero-btn" onclick="this.textContent=this.textContent.includes('♡')?'♥ Saved':'♡ Save'">♡ Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── profile body ───────────────────────────────────────────────── -->
+<div class="profile-body">
+
+  <!-- ── left column ─────────────────────────────────────────── -->
+  <div class="profile-left">
+
+    <!-- stats -->
+    <section class="section">
+      <div class="stats-row">
+        <div class="stat"><div class="stat-n">234</div><div class="stat-l">Bookings</div></div>
+        <div class="stat"><div class="stat-n">8</div><div class="stat-l">Years exp.</div></div>
+        <div class="stat"><div class="stat-n">4.9</div><div class="stat-l">Rating</div></div>
+        <div class="stat"><div class="stat-n">48h</div><div class="stat-l">Avg. response</div></div>
+        <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Rebooking rate</div></div>
+      </div>
+    </section>
+
+    <!-- about -->
+    <section class="section">
+      <div class="sec-title">About Sophie</div>
+      <p class="about-text">
+        <strong>Award-winning wedding and portrait photographer</strong> based in Shoreditch, London. I specialise in capturing authentic, unscripted moments — the laugh just before the kiss, the father wiping a tear, the stolen glance across the room.
+      </p>
+      <p class="about-text">
+        My style blends <strong>editorial precision</strong> with a warm, documentary approach. I've shot over 200 weddings across the UK and Europe, and my work has been featured in <em>Vogue Weddings</em>, <em>Rock My Wedding</em>, and <em>The Sunday Times Style</em>.
+      </p>
+      <p class="about-text">
+        Every booking includes a pre-shoot consultation, full edited gallery (delivered in 2 weeks), and lifetime access to your private Lumora gallery.
+      </p>
+    </section>
+
+    <!-- gear -->
+    <section class="section">
+      <div class="sec-title">Equipment</div>
+      <div class="gear-chips">
+        <span class="gear-chip">📷 Sony A7R V (×2)</span>
+        <span class="gear-chip">🔭 Sony 35mm f/1.4 GM</span>
+        <span class="gear-chip">🔭 Sony 85mm f/1.4 GM</span>
+        <span class="gear-chip">🔭 Sony 24–70mm f/2.8 GM</span>
+        <span class="gear-chip">💡 Profoto B10 (×2)</span>
+        <span class="gear-chip">🎞 Medium Format (rental)</span>
+        <span class="gear-chip">🛡 Fully insured</span>
+        <span class="gear-chip">💾 Dual-card backup</span>
+      </div>
+    </section>
+
+    <!-- availability calendar -->
+    <section class="section" id="availability">
+      <div class="sec-title">Availability — August 2026</div>
+      <div class="cal-nav">
+        <button class="cal-arrow" onclick="prevMonth()">‹</button>
+        <span class="cal-month" id="cal-month-title">August 2026</span>
+        <button class="cal-arrow" onclick="nextMonth()">›</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <div class="cal-leg-item"><div class="leg-dot" style="background:var(--green)"></div>Available</div>
+        <div class="cal-leg-item"><div class="leg-dot" style="background:var(--amber)"></div>Partially booked</div>
+        <div class="cal-leg-item"><div class="leg-dot" style="background:var(--muted)"></div>Fully booked</div>
+      </div>
+      <!-- time slots -->
+      <div class="time-slots-section" id="time-slots-sec">
+        <div class="ts-title" id="ts-title">Available slots for <strong id="ts-date-lbl">—</strong></div>
+        <div class="time-slots" id="time-slots"></div>
+        <p class="ts-note">All times are BST. Each slot is 4 hours (half day) or combinable.</p>
+      </div>
+    </section>
+
+    <!-- reviews -->
+    <section class="section">
+      <div class="sec-title">Reviews</div>
+      <div class="review-summary">
+        <div class="rev-big">
+          <div class="rev-num">4.9</div>
+          <div class="rev-stars-lg">★★★★★</div>
+          <div class="rev-total">127 reviews</div>
+        </div>
+        <div class="rev-bars">
+          <div class="rev-bar-row"><span class="rev-bar-label">5★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:88%"></div></div><span class="rev-bar-pct">88%</span></div>
+          <div class="rev-bar-row"><span class="rev-bar-label">4★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:9%"></div></div><span class="rev-bar-pct">9%</span></div>
+          <div class="rev-bar-row"><span class="rev-bar-label">3★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:2%"></div></div><span class="rev-bar-pct">2%</span></div>
+          <div class="rev-bar-row"><span class="rev-bar-label">2★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:1%"></div></div><span class="rev-bar-pct">1%</span></div>
+          <div class="rev-bar-row"><span class="rev-bar-label">1★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:0%"></div></div><span class="rev-bar-pct">0%</span></div>
+        </div>
+      </div>
+      <div class="review-cards">
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-av" style="background:rgba(167,139,250,0.2);color:#a78bfa">JM</div>
+            <div><div class="rc-name">James &amp; Mia Thompson</div><div class="rc-date">July 2026 · Wedding</div></div>
+            <div class="rc-stars">★★★★★</div>
+          </div>
+          <p class="rc-body">Sophie was absolutely incredible. She captured every single emotion of our day — we cried looking through the gallery. She's warm, professional and completely invisible when she needs to be. Already recommended her to three friends.</p>
+          <span class="rc-tag">💍 Wedding · Kew Gardens, London</span>
+        </div>
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-av" style="background:rgba(56,189,248,0.2);color:#38bdf8">RK</div>
+            <div><div class="rc-name">Rachel Kim</div><div class="rc-date">June 2026 · Portrait session</div></div>
+            <div class="rc-stars">★★★★★</div>
+          </div>
+          <p class="rc-body">Booked Sophie for headshots and brand portraits. She instantly put me at ease — I never feel comfortable in front of a camera but she had me laughing and relaxed within minutes. The lighting and editing are stunning. The images are already doing amazing things for my website.</p>
+          <span class="rc-tag">👤 Brand Portraits · Studio, Shoreditch</span>
+        </div>
+        <div class="review-card">
+          <div class="rc-header">
+            <div class="rc-av" style="background:rgba(74,222,128,0.2);color:#4ade80">AL</div>
+            <div><div class="rc-name">Amara &amp; Leroy Davis</div><div class="rc-date">May 2026 · Wedding</div></div>
+            <div class="rc-stars">★★★★★</div>
+          </div>
+          <p class="rc-body">We'd looked at dozens of photographers and Sophie stood out immediately — her eye for natural light is extraordinary. She delivered our full gallery in 10 days (she said 2 weeks, we were blown away). Every photo tells a story.</p>
+          <span class="rc-tag">💍 Wedding · The Ned, London</span>
+        </div>
+      </div>
+      <button class="see-more-btn" onclick="this.textContent='Showing all 127 reviews ↑'">See all 127 reviews →</button>
+    </section>
+
+    <!-- similar -->
+    <section class="section">
+      <div class="sec-title">Similar creators you may like</div>
+      <div class="similar-grid">
+        <div class="sim-card" onclick="window.location='search.html'">
+          <div class="sim-img" style="background:linear-gradient(135deg,#0d1117,rgba(167,139,250,0.25))">MW</div>
+          <div class="sim-body">
+            <div class="sim-name">Marcus Webb</div>
+            <div class="sim-sub">Videographer · Notting Hill</div>
+            <div class="sim-footer"><span class="sim-stars">★ 4.8</span><span class="sim-price">£350/hr</span></div>
+          </div>
+        </div>
+        <div class="sim-card" onclick="window.location='search.html'">
+          <div class="sim-img" style="background:linear-gradient(135deg,#120a0a,rgba(248,113,113,0.25))">ZA</div>
+          <div class="sim-body">
+            <div class="sim-name">Zara Ali</div>
+            <div class="sim-sub">Photographer · Kensington</div>
+            <div class="sim-footer"><span class="sim-stars">★ 4.9</span><span class="sim-price">£380/hr</span></div>
+          </div>
+        </div>
+        <div class="sim-card" onclick="window.location='search.html'">
+          <div class="sim-img" style="background:linear-gradient(135deg,#0a0d0f,rgba(6,182,212,0.25))">MF</div>
+          <div class="sim-body">
+            <div class="sim-name">Maya Foster</div>
+            <div class="sim-sub">Photographer · Brighton</div>
+            <div class="sim-footer"><span class="sim-stars">★ 4.9</span><span class="sim-price">£310/hr</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── booking sidebar ──────────────────────────────────────── -->
+  <aside class="booking-sidebar" id="book">
+    <div class="bs-mini-profile">
+      <div class="bs-av">SC</div>
+      <div>
+        <div class="bs-name">Sophie Clarke</div>
+        <div class="bs-meta">📍 Shoreditch · ★ 4.9 (127)</div>
+      </div>
+      <div class="bs-v" title="Lumora Verified">✓</div>
+    </div>
+
+    <div class="bs-body">
+      <!-- packages -->
+      <div class="pkg-tabs" id="pkg-tabs">
+        <div class="pkg-tab" data-pkg="0" onclick="selectPkg(0)">
+          <span class="pkg-tab-name">Half Day</span>
+          <span class="pkg-tab-hrs">4 hrs</span>
+          <span class="pkg-tab-price">£980</span>
+        </div>
+        <div class="pkg-tab on" data-pkg="1" onclick="selectPkg(1)">
+          <span class="pkg-tab-name">Full Day</span>
+          <span class="pkg-tab-hrs">8 hrs</span>
+          <span class="pkg-tab-price">£1,680</span>
+        </div>
+        <div class="pkg-tab" data-pkg="2" onclick="selectPkg(2)">
+          <span class="pkg-tab-name">Evening</span>
+          <span class="pkg-tab-hrs">3 hrs</span>
+          <span class="pkg-tab-price">£780</span>
+        </div>
+      </div>
+
+      <!-- date button -->
+      <button class="date-picker-btn" id="date-btn" onclick="toggleBsCal()">
+        <span class="dpb-icon">📅</span>
+        <div class="dpb-text">
+          <span class="dpb-label">Select date</span>
+          <span id="date-btn-val">Choose an available date</span>
+        </div>
+        <span style="color:var(--muted);font-size:.8rem">▾</span>
+      </button>
+
+      <!-- mini calendar -->
+      <div class="bs-cal" id="bs-cal">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <button class="cal-arrow" style="width:24px;height:24px" onclick="prevMonth()">‹</button>
+          <span style="font-size:.78rem;font-weight:700" id="bs-cal-month">August 2026</span>
+          <button class="cal-arrow" style="width:24px;height:24px" onclick="nextMonth()">›</button>
+        </div>
+        <div class="cal-grid" id="bs-cal-grid" style="gap:2px"></div>
+      </div>
+
+      <!-- selected slot display -->
+      <div class="sel-slot" id="sel-slot">
+        <span>✓</span>
+        <span id="sel-slot-text">—</span>
+      </div>
+
+      <!-- price breakdown -->
+      <div class="price-breakdown">
+        <div class="pb-row"><span>Rate</span><strong id="pb-rate">£210/hr</strong></div>
+        <div class="pb-row"><span id="pb-hrs-label">Hours (8)</span><strong id="pb-hrs-val">£1,680</strong></div>
+        <div class="pb-row"><span>Platform fee (12%)</span><strong id="pb-fee">£202</strong></div>
+        <div class="pb-row" id="pb-travel-row" style="display:none"><span>Travel (>15mi)</span><strong id="pb-travel">£50</strong></div>
+        <hr class="pb-divider">
+        <div class="pb-total"><span>Total</span><span class="pb-price" id="pb-total">£1,882</span></div>
+        <p class="pb-note">You won't be charged until Sophie confirms · Free cancellation 48hrs before</p>
+      </div>
+
+      <!-- book button -->
+      <button class="book-btn" id="book-btn" onclick="openBookingSuccess()">Request to Book</button>
+      <p class="resp-time">⚡ Sophie typically responds in under 2 hours</p>
+
+      <!-- chat section -->
+      <div class="chat-divider"><span class="chat-divider-text">Prefer to chat first?</span></div>
+      <div class="contact-btns">
+        <a class="cb wa" href="https://wa.me/447700900001?text=Hi Sophie, I found you on Lumora and I'd love to discuss booking you for a shoot!" target="_blank" rel="noopener">
+          <div class="cb-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div>
+            <span style="font-size:.82rem;font-weight:700;display:block">WhatsApp</span>
+            <span style="font-size:.7rem;color:var(--sub)">Open WhatsApp chat</span>
+          </div>
+        </a>
+        <a class="cb ig" href="https://instagram.com/sophieclarke.photo" target="_blank" rel="noopener">
+          <div class="cb-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="url(#ig2)"><defs><linearGradient id="ig2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div>
+            <span style="font-size:.82rem;font-weight:700;display:block">Instagram DM</span>
+            <span style="font-size:.7rem;color:var(--sub)">@sophieclarke.photo</span>
+          </div>
+        </a>
+        <button class="cb lm" onclick="openChatPanel()">
+          <div class="cb-icon">🔮</div>
+          <div>
+            <span style="font-size:.82rem;font-weight:700;display:block">Message on Lumora</span>
+            <span style="font-size:.7rem;color:var(--sub)">Secure · AI-assisted</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ── booking success modal ────────────────────────────────────── -->
+<div class="overlay" id="success-overlay" onclick="if(event.target===this)closeSuccess()">
+  <div class="success-modal">
+    <div class="success-icon">🎉</div>
+    <h2 class="success-title">Booking Requested!</h2>
+    <p class="success-body">Your request has been sent to Sophie. She'll confirm within 2 hours. Lumora will notify you by email and SMS.</p>
+    <div class="success-details">
+      <div class="sd-row"><strong>Creator</strong><span>Sophie Clarke</span></div>
+      <div class="sd-row"><strong>Date</strong><span id="sc-date">—</span></div>
+      <div class="sd-row"><strong>Package</strong><span id="sc-pkg">Full Day (8hrs)</span></div>
+      <div class="sd-row"><strong>Time slot</strong><span id="sc-slot">—</span></div>
+      <div class="sd-row"><strong>Total</strong><span id="sc-total" style="color:var(--gold);font-weight:800">—</span></div>
+    </div>
+    <button class="success-btn" onclick="closeSuccess()">Done — back to profile</button>
+  </div>
+</div>
+
+<!-- ── chat panel ─────────────────────────────────────────────────── -->
+<div class="chat-panel" id="chat-panel">
+  <div class="cp-header">
+    <div class="cp-av">SC</div>
+    <div class="cp-info" style="flex:1">
+      <div class="cp-name">Sophie Clarke</div>
+      <div class="cp-status">● Online now · Usually replies in &lt;2h</div>
+    </div>
+    <button class="cp-close" onclick="closeChatPanel()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs">
+    <div style="text-align:center;font-size:.7rem;color:var(--muted);padding:4px 0">Today, 14:32</div>
+    <div class="chat-msg in">
+      <div class="bubble">Hi! 👋 I'm Sophie — thanks for visiting my Lumora profile. How can I help you today?</div>
+      <span class="chat-time">14:32 · <span style="color:var(--green)">✓✓ Seen</span></span>
+    </div>
+    <div class="chat-msg in">
+      <div class="bubble">I have availability coming up this month — feel free to ask about dates, packages or to see more portfolio work!</div>
+      <span class="chat-time">14:33</span>
+    </div>
+  </div>
+  <!-- AI quick-replies -->
+  <div class="ai-suggest">
+    <button class="sug-chip" onclick="useSuggestion(this)">What's included in full day?</button>
+    <button class="sug-chip" onclick="useSuggestion(this)">Do you travel outside London?</button>
+    <button class="sug-chip" onclick="useSuggestion(this)">How long for edited photos?</button>
+    <button class="sug-chip" onclick="useSuggestion(this)">Can I see more wedding work?</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-in" id="chat-in" type="text" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<script>
+/* ── calendar state ───────────────────────────────────────────── */
+let calYear = 2026, calMonth = 7; // 0-based: 7 = August
+let selectedDay = null, selectedSlot = null, selectedPkg = 1;
+let bsCalOpen = false;
+
+// Sophie's availability for Aug 2026
+const availability = {
+  1:'past',2:'past',3:'past',4:'past',5:'available',
+  6:'available',7:'available',8:'partial',9:'booked',10:'booked',
+  11:'available',12:'available',13:'available',14:'available',15:'partial',
+  16:'booked',17:'booked',18:'available',19:'available',20:'available',
+  21:'available',22:'partial',23:'booked',24:'booked',25:'available',
+  26:'available',27:'available',28:'available',29:'partial',30:'booked',31:'booked'
+};
+
+const slotsByAvail = {
+  available: ['🌅 Morning · 9am–1pm','☀️ Afternoon · 2pm–6pm','🌙 Evening · 7pm–10pm'],
+  partial:   ['🌙 Evening · 7pm–10pm'],
+};
+
+const packages = [
+  {name:'Half Day', hrs:4, rate:245, base:980},
+  {name:'Full Day', hrs:8, rate:210, base:1680},
+  {name:'Evening', hrs:3, rate:260, base:780},
+];
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+/* ── init ─────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  drawLogo();
+  renderCal('cal-grid');
+  renderCal('bs-cal-grid');
+  selectPkg(1);
+  initTheme();
+});
+
+/* ── logo ─────────────────────────────────────────────────────── */
+function drawLogo() {
+  const c = document.getElementById('logo-canvas'); if(!c)return;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0,0,28,28);
+  ctx.strokeStyle='#E9B84A'; ctx.lineWidth=1.5;
+  for(let i=0;i<7;i++){
+    ctx.save(); ctx.translate(14,14); ctx.rotate(i*Math.PI*2/7);
+    ctx.beginPath(); ctx.moveTo(-6,0); ctx.lineTo(0,-11); ctx.lineTo(6,0); ctx.closePath();
+    ctx.fillStyle=`rgba(233,184,74,${0.55+i*0.07})`; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+}
+
+/* ── calendar render ──────────────────────────────────────────── */
+function renderCal(gridId) {
+  const grid = document.getElementById(gridId); if(!grid)return;
+  const titleId = gridId==='cal-grid'?'cal-month-title':'bs-cal-month';
+  document.getElementById(titleId).textContent = `${MONTHS[calMonth]} ${calYear}`;
+  grid.innerHTML = '';
+  // day-of-week headers
+  DAYS.forEach(d => { const h=document.createElement('div'); h.className='cal-dow'; h.textContent=d; grid.appendChild(h); });
+  // first day (Mon=0): Aug 1 2026 = Saturday → index 5 in Mon-first week
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const offset = (firstDay+6)%7; // convert to Mon-first
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  for(let i=0;i<offset;i++){ const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e); }
+  const today = new Date(); const todayDay = (today.getFullYear()===calYear && today.getMonth()===calMonth) ? today.getDate() : -1;
+  for(let d=1;d<=daysInMonth;d++){
+    const cell=document.createElement('div');
+    let cls='cal-day';
+    const avail = calYear===2026&&calMonth===7 ? (availability[d]||'past') : 'available';
+    if(d===todayDay) cls+=' today-day';
+    if(avail==='past') cls+=' past';
+    else if(avail==='booked') cls+=' booked';
+    else if(avail==='partial') cls+=' partial';
+    else cls+=' available';
+    if(d===selectedDay&&calYear===2026&&calMonth===7) cls+=' selected';
+    cell.className=cls; cell.textContent=d;
+    if(avail==='available'||avail==='partial'){
+      cell.addEventListener('click',()=>selectDay(d,avail,gridId));
+    }
+    grid.appendChild(cell);
+  }
+}
+
+function prevMonth(){ if(calMonth===0){calMonth=11;calYear--;}else calMonth--; selectedDay=null; selectedSlot=null; renderCal('cal-grid'); renderCal('bs-cal-grid'); updateSelSlot(); }
+function nextMonth(){ if(calMonth===11){calMonth=0;calYear++;}else calMonth++; selectedDay=null; selectedSlot=null; renderCal('cal-grid'); renderCal('bs-cal-grid'); updateSelSlot(); }
+
+function selectDay(day, avail, fromGrid) {
+  selectedDay=day; selectedSlot=null;
+  renderCal('cal-grid'); renderCal('bs-cal-grid');
+  const dateStr = `${day} ${MONTHS[calMonth]} ${calYear}`;
+  document.getElementById('date-btn-val').textContent = dateStr;
+  document.getElementById('date-btn').classList.add('active');
+  // show time slots in main column
+  const slots = slotsByAvail[avail]||[];
+  const sec = document.getElementById('time-slots-sec');
+  const slotsEl = document.getElementById('time-slots');
+  document.getElementById('ts-date-lbl').textContent = dateStr;
+  slotsEl.innerHTML = slots.map(s=>`<button class="ts-slot" onclick="selectSlot(this,'${s}')">${s}</button>`).join('');
+  sec.style.display='block';
+  updateSelSlot();
+  // scroll to time slots
+  if(fromGrid==='cal-grid') sec.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(bsCalOpen) { bsCalOpen=false; document.getElementById('bs-cal').style.display='none'; }
+}
+
+function selectSlot(btn, slot) {
+  document.querySelectorAll('.ts-slot').forEach(s=>s.classList.remove('on'));
+  btn.classList.add('on');
+  selectedSlot = slot;
+  updateSelSlot();
+}
+
+function updateSelSlot() {
+  const el = document.getElementById('sel-slot');
+  const txt = document.getElementById('sel-slot-text');
+  if(selectedDay && selectedSlot){
+    txt.textContent = `${selectedDay} ${MONTHS[calMonth]} · ${selectedSlot}`;
+    el.classList.add('show');
+    document.getElementById('book-btn').textContent = 'Request to Book';
+    document.getElementById('sc-date').textContent = `${selectedDay} ${MONTHS[calMonth]} ${calYear}`;
+    document.getElementById('sc-slot').textContent = selectedSlot;
+  } else {
+    el.classList.remove('show');
+  }
+}
+
+function toggleBsCal() {
+  bsCalOpen=!bsCalOpen;
+  const cal=document.getElementById('bs-cal');
+  cal.style.display=bsCalOpen?'block':'none';
+}
+
+/* ── packages ─────────────────────────────────────────────────── */
+function selectPkg(idx) {
+  selectedPkg=idx;
+  document.querySelectorAll('.pkg-tab').forEach((t,i)=>t.classList.toggle('on',i===idx));
+  const pkg=packages[idx];
+  document.getElementById('pb-rate').textContent=`£${pkg.rate}/hr`;
+  document.getElementById('pb-hrs-label').textContent=`Hours (${pkg.hrs})`;
+  document.getElementById('pb-hrs-val').textContent=`£${pkg.base}`;
+  const fee=Math.round(pkg.base*0.12);
+  document.getElementById('pb-fee').textContent=`£${fee}`;
+  document.getElementById('pb-total').textContent=`£${pkg.base+fee}`;
+  document.getElementById('sc-pkg').textContent=`${pkg.name} (${pkg.hrs}hrs)`;
+  document.getElementById('sc-total').textContent=`£${pkg.base+fee}`;
+}
+
+/* ── booking success ──────────────────────────────────────────── */
+function openBookingSuccess() {
+  if(!selectedDay){
+    document.getElementById('availability').scrollIntoView({behavior:'smooth'});
+    document.getElementById('date-btn').style.borderColor='var(--gold)';
+    return;
+  }
+  document.getElementById('success-overlay').classList.add('open');
+}
+function closeSuccess(){ document.getElementById('success-overlay').classList.remove('open'); }
+
+/* ── chat panel ───────────────────────────────────────────────── */
+function openChatPanel(){ document.getElementById('chat-panel').classList.add('open'); }
+function closeChatPanel(){ document.getElementById('chat-panel').classList.remove('open'); }
+
+const AUTO_REPLIES = {
+  'What\'s included in full day?': "Full day (8hrs) includes pre-shoot consultation, travel within 20mi of London, 400+ edited photos delivered in 2 weeks, private Lumora gallery, and commercial licence. ✨",
+  'Do you travel outside London?': "Yes! I travel anywhere in the UK — I just add a travel supplement for shoots over 20mi from Shoreditch. International shoots are possible with advance notice. 🌍",
+  'How long for edited photos?': "I deliver the full edited gallery within 14 days. I also send a sneak peek of 10–15 images within 48 hours so you have something to share straight away! 📸",
+  'Can I see more wedding work?': "Of course! My full wedding portfolio is on my Instagram @sophieclarke.photo and I'd be happy to send a private album link. Just share your email and I'll send it over! 💍",
+};
+
+function useSuggestion(btn) {
+  const txt = btn.textContent;
+  document.getElementById('chat-in').value = txt;
+  sendMsg();
+}
+
+function sendMsg() {
+  const inp=document.getElementById('chat-in');
+  const txt=inp.value.trim(); if(!txt)return;
+  const msgs=document.getElementById('chat-msgs');
+  const div=document.createElement('div'); div.className='chat-msg out';
+  div.innerHTML=`<div class="bubble">${txt}</div><span class="chat-time">Just now · ✓ Sent</span>`;
+  msgs.appendChild(div); inp.value=''; msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const reply=AUTO_REPLIES[txt]||["That's a great question! Let me check and get back to you shortly. 😊","Happy to help with that! Could you give me a bit more detail so I can answer properly?","Thanks for reaching out! I'll send you more info shortly. ✨"][Math.floor(Math.random()*3)];
+    const r=document.createElement('div'); r.className='chat-msg in';
+    r.innerHTML=`<div class="bubble">${reply}</div><span class="chat-time">Just now · <span style="color:var(--green)">✓✓ Seen</span></span>`;
+    msgs.appendChild(r); msgs.scrollTop=msgs.scrollHeight;
+  },1300);
+}
+
+/* ── theme ────────────────────────────────────────────────────── */
+function initTheme(){
+  const btn=document.getElementById('theme-btn');
+  let isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  document.documentElement.dataset.theme=isDark?'dark':'light'; btn.textContent=isDark?'☀️':'🌙';
+  btn.addEventListener('click',()=>{ isDark=!isDark; document.documentElement.dataset.theme=isDark?'dark':'light'; btn.textContent=isDark?'☀️':'🌙'; });
+}
+</script>
+</body>
+</html>
