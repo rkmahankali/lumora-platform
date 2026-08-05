@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumora — Book World-Class Photographers & Videographers</title>
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root {
+  --bg:        #07080D;
+  --bg1:       #0C0E16;
+  --bg2:       #11141F;
+  --bg3:       #171B28;
+  --border:    rgba(255,255,255,0.07);
+  --border-m:  rgba(255,255,255,0.12);
+  --text:      #F2F4FA;
+  --muted:     #6B7190;
+  --dim:       #373C52;
+  --gold:      #E9B84A;
+  --gold-hi:   #F5D078;
+  --gold-bg:   rgba(233,184,74,0.1);
+  --gold-bdr:  rgba(233,184,74,0.25);
+  --blue:      #4B9CF5;
+  --blue-bg:   rgba(75,156,245,0.1);
+  --blue-bdr:  rgba(75,156,245,0.25);
+  --teal:      #3ECBA9;
+  --teal-bg:   rgba(62,203,169,0.1);
+  --red:       #E85A5A;
+  --r:         14px;
+  --r-sm:      8px;
+  --r-lg:      20px;
+  --nav-h:     64px;
+  font-family: "Inter", "Helvetica Neue", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:       #F5F4F0;
+    --bg1:      #FFFFFF;
+    --bg2:      #F0EDE6;
+    --bg3:      #E8E4DC;
+    --border:   rgba(0,0,0,0.08);
+    --border-m: rgba(0,0,0,0.14);
+    --text:     #0A0C14;
+    --muted:    #64687A;
+    --dim:      #B8BBC8;
+    --gold-bg:  rgba(233,184,74,0.12);
+    --blue-bg:  rgba(75,156,245,0.08);
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #07080D;
+  --bg1:       #0C0E16;
+  --bg2:       #11141F;
+  --bg3:       #171B28;
+  --border:    rgba(255,255,255,0.07);
+  --border-m:  rgba(255,255,255,0.12);
+  --text:      #F2F4FA;
+  --muted:     #6B7190;
+  --dim:       #373C52;
+  --gold-bg:   rgba(233,184,74,0.1);
+  --blue-bg:   rgba(75,156,245,0.1);
+}
+:root[data-theme="light"] {
+  --bg:       #F5F4F0;
+  --bg1:      #FFFFFF;
+  --bg2:      #F0EDE6;
+  --bg3:      #E8E4DC;
+  --border:   rgba(0,0,0,0.08);
+  --border-m: rgba(0,0,0,0.14);
+  --text:     #0A0C14;
+  --muted:    #64687A;
+  --dim:      #B8BBC8;
+  --gold-bg:  rgba(233,184,74,0.12);
+  --blue-bg:  rgba(75,156,245,0.08);
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════ */
+.t-display {
+  font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.t-hero {
+  font-size: clamp(44px, 6vw, 88px);
+  font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.t-section {
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.t-card-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.t-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.t-body-lg { font-size: 17px; line-height: 1.7; color: var(--muted); }
+.t-body { font-size: 14px; line-height: 1.65; color: var(--muted); }
+.t-mono { font-family: "SF Mono", "Fira Code", Consolas, monospace; font-size: 12px; }
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════ */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+section { padding: 96px 0; position: relative; }
+section + section { border-top: 1px solid var(--border); }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+
+/* ═══════════════════════════════════════════════
+   COMPONENTS
+═══════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--gold);
+  color: #07080D;
+}
+.btn-primary:hover { background: var(--gold-hi); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(233,184,74,0.3); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-m);
+}
+.btn-ghost:hover { background: var(--bg2); border-color: var(--border-m); }
+.btn-blue {
+  background: var(--blue);
+  color: #fff;
+}
+.btn-blue:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(75,156,245,0.3); }
+.btn-sm { padding: 9px 18px; font-size: 13px; }
+
+.card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { border-color: var(--border-m); transform: translateY(-2px); }
+.card-gold { border-top: 2px solid var(--gold); }
+.card-blue { border-top: 2px solid var(--blue); }
+.card-teal { border-top: 2px solid var(--teal); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.badge-gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bdr); }
+.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bdr); }
+.badge-teal { background: var(--teal-bg); color: var(--teal); }
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 56px;
+}
+.section-head .t-eyebrow { margin-bottom: 12px; }
+.section-head .t-section { margin-bottom: 16px; }
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(7,8,13,0.8);
+  transition: background 0.3s;
+}
+:root[data-theme="light"] nav { background: rgba(245,244,240,0.88); }
+@media (prefers-color-scheme: light) { nav { background: rgba(245,244,240,0.88); } }
+
+.nav-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 19px;
+  font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-right: auto;
+  color: var(--text);
+}
+.nav-logo-mark {
+  width: 30px; height: 30px;
+  position: relative;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 20px;
+}
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-links a:hover { color: var(--text); background: var(--bg2); }
+.nav-ctas { display: flex; align-items: center; gap: 10px; }
+.nav-theme {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  margin-right: 8px;
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-ctas .btn-ghost { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-glow-1 {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(233,184,74,0.07) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+.hero-glow-2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(75,156,245,0.06) 0%, transparent 70%);
+  bottom: 0; left: -80px;
+}
+.hero-inner {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  padding: 80px 28px 80px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 48px;
+  }
+  .hero-ctas { justify-content: center; }
+  .hero-proof { justify-content: center; }
+}
+.hero-content { max-width: 560px; }
+.hero-name-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-bdr);
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  font-size: clamp(44px, 5.5vw, 80px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+  margin-bottom: 20px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hi) 60%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 440px;
+  margin-bottom: 32px;
+}
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.hero-proof {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.hero-proof-item { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.hero-proof-item::before { content: '✓'; color: var(--teal); font-size: 12px; font-weight: 700; }
+
+/* Aperture canvas container */
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#aperture-canvas {
+  width: min(460px, 90vw);
+  height: min(460px, 90vw);
+  border-radius: 50%;
+}
+.hero-booking-card {
+  position: absolute;
+  bottom: -16px;
+  left: -24px;
+  background: var(--bg1);
+  border: 1px solid var(--border-m);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  width: 220px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+.hero-booking-card .t-eyebrow { font-size: 10px; margin-bottom: 8px; }
+.hbc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.hbc-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--blue)); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.hbc-name { font-size: 13px; font-weight: 600; }
+.hbc-spec { font-size: 11px; color: var(--muted); }
+.hbc-stars { color: var(--gold); font-size: 11px; letter-spacing: 1px; }
+.hbc-cta { width: 100%; background: var(--gold); color: #07080D; border: none; border-radius: 8px; padding: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.hbc-cta:hover { background: var(--gold-hi); }
+.hero-ai-badge {
+  position: absolute;
+  top: 16px;
+  right: -16px;
+  background: var(--bg1);
+  border: 1px solid var(--blue-bdr);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  width: 190px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+}
+.hai-icon { font-size: 20px; flex-shrink: 0; }
+.hai-label { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 3px; }
+.hai-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+@media (max-width: 900px) {
+  .hero-booking-card, .hero-ai-badge { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   STATS BAR
+═══════════════════════════════════════════════ */
+.stats-bar {
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 0;
+}
+.stats-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-val {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: "Didot", "Bodoni MT", Georgia, serif;
+  letter-spacing: -0.02em;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ═══════════════════════════════════════════════
+   PERSONA TABS
+═══════════════════════════════════════════════ */
+.persona-wrap { padding-bottom: 0; }
+.persona-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 4px;
+  width: fit-content;
+  margin-bottom: 56px;
+}
+.persona-tab {
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.persona-tab.active[data-persona="customer"] {
+  background: var(--gold);
+  color: #07080D;
+}
+.persona-tab.active[data-persona="creator"] {
+  background: var(--blue);
+  color: #fff;
+}
+.persona-panel { display: none; }
+.persona-panel.active { display: block; }
+.persona-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) { .persona-content-grid { grid-template-columns: 1fr; } }
+
+/* Customer flow steps */
+.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.flow-step {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 28px;
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 44px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.flow-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-bdr);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.flow-step[data-persona="creator"] .flow-num {
+  background: var(--blue-bg);
+  border-color: var(--blue-bdr);
+  color: var(--blue);
+}
+.flow-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.flow-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+/* Search UI mock */
+.search-mock {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.sm-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  gap: 12px;
+}
+.sm-bar-input {
+  flex: 1;
+  font-size: 14px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sm-cards {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.sm-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.sm-card-img {
+  height: 80px;
+  background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.sm-card-body { padding: 10px 12px; }
+.sm-card-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.sm-card-spec { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.sm-card-meta { display: flex; justify-content: space-between; align-items: center; }
+.sm-card-price { font-size: 12px; font-weight: 700; color: var(--gold); }
+.sm-card-stars { font-size: 10px; color: var(--gold); }
+
+/* Profile mock for creators */
+.profile-mock {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.pm-header {
+  height: 100px;
+  background: linear-gradient(135deg, rgba(75,156,245,0.3) 0%, rgba(62,203,169,0.2) 100%);
+  position: relative;
+}
+.pm-body { padding: 48px 20px 20px; }
+.pm-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  border: 3px solid var(--bg2);
+  position: absolute;
+  bottom: -32px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.pm-name { font-size: 17px; font-weight: 700; }
+.pm-spec { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.pm-stats-row { display: flex; gap: 16px; margin-bottom: 16px; }
+.pm-stat .val { font-size: 17px; font-weight: 800; color: var(--blue); }
+.pm-stat .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.pm-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.pm-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  border: 1px solid var(--blue-bdr);
+}
+.pm-gallery { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.pm-gallery-item {
+  aspect-ratio: 1;
+  background: var(--bg3);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* ═══════════════════════════════════════════════
+   SPECIALTIES
+═══════════════════════════════════════════════ */
+.spec-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.spec-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.spec-chip:hover {
+  background: var(--bg2);
+  border-color: var(--gold-bdr);
+  color: var(--gold);
+}
+.spec-chip .icon { font-size: 18px; }
+.spec-chip.featured {
+  background: var(--gold-bg);
+  border-color: var(--gold-bdr);
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════════════════
+   AI SECTION
+═══════════════════════════════════════════════ */
+.ai-section { background: var(--bg1); }
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 860px) { .ai-grid { grid-template-columns: 1fr; } }
+.ai-features { display: flex; flex-direction: column; gap: 16px; }
+.ai-feature {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  transition: border-color 0.2s;
+}
+.ai-feature:hover { border-color: var(--blue-bdr); }
+.ai-feature-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-bdr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.ai-feature-icon.gold { background: var(--gold-bg); border-color: var(--gold-bdr); }
+.ai-feature-icon.teal { background: var(--teal-bg); border-color: rgba(62,203,169,0.25); }
+.ai-feature-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.ai-feature-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* AI Chat mock */
+.ai-chat-mock {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.acm-header {
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.acm-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.acm-name { font-size: 13px; font-weight: 700; }
+.acm-status { font-size: 11px; color: var(--teal); display: flex; align-items: center; gap: 4px; }
+.acm-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); display: block; }
+.acm-messages { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.acm-msg { max-width: 84%; }
+.acm-msg.ai { align-self: flex-start; }
+.acm-msg.user { align-self: flex-end; }
+.acm-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.acm-msg.ai .acm-bubble {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 4px 14px 14px 14px;
+}
+.acm-msg.user .acm-bubble {
+  background: var(--blue);
+  color: #fff;
+  border-radius: 14px 14px 4px 14px;
+}
+.acm-timestamp { font-size: 10px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
+.acm-action-row { display: flex; gap: 8px; padding: 0 20px 16px; }
+.acm-action {
+  flex: 1;
+  padding: 9px;
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  color: var(--blue);
+  transition: background 0.2s;
+}
+.acm-action:hover { background: var(--blue-bg); border-color: var(--blue-bdr); }
+
+/* ═══════════════════════════════════════════════
+   PREMIUM
+═══════════════════════════════════════════════ */
+.premium-section { background: var(--bg); }
+.premium-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 4px;
+  width: fit-content;
+  margin-bottom: 48px;
+}
+.premium-tab {
+  padding: 9px 22px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.premium-tab.active {
+  background: var(--gold);
+  color: #07080D;
+}
+.premium-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.pricing-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.pricing-card:hover { transform: translateY(-3px); border-color: var(--border-m); }
+.pricing-card.featured {
+  background: linear-gradient(145deg, rgba(233,184,74,0.07) 0%, var(--bg1) 100%);
+  border-color: var(--gold-bdr);
+}
+.pricing-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--gold);
+  color: #07080D;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+.pricing-tier { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.pricing-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.pricing-price {
+  font-size: 40px;
+  font-weight: 800;
+  font-family: "Didot", Georgia, serif;
+  letter-spacing: -0.03em;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.pricing-price .period { font-size: 14px; font-weight: 400; color: var(--muted); font-family: system-ui; }
+.pricing-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.pricing-features li { font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
+.pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 700; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+.pricing-features li.muted::before { content: '—'; color: var(--dim); }
+.pricing-features li.muted { color: var(--muted); }
+
+/* ═══════════════════════════════════════════════
+   APP SECTION
+═══════════════════════════════════════════════ */
+.app-section {
+  background: linear-gradient(135deg, var(--bg) 0%, rgba(75,156,245,0.04) 100%);
+}
+.app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+@media (max-width: 860px) { .app-grid { grid-template-columns: 1fr; text-align: center; } }
+.app-stores { display: flex; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 860px) { .app-stores { justify-content: center; } }
+.app-store-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--bg1);
+  border: 1px solid var(--border-m);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.app-store-btn:hover { border-color: var(--gold-bdr); background: var(--bg2); }
+.asb-icon { font-size: 24px; }
+.asb-text .asb-sub { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.asb-text .asb-name { font-size: 15px; font-weight: 700; }
+.app-phone-mock {
+  width: min(280px, 80vw);
+  height: min(520px, 70vh);
+  background: var(--bg2);
+  border: 1px solid var(--border-m);
+  border-radius: 36px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+}
+.apm-notch {
+  width: 100px;
+  height: 24px;
+  background: var(--bg);
+  border-radius: 0 0 16px 16px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.apm-screen { padding: 8px 16px 20px; }
+.apm-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 16px; }
+.apm-logo { font-size: 16px; font-weight: 800; font-family: Georgia, serif; letter-spacing: -0.02em; color: var(--gold); }
+.apm-icon-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.apm-search {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.apm-chips { display: flex; gap: 6px; margin-bottom: 16px; overflow: hidden; }
+.apm-chip {
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg3);
+  color: var(--muted);
+}
+.apm-chip.active { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bdr); }
+.apm-cards { display: flex; flex-direction: column; gap: 10px; }
+.apm-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.apm-card-img {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--bg3), var(--bg2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.apm-card-name { font-size: 12px; font-weight: 700; }
+.apm-card-spec { font-size: 10px; color: var(--muted); }
+.apm-card-meta { display: flex; justify-content: space-between; margin-top: 3px; }
+.apm-card-price { font-size: 11px; font-weight: 700; color: var(--gold); }
+.apm-card-stars { font-size: 10px; color: var(--gold); }
+.apm-bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  padding: 10px 20px 16px;
+  display: flex;
+  justify-content: space-around;
+}
+.apm-nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 20px; }
+.apm-nav-label { font-size: 9px; color: var(--muted); }
+.apm-nav-item.active .apm-nav-label { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════════ */
+.hiw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+.hiw-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  position: relative;
+}
+.hiw-step {
+  font-size: 48px;
+  font-weight: 900;
+  font-family: Georgia, serif;
+  color: var(--border-m);
+  line-height: 1;
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.hiw-icon { font-size: 28px; margin-bottom: 12px; }
+.hiw-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.hiw-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════════ */
+.testimonial-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.testimonial-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+.testimonial-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.testimonial-text { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 20px; font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.testimonial-name { font-size: 14px; font-weight: 700; }
+.testimonial-role { font-size: 12px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  padding: 64px 0 40px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+.footer-brand .nav-logo { margin-bottom: 12px; font-size: 22px; }
+.footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 280px; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 10px; }
+.social-btn {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.social-btn:hover { background: var(--bg3); border-color: var(--border-m); }
+.footer-col h4 { font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col li a { font-size: 13px; color: var(--muted); transition: color 0.15s; }
+.footer-col li a:hover { color: var(--text); }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: var(--muted); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: 12px; color: var(--muted); transition: color 0.15s; }
+.footer-bottom-links a:hover { color: var(--text); }
+
+/* ═══════════════════════════════════════════════
+   ANIMATION
+═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.03); opacity: 0.85; }
+  }
+}
+
+/* Gold underline */
+.gold-under {
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   LIGHT THEME OVERRIDES (selective)
+═══════════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  .ai-chat-mock, .search-mock, .profile-mock, .app-phone-mock {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+  }
+  .hero-booking-card, .hero-ai-badge {
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  }
+}
+:root[data-theme="light"] .ai-chat-mock,
+:root[data-theme="light"] .search-mock,
+:root[data-theme="light"] .profile-mock {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+}
+
+/* ═══════════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════════ */
+.divider { width: 40px; height: 2px; background: var(--gold); margin: 16px 0; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: var(--bg3);
+  color: var(--muted);
+  font-weight: 600;
+}
+.overflow-x { overflow-x: auto; }
+
+/* Sticky nav active state */
+nav.scrolled {
+  background: rgba(7,8,13,0.95);
+  box-shadow: 0 1px 0 var(--border);
+}
+:root[data-theme="light"] nav.scrolled { background: rgba(245,244,240,0.97); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <canvas class="nav-logo-mark" id="logo-aperture" width="60" height="60"></canvas>
+      Lumora
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#for-photographers">For Creators</a>
+      <a href="#ai-features">Lumora AI</a>
+      <a href="#premium">Premium</a>
+      <a href="#app">App</a>
+    </div>
+    <div class="nav-ctas">
+      <button class="nav-theme" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">☀️</button>
+      <a href="#" class="btn btn-ghost btn-sm">Log In</a>
+      <a href="#" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-name-badge">
+        <span>✦</span>
+        UK's Premier Photography Platform
+      </div>
+      <h1>Every Frame<br>Tells <em>Your</em> Story</h1>
+      <p class="hero-sub">
+        Book world-class photographers and videographers in minutes, or build a thriving creative career — on the platform designed for both sides of the lens.
+      </p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">
+          <span>📸</span> Find a Photographer
+        </a>
+        <a href="pages/onboarding.html" class="btn btn-ghost">
+          <span>🎬</span> Join as Creator
+        </a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item">No upfront fees</div>
+        <div class="hero-proof-item">Vetted professionals</div>
+        <div class="hero-proof-item">Instant booking</div>
+        <div class="hero-proof-item">Secure escrow</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <canvas id="aperture-canvas" width="920" height="920" aria-hidden="true"></canvas>
+      <div class="hero-booking-card">
+        <div class="t-eyebrow">Now Available</div>
+        <div class="hbc-row">
+          <div class="hbc-avatar">📸</div>
+          <div>
+            <div class="hbc-name">Sophie Clarke</div>
+            <div class="hbc-spec">Wedding &amp; Portrait</div>
+          </div>
+        </div>
+        <div class="hbc-stars">★★★★★</div>
+        <div style="font-size:11px;color:var(--muted);margin:6px 0 10px;">London · from £280/hr</div>
+        <button class="hbc-cta">Book Now</button>
+      </div>
+      <div class="hero-ai-badge">
+        <div class="hai-icon">🤖</div>
+        <div>
+          <div class="hai-label">Lumora AI</div>
+          <div class="hai-text">Your photographer is 8 min away. Prepare the venue!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     STATS
+═══════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="wrap">
+    <div class="stats-bar-inner">
+      <div class="stat-item reveal">
+        <div class="stat-val">50K+</div>
+        <div class="stat-label">Vetted Creators</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-val">265K</div>
+        <div class="stat-label">UK Weddings/Year</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-val">£1.9B</div>
+        <div class="stat-label">UK Photo Market</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-val">4.9★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-4">
+        <div class="stat-val">&lt;60s</div>
+        <div class="stat-label">Avg. Booking Time</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+═══════════════════════════════════════════════ -->
+<section id="how-it-works">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">Simple by design</div>
+      <h2 class="t-section">Book in three steps, done</h2>
+      <p class="t-body-lg">No emails. No waiting. No surprises. From search to confirmed booking in under a minute.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-card reveal">
+        <div class="hiw-step">01</div>
+        <div class="hiw-icon">🔍</div>
+        <div class="hiw-title">Search your vision</div>
+        <div class="hiw-desc">Tell us what you need — wedding, headshots, product shoot, event — filter by location, date, style, and budget. Browse real portfolios in seconds.</div>
+      </div>
+      <div class="hiw-card reveal reveal-delay-1">
+        <div class="hiw-step">02</div>
+        <div class="hiw-icon">✅</div>
+        <div class="hiw-title">Pick &amp; confirm instantly</div>
+        <div class="hiw-desc">See live availability, transparent pricing, and verified reviews. Book your chosen photographer with secure escrow payment — no awkward bank transfers.</div>
+      </div>
+      <div class="hiw-card reveal reveal-delay-2">
+        <div class="hiw-step">03</div>
+        <div class="hiw-icon">🎉</div>
+        <div class="hiw-title">Receive &amp; love your images</div>
+        <div class="hiw-desc">Your private gallery lands within the agreed turnaround. Approve, download, order prints — and release payment only when you're delighted.</div>
+      </div>
+      <div class="hiw-card reveal reveal-delay-3">
+        <div class="hiw-step">✦</div>
+        <div class="hiw-icon">🤖</div>
+        <div class="hiw-title">AI handles the rest</div>
+        <div class="hiw-desc">Lumora AI sends reminders, confirms logistics, tracks your photographer's ETA, and is on hand to help with anything — before, during, and after your shoot.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PERSONA SECTION
+═══════════════════════════════════════════════ -->
+<section style="background: var(--bg1);">
+  <div class="wrap persona-wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">Built for both sides</div>
+      <h2 class="t-section">One platform, two powerful experiences</h2>
+    </div>
+
+    <div class="persona-tabs reveal">
+      <button class="persona-tab active" data-persona="customer" onclick="switchPersona('customer')">
+        📸 For Clients
+      </button>
+      <button class="persona-tab" data-persona="creator" onclick="switchPersona('creator')">
+        🎬 For Creators
+      </button>
+    </div>
+
+    <!-- Customer Panel -->
+    <div class="persona-panel active" id="panel-customer">
+      <div class="persona-content-grid">
+        <div>
+          <h3 class="t-section" style="font-size: clamp(24px,2.8vw,38px); margin-bottom:16px;">Find the perfect photographer for any occasion</h3>
+          <p class="t-body-lg" style="margin-bottom:28px;">From spontaneous portraits to meticulously planned weddings — every specialist, every style, right where you are.</p>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-num">1</div>
+              <div>
+                <div class="flow-title">Search by specialty &amp; location</div>
+                <div class="flow-desc">Filter by shoot type, distance, date, price range, and photographer style. Real-time availability — no back-and-forth.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">2</div>
+              <div>
+                <div class="flow-title">Review verified portfolios</div>
+                <div class="flow-desc">Every photographer is vetted — portfolio reviewed, references checked, top 15% accepted. What you see is what you get.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">3</div>
+              <div>
+                <div class="flow-title">Book with payment protection</div>
+                <div class="flow-desc">Secure escrow holds your payment until photos are delivered and approved. Full refund if anything goes wrong.</div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top:12px;">Browse Photographers →</a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="search-mock">
+            <div class="sm-bar">
+              <span>🔍</span>
+              <div class="sm-bar-input">Wedding photographer · London · Sep 2026</div>
+              <button class="btn btn-primary btn-sm" style="flex-shrink:0;">Search</button>
+            </div>
+            <div class="sm-cards">
+              <div class="sm-card">
+                <div class="sm-card-img">🌸</div>
+                <div class="sm-card-body">
+                  <div class="sm-card-name">Emma Rivera</div>
+                  <div class="sm-card-spec">Wedding · Portrait</div>
+                  <div class="sm-card-meta">
+                    <span class="sm-card-price">£320/hr</span>
+                    <span class="sm-card-stars">★ 4.9</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sm-card">
+                <div class="sm-card-img">🎞️</div>
+                <div class="sm-card-body">
+                  <div class="sm-card-name">Marcus Tate</div>
+                  <div class="sm-card-spec">Wedding · Film</div>
+                  <div class="sm-card-meta">
+                    <span class="sm-card-price">£280/hr</span>
+                    <span class="sm-card-stars">★ 5.0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sm-card">
+                <div class="sm-card-img">💍</div>
+                <div class="sm-card-body">
+                  <div class="sm-card-name">Priya Kapoor</div>
+                  <div class="sm-card-spec">Wedding · Indian</div>
+                  <div class="sm-card-meta">
+                    <span class="sm-card-price">£350/hr</span>
+                    <span class="sm-card-stars">★ 4.8</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sm-card">
+                <div class="sm-card-img">🎬</div>
+                <div class="sm-card-body">
+                  <div class="sm-card-name">James O'Brien</div>
+                  <div class="sm-card-spec">Wedding · Video</div>
+                  <div class="sm-card-meta">
+                    <span class="sm-card-price">£400/hr</span>
+                    <span class="sm-card-stars">★ 4.9</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Creator Panel -->
+    <div class="persona-panel" id="panel-creator">
+      <div class="persona-content-grid">
+        <div>
+          <h3 class="t-section" style="font-size: clamp(24px,2.8vw,38px); margin-bottom:16px;">Turn your lens into a thriving business</h3>
+          <p class="t-body-lg" style="margin-bottom:28px;">Join the UK's most creator-friendly platform. No upfront fees. Commission only on completed jobs. Enterprise clients you'd never reach alone.</p>
+          <div class="flow-steps">
+            <div class="flow-step" data-persona="creator">
+              <div class="flow-num" style="background:var(--blue-bg);border-color:var(--blue-bdr);color:var(--blue);">1</div>
+              <div>
+                <div class="flow-title">Build your profile in 20 minutes</div>
+                <div class="flow-desc">Upload your portfolio, set your specialties, rates, and availability. Our onboarding flow guides you step by step — no tech skills needed.</div>
+              </div>
+            </div>
+            <div class="flow-step" data-persona="creator">
+              <div class="flow-num" style="background:var(--blue-bg);border-color:var(--blue-bdr);color:var(--blue);">2</div>
+              <div>
+                <div class="flow-title">Pass our vetting — earn the badge</div>
+                <div class="flow-desc">Portfolio review, work samples, reference check. If you pass, you earn the Lumora Verified badge — a professional credential that fills your calendar.</div>
+              </div>
+            </div>
+            <div class="flow-step" data-persona="creator">
+              <div class="flow-num" style="background:var(--blue-bg);border-color:var(--blue-bdr);color:var(--blue);">3</div>
+              <div>
+                <div class="flow-title">Get bookings. All the admin's handled</div>
+                <div class="flow-desc">Auto-invoicing, contracts, escrow payment, client gallery delivery — built in. You just shoot. Earn from consumers and enterprise clients.</div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-blue" style="margin-top:12px;">Apply as a Creator →</a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="profile-mock">
+            <div class="pm-header">
+              <div class="pm-avatar">📸</div>
+            </div>
+            <div class="pm-body">
+              <div class="pm-name">Alex Morgan</div>
+              <div class="pm-spec">Commercial &amp; Portrait Photographer · London</div>
+              <div class="pm-stats-row">
+                <div class="pm-stat"><div class="val">847</div><div class="lbl">Bookings</div></div>
+                <div class="pm-stat"><div class="val">4.97</div><div class="lbl">Rating</div></div>
+                <div class="pm-stat"><div class="val">£42K</div><div class="lbl">Earned</div></div>
+              </div>
+              <div class="pm-tags">
+                <span class="pm-tag">Portraits</span>
+                <span class="pm-tag">Corporate</span>
+                <span class="pm-tag">Headshots</span>
+                <span class="pm-tag">Events</span>
+                <span class="pm-tag">E-commerce</span>
+              </div>
+              <div class="pm-gallery">
+                <div class="pm-gallery-item">🌆</div>
+                <div class="pm-gallery-item">👤</div>
+                <div class="pm-gallery-item">🏢</div>
+                <div class="pm-gallery-item">🎭</div>
+                <div class="pm-gallery-item">🌿</div>
+                <div class="pm-gallery-item">💼</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SPECIALTIES
+═══════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">Every occasion covered</div>
+      <h2 class="t-section">Whatever the moment,<br>we have the specialist</h2>
+    </div>
+    <div class="spec-grid reveal">
+      <div class="spec-chip featured"><span class="icon">💍</span> Weddings</div>
+      <div class="spec-chip featured"><span class="icon">🏠</span> Real Estate</div>
+      <div class="spec-chip featured"><span class="icon">🛍️</span> E-Commerce</div>
+      <div class="spec-chip"><span class="icon">👤</span> Portraits &amp; Headshots</div>
+      <div class="spec-chip"><span class="icon">🎉</span> Events &amp; Parties</div>
+      <div class="spec-chip"><span class="icon">🍽️</span> Food &amp; Hospitality</div>
+      <div class="spec-chip"><span class="icon">🏢</span> Corporate &amp; HR</div>
+      <div class="spec-chip"><span class="icon">🎬</span> Video &amp; Reels</div>
+      <div class="spec-chip"><span class="icon">🚁</span> Drone Photography</div>
+      <div class="spec-chip"><span class="icon">⚽</span> Sports &amp; Fitness</div>
+      <div class="spec-chip"><span class="icon">🎓</span> Education &amp; Schools</div>
+      <div class="spec-chip"><span class="icon">🏥</span> Healthcare</div>
+      <div class="spec-chip"><span class="icon">📱</span> Social &amp; Content</div>
+      <div class="spec-chip"><span class="icon">🏗️</span> Architecture</div>
+      <div class="spec-chip"><span class="icon">⚖️</span> Legal Documentation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     AI FEATURES
+═══════════════════════════════════════════════ -->
+<section id="ai-features" class="ai-section">
+  <div class="wrap">
+    <div class="ai-grid">
+      <div>
+        <div class="section-head reveal" style="margin-bottom:36px;">
+          <div class="t-eyebrow">Lumora AI</div>
+          <h2 class="t-section">Your intelligent shoot companion</h2>
+          <p class="t-body-lg">AI agents work in the background for both clients and creators — so every shoot runs like a well-directed production.</p>
+        </div>
+        <div class="ai-features">
+          <div class="ai-feature reveal">
+            <div class="ai-feature-icon">⏰</div>
+            <div>
+              <div class="ai-feature-title">Smart pre-event reminders</div>
+              <div class="ai-feature-desc">Automated reminders sent to both parties — 48h, 24h, and 2h before. Shot lists, location pins, prep checklists — all timed perfectly.</div>
+            </div>
+          </div>
+          <div class="ai-feature reveal reveal-delay-1">
+            <div class="ai-feature-icon gold">📍</div>
+            <div>
+              <div class="ai-feature-title">Live ETA &amp; location tracking</div>
+              <div class="ai-feature-desc">Clients see their photographer's live ETA. Photographers get real-time traffic routing. No more "are you almost here?" messages.</div>
+            </div>
+          </div>
+          <div class="ai-feature reveal reveal-delay-2">
+            <div class="ai-feature-icon teal">🤝</div>
+            <div>
+              <div class="ai-feature-title">Instant AI concierge</div>
+              <div class="ai-feature-desc">Available 24/7 to answer questions, renegotiate details, handle last-minute changes, and bridge communication between both parties.</div>
+            </div>
+          </div>
+          <div class="ai-feature reveal reveal-delay-3">
+            <div class="ai-feature-icon">✨</div>
+            <div>
+              <div class="ai-feature-title">Post-shoot AI editing assistant</div>
+              <div class="ai-feature-desc">AI-powered culling, background removal, colour grading, and brand consistency checks — available as add-ons for creators and enterprise clients.</div>
+            </div>
+          </div>
+          <div class="ai-feature reveal reveal-delay-4">
+            <div class="ai-feature-icon gold">🗓️</div>
+            <div>
+              <div class="ai-feature-title">Smart calendar &amp; demand prediction</div>
+              <div class="ai-feature-desc">Suggests optimal availability slots to creators, fills off-peak gaps with B2B jobs, and predicts seasonal demand so photographers earn year-round.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="ai-chat-mock">
+          <div class="acm-header">
+            <div class="acm-avatar">✨</div>
+            <div>
+              <div class="acm-name">Lumora AI</div>
+              <div class="acm-status">Online — always ready</div>
+            </div>
+          </div>
+          <div class="acm-messages">
+            <div class="acm-msg ai">
+              <div class="acm-bubble">Hi Sarah! 👋 Your wedding shoot with Marcus Tate is tomorrow at 11am. He's confirmed and will arrive at Kew Gardens 15 min early.</div>
+              <div class="acm-timestamp">10:02 AM</div>
+            </div>
+            <div class="acm-msg user">
+              <div class="acm-bubble">Can we add a golden hour session at 5pm? What's the cost?</div>
+              <div class="acm-timestamp">10:04 AM</div>
+            </div>
+            <div class="acm-msg ai">
+              <div class="acm-bubble">Marcus has availability until 6:30pm. A 90-minute golden hour extension would be £280 extra. I can add it now if you'd like — he'll be notified instantly.</div>
+              <div class="acm-timestamp">10:04 AM</div>
+            </div>
+            <div class="acm-msg ai">
+              <div class="acm-bubble">Also — rain is forecast at 2pm tomorrow. I've sent Marcus a heads-up and he'll bring his weather covers. You're all set! ☀️</div>
+              <div class="acm-timestamp">10:05 AM</div>
+            </div>
+          </div>
+          <div class="acm-action-row">
+            <div class="acm-action">Add extension</div>
+            <div class="acm-action">View shoot plan</div>
+            <div class="acm-action">Message Marcus</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOR PHOTOGRAPHERS
+═══════════════════════════════════════════════ -->
+<section id="for-photographers">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">For creators</div>
+      <h2 class="t-section">Your whole creative business, in one place</h2>
+      <p class="t-body-lg">Everything you need to find clients, manage bookings, deliver work, and grow — without the admin headaches.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card card-blue reveal">
+        <div style="font-size:28px;margin-bottom:14px;">💼</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Professional profile &amp; portfolio</div>
+        <p class="t-body">A stunning, searchable profile with your portfolio, specialties, rates, and verified reviews. Your best marketing tool.</p>
+      </div>
+      <div class="card card-gold reveal reveal-delay-1">
+        <div style="font-size:28px;margin-bottom:14px;">📅</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Availability &amp; calendar management</div>
+        <p class="t-body">Set your working hours, block dates, sync with Google Calendar. Clients only see slots you're actually free.</p>
+      </div>
+      <div class="card card-teal reveal reveal-delay-2">
+        <div style="font-size:28px;margin-bottom:14px;">💳</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Instant payment, zero chasing</div>
+        <p class="t-body">Commission only on completed jobs. No pay-per-lead fees. Funds auto-released when client approves. Auto-invoicing included.</p>
+      </div>
+      <div class="card reveal reveal-delay-3">
+        <div style="font-size:28px;margin-bottom:14px;">📊</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Earnings &amp; analytics dashboard</div>
+        <p class="t-body">Real-time earnings tracker, booking analytics, profile strength score, and personalised tips to increase your booking rate.</p>
+      </div>
+      <div class="card reveal reveal-delay-4">
+        <div style="font-size:28px;margin-bottom:14px;">🏢</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Access enterprise clients</div>
+        <p class="t-body">Estate agents, hospitality chains, e-commerce brands — recurring B2B work that fills your quiet months. Clients you'd never reach solo.</p>
+      </div>
+      <div class="card reveal">
+        <div style="font-size:28px;margin-bottom:14px;">📜</div>
+        <div class="t-card-title" style="margin-bottom:8px;">Contracts &amp; legal templates</div>
+        <p class="t-body">Auto-generated contracts for every booking. Client-signed before the shoot. Disputes handled by our team — you're always protected.</p>
+      </div>
+    </div>
+    <div style="margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;" class="reveal">
+      <a href="#" class="btn btn-blue">Apply as a Creator — Free</a>
+      <a href="#premium" class="btn btn-ghost">View Creator Pro Plans</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PREMIUM
+═══════════════════════════════════════════════ -->
+<section id="premium" class="premium-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">Lumora Premium</div>
+      <h2 class="t-section">Unlock the full platform</h2>
+      <p class="t-body-lg">Free to use. Premium plans amplify everything — for clients who book often and creators who want to grow fast.</p>
+    </div>
+
+    <div class="premium-tabs reveal">
+      <button class="premium-tab active" data-ptab="client" onclick="switchPremiumTab('client')">For Clients</button>
+      <button class="premium-tab" data-ptab="creator" onclick="switchPremiumTab('creator')">For Creators</button>
+    </div>
+
+    <!-- Client pricing -->
+    <div id="ptab-client" class="premium-grid">
+      <div class="pricing-card reveal">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-name">Lumora Basic</div>
+        <div class="pricing-price">£0<span class="period"> / month</span></div>
+        <div class="pricing-desc">Everything you need to book a photographer and love your photos.</div>
+        <ul class="pricing-features">
+          <li>Search &amp; browse all photographers</li>
+          <li>Instant booking</li>
+          <li>Secure escrow payment</li>
+          <li>Private delivery gallery</li>
+          <li>Verified reviews</li>
+          <li class="muted">Priority access to new photographers</li>
+          <li class="muted">Concierge matching service</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;">Get Started Free</a>
+      </div>
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-name">Lumora Plus</div>
+        <div class="pricing-price">£9<span class="period"> / month</span></div>
+        <div class="pricing-desc">For clients who book regularly and want white-glove treatment.</div>
+        <ul class="pricing-features">
+          <li>Everything in Basic</li>
+          <li>Priority booking — skip the queue</li>
+          <li>Concierge matching (we find the perfect fit)</li>
+          <li>Cancellation insurance included</li>
+          <li>Extended delivery gallery (12 months)</li>
+          <li>10% discount on all bookings</li>
+          <li>Exclusive access to premium photographers</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Start 14-day Free Trial</a>
+      </div>
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="pricing-tier">Business</div>
+        <div class="pricing-name">Lumora Business</div>
+        <div class="pricing-price">£99<span class="period"> / month</span></div>
+        <div class="pricing-desc">For teams and brands that need photography at scale.</div>
+        <ul class="pricing-features">
+          <li>Everything in Plus</li>
+          <li>Multi-seat team access</li>
+          <li>Purchase orders &amp; consolidated invoicing</li>
+          <li>Dedicated account manager</li>
+          <li>API access for your own tools</li>
+          <li>SLA: 99% coverage, 2-hour dispatch</li>
+          <li>Custom brand guidelines for photographers</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;">Contact Sales</a>
+      </div>
+    </div>
+
+    <!-- Creator pricing -->
+    <div id="ptab-creator" class="premium-grid" style="display:none;">
+      <div class="pricing-card reveal">
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-name">Creator Basic</div>
+        <div class="pricing-price">£0<span class="period"> + 22% commission</span></div>
+        <div class="pricing-desc">Start earning with zero upfront cost. Commission only on completed bookings.</div>
+        <ul class="pricing-features">
+          <li>Full profile &amp; portfolio page</li>
+          <li>Unlimited bookings</li>
+          <li>Auto-invoicing &amp; contracts</li>
+          <li>Client delivery gallery</li>
+          <li>Verified reviews</li>
+          <li class="muted">Priority search placement</li>
+          <li class="muted">B2B enterprise access</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;">Apply Free</a>
+      </div>
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">Best for Growth</div>
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-name">Creator Pro</div>
+        <div class="pricing-price">£29<span class="period"> / month</span></div>
+        <div class="pricing-desc">Grow faster, earn more, and run your business like a pro.</div>
+        <ul class="pricing-features">
+          <li>Everything in Basic</li>
+          <li>Reduced commission: 18%</li>
+          <li>Priority placement in search</li>
+          <li>Advanced earnings analytics</li>
+          <li>Client CRM &amp; notes</li>
+          <li>AI-powered calendar suggestions</li>
+          <li>Access to B2B enterprise jobs</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Start 30-day Free Trial</a>
+      </div>
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="pricing-tier">Studio</div>
+        <div class="pricing-name">Creator Studio</div>
+        <div class="pricing-price">£79<span class="period"> / month</span></div>
+        <div class="pricing-desc">For established photographers and studios managing a team.</div>
+        <ul class="pricing-features">
+          <li>Everything in Pro</li>
+          <li>Lowest commission: 15%</li>
+          <li>Up to 5 sub-profiles (team members)</li>
+          <li>White-label client galleries</li>
+          <li>AI editing suite access</li>
+          <li>Dedicated growth consultant</li>
+          <li>Early access to enterprise contracts</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;">Go Studio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════════════ -->
+<section style="background: var(--bg1);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="t-eyebrow">From the community</div>
+      <h2 class="t-section">Loved by clients &amp; creators alike</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Found the perfect wedding photographer in 20 minutes. The escrow payment meant we could book with zero stress. And the Lumora AI even flagged a venue access issue we hadn't thought of!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: var(--gold-bg);">👰</div>
+          <div>
+            <div class="testimonial-name">Amara &amp; Kai</div>
+            <div class="testimonial-role">Wedding clients · London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a commercial photographer, Lumora changed everything. B2B jobs fill my January and February calendar now — months that used to be dead. Earned more in my first year than the previous two combined."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: var(--blue-bg);">📸</div>
+          <div>
+            <div class="testimonial-name">Declan Murray</div>
+            <div class="testimonial-role">Commercial photographer · Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"We book 40–50 property shoots a month through Lumora Business. The API integration with our CRM means we never leave the platform. Consistently the best property photography we've ever received."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background: var(--teal-bg);">🏠</div>
+          <div>
+            <div class="testimonial-name">Jemima Clarke</div>
+            <div class="testimonial-role">Operations Director · Sterling Property Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     APP
+═══════════════════════════════════════════════ -->
+<section id="app" class="app-section">
+  <div class="wrap">
+    <div class="app-grid">
+      <div>
+        <div class="t-eyebrow reveal" style="margin-bottom:12px;">Available now</div>
+        <h2 class="t-section reveal" style="margin-bottom:16px;">The whole platform in your pocket</h2>
+        <p class="t-body-lg reveal" style="margin-bottom:32px;">
+          Book a photographer, manage your shoots, chat with Lumora AI, and deliver client galleries — all from a beautifully designed app. Available on iOS and Android.
+        </p>
+        <div class="app-stores reveal">
+          <div class="app-store-btn">
+            <div class="asb-icon">🍎</div>
+            <div class="asb-text">
+              <div class="asb-sub">Download on the</div>
+              <div class="asb-name">App Store</div>
+            </div>
+          </div>
+          <div class="app-store-btn">
+            <div class="asb-icon">▶️</div>
+            <div class="asb-text">
+              <div class="asb-sub">Get it on</div>
+              <div class="asb-name">Google Play</div>
+            </div>
+          </div>
+        </div>
+        <div class="tag-row reveal" style="margin-top:28px;">
+          <span class="tag">Instant booking</span>
+          <span class="tag">Live ETA tracking</span>
+          <span class="tag">Gallery delivery</span>
+          <span class="tag">AI concierge</span>
+          <span class="tag">Earnings dashboard</span>
+          <span class="tag">Dark mode</span>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="app-phone-mock">
+          <div class="apm-notch"></div>
+          <div class="apm-screen">
+            <div class="apm-header">
+              <div class="apm-logo">Lumora</div>
+              <div class="apm-icon-btn">🔔</div>
+            </div>
+            <div class="apm-search">
+              <span>🔍</span> Search photographers...
+            </div>
+            <div class="apm-chips">
+              <div class="apm-chip active">All</div>
+              <div class="apm-chip">Wedding</div>
+              <div class="apm-chip">Portrait</div>
+              <div class="apm-chip">Commercial</div>
+            </div>
+            <div class="apm-cards">
+              <div class="apm-card">
+                <div class="apm-card-img">🌸</div>
+                <div style="flex:1;">
+                  <div class="apm-card-name">Emma Rivera</div>
+                  <div class="apm-card-spec">Wedding · London</div>
+                  <div class="apm-card-meta">
+                    <span class="apm-card-price">£320/hr</span>
+                    <span class="apm-card-stars">★ 4.9</span>
+                  </div>
+                </div>
+              </div>
+              <div class="apm-card">
+                <div class="apm-card-img">🎞️</div>
+                <div style="flex:1;">
+                  <div class="apm-card-name">Marcus Tate</div>
+                  <div class="apm-card-spec">Wedding · Film · London</div>
+                  <div class="apm-card-meta">
+                    <span class="apm-card-price">£280/hr</span>
+                    <span class="apm-card-stars">★ 5.0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="apm-card">
+                <div class="apm-card-img">🎬</div>
+                <div style="flex:1;">
+                  <div class="apm-card-name">Yuki Tanaka</div>
+                  <div class="apm-card-spec">Commercial · Video</div>
+                  <div class="apm-card-meta">
+                    <span class="apm-card-price">£400/hr</span>
+                    <span class="apm-card-stars">★ 4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="apm-bottom-nav">
+            <div class="apm-nav-item active">🏠<div class="apm-nav-label">Home</div></div>
+            <div class="apm-nav-item">🔍<div class="apm-nav-label">Search</div></div>
+            <div class="apm-nav-item">📅<div class="apm-nav-label">Bookings</div></div>
+            <div class="apm-nav-item">✨<div class="apm-nav-label">AI</div></div>
+            <div class="apm-nav-item">👤<div class="apm-nav-label">Profile</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <canvas width="60" height="60" id="footer-aperture" class="nav-logo-mark"></canvas>
+          Lumora
+        </div>
+        <p>The UK's premier photography and videography marketplace — connecting world-class creators with clients, brands, and enterprises.</p>
+        <div class="footer-social">
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">📷</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">How it Works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Lumora AI</a></li>
+          <li><a href="#">Lumora Business</a></li>
+          <li><a href="#">Lumora Academy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For Creators</h4>
+        <ul>
+          <li><a href="#">Apply to Join</a></li>
+          <li><a href="#">Creator Pro</a></li>
+          <li><a href="#">Creator Studio</a></li>
+          <li><a href="#">Success Stories</a></li>
+          <li><a href="#">Creator Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Lumora</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Lumora Ltd · Registered in England &amp; Wales · London, UK</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">API</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+/* ─── Theme toggle ─── */
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  const isDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.nav-theme').textContent = isDark ? '🌙' : '☀️';
+  redrawApertures();
+}
+
+/* ─── Persona tabs ─── */
+function switchPersona(persona) {
+  document.querySelectorAll('.persona-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.persona-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.persona-tab[data-persona="${persona}"]`).classList.add('active');
+  document.getElementById(`panel-${persona}`).classList.add('active');
+}
+
+/* ─── Premium tabs ─── */
+function switchPremiumTab(tab) {
+  document.querySelectorAll('.premium-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.premium-tab[data-ptab="${tab}"]`).classList.add('active');
+  document.getElementById('ptab-client').style.display = tab === 'client' ? 'grid' : 'none';
+  document.getElementById('ptab-creator').style.display = tab === 'creator' ? 'grid' : 'none';
+}
+
+/* ─── Nav scroll ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ─── Scroll reveal ─── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ─── isDark helper ─── */
+function getIsDark() {
+  return document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+}
+
+/* ─── Logo aperture (nav / footer) ─── */
+function drawLogoMark(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const size = 30;
+  canvas.width = size * dpr; canvas.height = size * dpr;
+  canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const cx = size/2, cy = size/2, r = size*0.42;
+  const isDark = getIsDark();
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle = isDark?'rgba(233,184,74,0.75)':'rgba(160,115,25,0.85)';
+  ctx.lineWidth = size*0.065; ctx.stroke();
+  ctx.save(); ctx.translate(cx,cy);
+  for(let i=0;i<6;i++){
+    const a=(i/6)*Math.PI*2; ctx.save(); ctx.rotate(a);
+    ctx.beginPath(); ctx.moveTo(0,0);
+    ctx.arc(0,0,r*0.56,-0.52,0.52); ctx.closePath();
+    ctx.fillStyle=isDark?'rgba(233,184,74,0.58)':'rgba(160,115,25,0.62)';
+    ctx.fill(); ctx.restore();
+  }
+  ctx.restore();
+}
+
+/* ═══════════════════════════════════════════════════════
+   CINEMATIC HERO SCENE
+   Videographer → Cinema Lens (with aperture inside)
+   + Drone above reflecting in LCD screen
+═══════════════════════════════════════════════════════ */
+let sceneRAF = null;
+let sceneProg = 0;         // 0→1 open animation
+let rotorAngle = 0;        // continuous rotor spin
+let lastTS = 0;
+
+function drawHeroScene(canvas, prog) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = 460, H = 460;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,W,H);
+  const D = getIsDark();
+
+  /* colour palette */
+  const gold    = '#E9B84A', goldA = (a)=>`rgba(233,184,74,${a})`;
+  const blue    = '#4B9CF5', blueA = (a)=>`rgba(75,156,245,${a})`;
+  const teal    = '#3ECBA9', tealA = (a)=>`rgba(62,203,169,${a})`;
+  const body    = D?'#14172200':'#1e2235';
+  const metal   = D?'#1e2235':'#2a3050';
+  const metal2  = D?'#252a3c':'#323850';
+
+  /* ── 0. soft background glow ── */
+  const bg = ctx.createRadialGradient(175,240,0,175,240,220);
+  bg.addColorStop(0, goldA(D?.04:.05)); bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(175,240,220,0,Math.PI*2); ctx.fill();
+
+  /* ── 1. Drone ── */
+  _drone(ctx, 330, 52, D, gold, teal, prog);
+
+  /* ── 2. Dashed beam: drone → LCD ── */
+  ctx.save();
+  ctx.setLineDash([3,5]);
+  ctx.strokeStyle = blueA(D?.32:.38); ctx.lineWidth=1.2;
+  ctx.beginPath(); ctx.moveTo(330,78); ctx.bezierCurveTo(330,140,340,160,352,205);
+  ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+
+  /* ── 3. Videographer silhouette ── */
+  _videographer(ctx, 370, 420, D, gold);
+
+  /* ── 4. Camera body (right of lens) ── */
+  _cameraBody(ctx, 270, 150, 155, 180, D, gold, metal, metal2);
+
+  /* ── 5. Cinema lens barrel + aperture blades inside ── */
+  _cinemaLens(ctx, 168, 238, 138, D, gold, prog);
+
+  /* ── 6. LCD screen on camera back showing drone feed ── */
+  _lcdScreen(ctx, 326, 192, 82, 96, D, gold, blue, teal, prog);
+}
+
+/* ── Drone ── */
+function _drone(ctx, cx, cy, D, gold, teal, prog) {
+  const arms=[[-1,-1],[1,-1],[1,1],[-1,1]];
+  const armL=30, rotR=11;
+  /* arms */
+  ctx.strokeStyle=D?'#252a3c':'#323850'; ctx.lineWidth=3.5; ctx.lineCap='round';
+  arms.forEach(([dx,dy])=>{
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+dx*armL,cy+dy*armL); ctx.stroke();
+  });
+  /* rotor ellipses */
+  arms.forEach(([dx,dy],i)=>{
+    const rx=cx+dx*armL, ry=cy+dy*armL;
+    ctx.save(); ctx.translate(rx,ry); ctx.rotate(rotorAngle+(i*Math.PI/2));
+    ctx.beginPath(); ctx.ellipse(0,0,rotR,rotR*0.22,0,0,Math.PI*2);
+    ctx.fillStyle=D?'rgba(233,184,74,0.12)':'rgba(233,184,74,0.18)'; ctx.fill();
+    ctx.strokeStyle=D?'rgba(233,184,74,0.45)':'rgba(180,130,30,0.55)';
+    ctx.lineWidth=1.5; ctx.beginPath();
+    ctx.moveTo(-rotR,0); ctx.lineTo(rotR,0); ctx.stroke();
+    ctx.restore();
+    /* motor hub */
+    ctx.beginPath(); ctx.arc(rx,ry,3.5,0,Math.PI*2);
+    ctx.fillStyle=D?'#2a3050':'#3a4065'; ctx.fill();
+  });
+  /* body */
+  ctx.beginPath(); ctx.roundRect(cx-13,cy-8,26,16,5);
+  ctx.fillStyle=D?'#111828':'#1e2438'; ctx.fill();
+  ctx.strokeStyle=D?'rgba(255,255,255,0.08)':'rgba(255,255,255,0.14)';
+  ctx.lineWidth=1; ctx.stroke();
+  /* LEDs */
+  [[cx-7,cy,'#E85A5A'],[cx+7,cy,teal]].forEach(([lx,ly,col])=>{
+    ctx.beginPath(); ctx.arc(lx,ly,2.2,0,Math.PI*2);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.shadowColor=col; ctx.shadowBlur=4; ctx.fill(); ctx.shadowBlur=0;
+  });
+  /* gimbal camera below */
+  ctx.beginPath(); ctx.arc(cx,cy+11,5.5,0,Math.PI*2);
+  ctx.fillStyle=D?'#07080D':'#0e1020'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy+11,3,0,Math.PI*2);
+  ctx.fillStyle=D?'rgba(75,156,245,0.85)':'rgba(75,156,245,0.9)'; ctx.fill();
+}
+
+/* ── Videographer silhouette ── */
+function _videographer(ctx, cx, baseY, D, gold) {
+  const c = D?'#0d0f18':'#161a28';
+  /* ambient glow behind figure */
+  const g=ctx.createRadialGradient(cx,baseY-160,10,cx,baseY-100,110);
+  g.addColorStop(0,D?'rgba(233,184,74,0.05)':'rgba(233,184,74,0.04)');
+  g.addColorStop(1,'transparent');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(cx,baseY-120,75,130,0,0,Math.PI*2); ctx.fill();
+
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  /* legs */
+  ctx.strokeStyle=c; ctx.lineWidth=13;
+  [[cx-13,baseY-82,cx-18,baseY],[cx+13,baseY-82,cx+18,baseY]].forEach(([x1,y1,x2,y2])=>{
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  });
+  /* torso */
+  ctx.beginPath(); ctx.roundRect(cx-24,baseY-195,48,115,10);
+  ctx.fillStyle=c; ctx.fill();
+  /* left arm → viewfinder */
+  ctx.strokeStyle=c; ctx.lineWidth=11;
+  ctx.beginPath(); ctx.moveTo(cx-22,baseY-175);
+  ctx.quadraticCurveTo(cx-65,baseY-175,cx-85,baseY-182); ctx.stroke();
+  /* right arm → camera grip */
+  ctx.beginPath(); ctx.moveTo(cx+22,baseY-175);
+  ctx.quadraticCurveTo(cx+35,baseY-172,cx-55,baseY-180); ctx.stroke();
+  /* head */
+  ctx.beginPath(); ctx.arc(cx,baseY-218,24,0,Math.PI*2);
+  ctx.fillStyle=c; ctx.fill();
+  /* cap */
+  ctx.beginPath(); ctx.ellipse(cx,baseY-241,30,7,0,0,Math.PI);
+  ctx.fillStyle=c; ctx.fill();
+  /* gold rim light */
+  ctx.beginPath(); ctx.arc(cx,baseY-218,24,Math.PI*1.05,Math.PI*1.85);
+  ctx.strokeStyle=D?'rgba(233,184,74,0.22)':'rgba(180,130,30,0.18)';
+  ctx.lineWidth=1.5; ctx.stroke();
+  /* eye glow at viewfinder */
+  ctx.beginPath(); ctx.arc(cx-22,baseY-212,3.5,0,Math.PI*2);
+  ctx.fillStyle=D?'rgba(233,184,74,0.5)':'rgba(180,130,30,0.5)'; ctx.fill();
+}
+
+/* ── Camera body ── */
+function _cameraBody(ctx, x, y, w, h, D, gold, metal, metal2) {
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.55)'; ctx.shadowBlur=22; ctx.shadowOffsetX=5; ctx.shadowOffsetY=5;
+  ctx.beginPath(); ctx.roundRect(x,y,w,h,10);
+  ctx.fillStyle=D?'#111520':'#1a1e30'; ctx.fill();
+  ctx.restore();
+  /* body border */
+  ctx.beginPath(); ctx.roundRect(x,y,w,h,10);
+  ctx.strokeStyle=D?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.12)'; ctx.lineWidth=1; ctx.stroke();
+  /* top panel */
+  ctx.beginPath(); ctx.roundRect(x+12,y-9,w-24,18,4);
+  ctx.fillStyle=metal; ctx.fill();
+  /* viewfinder hump */
+  ctx.beginPath(); ctx.roundRect(x+24,y-24,52,22,5);
+  ctx.fillStyle=D?'#111520':'#1a1e30'; ctx.fill();
+  ctx.strokeStyle=D?'rgba(255,255,255,0.05)':'rgba(255,255,255,0.1)';
+  ctx.lineWidth=1; ctx.stroke();
+  /* viewfinder eyecup */
+  ctx.beginPath(); ctx.roundRect(x+30,y-20,40,13,3);
+  ctx.fillStyle=D?'#07080d':'#0e1020'; ctx.fill();
+  /* hot shoe (gold) */
+  ctx.beginPath(); ctx.roundRect(x+w/2-16,y-11,32,11,2);
+  ctx.fillStyle=D?'rgba(233,184,74,0.28)':'rgba(180,130,30,0.38)'; ctx.fill();
+  ctx.strokeStyle=D?'rgba(233,184,74,0.55)':'rgba(180,130,30,0.65)';
+  ctx.lineWidth=0.6; ctx.stroke();
+  /* grip bump */
+  ctx.beginPath(); ctx.roundRect(x+w-28,y+12,32,h-34,[0,10,10,0]);
+  ctx.fillStyle=D?'#0d1020':'#151a2c'; ctx.fill();
+  for(let i=0;i<5;i++){
+    ctx.beginPath(); ctx.moveTo(x+w-27,y+22+i*13); ctx.lineTo(x+w+2,y+22+i*13);
+    ctx.strokeStyle=D?'rgba(255,255,255,0.05)':'rgba(255,255,255,0.09)';
+    ctx.lineWidth=1; ctx.stroke();
+  }
+  /* mode dial */
+  ctx.beginPath(); ctx.arc(x+w-16,y+16,13,0,Math.PI*2);
+  ctx.fillStyle=metal2; ctx.fill();
+  for(let i=0;i<8;i++){
+    const a=(i/8)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(x+w-16+Math.cos(a)*10,y+16+Math.sin(a)*10);
+    ctx.lineTo(x+w-16+Math.cos(a)*13,y+16+Math.sin(a)*13);
+    ctx.strokeStyle=D?'rgba(255,255,255,0.28)':'rgba(255,255,255,0.4)';
+    ctx.lineWidth=1; ctx.stroke();
+  }
+  /* buttons row */
+  [0,1,2].forEach(i=>{
+    ctx.beginPath(); ctx.arc(x+w-64+i*17,y+16,4.5,0,Math.PI*2);
+    ctx.fillStyle=metal2; ctx.fill();
+  });
+  /* REC button */
+  ctx.beginPath(); ctx.arc(x+w-13,y+h-20,5.5,0,Math.PI*2);
+  ctx.fillStyle='#E85A5A'; ctx.fill();
+  ctx.shadowColor='#E85A5A'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+  /* mount ring */
+  ctx.beginPath(); ctx.arc(x-4,y+h/2,32,0,Math.PI*2);
+  ctx.fillStyle=metal; ctx.fill();
+  ctx.strokeStyle=D?'rgba(233,184,74,0.22)':'rgba(180,130,30,0.3)';
+  ctx.lineWidth=2.5; ctx.stroke();
+  /* mount gold dot */
+  ctx.beginPath(); ctx.arc(x-4,y+h/2-30,3.5,0,Math.PI*2);
+  ctx.fillStyle=D?'rgba(233,184,74,0.8)':'rgba(180,130,30,0.85)'; ctx.fill();
+}
+
+/* ── Cinema lens barrel + aperture blades ── */
+function _cinemaLens(ctx, cx, cy, R, D, gold, prog) {
+  /* outer barrel gradient */
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.65)'; ctx.shadowBlur=28;
+  ctx.beginPath(); ctx.arc(cx,cy,R+14,0,Math.PI*2);
+  const bg=ctx.createRadialGradient(cx-45,cy-45,15,cx,cy,R+14);
+  bg.addColorStop(0,D?'#272d42':'#343b55');
+  bg.addColorStop(0.55,D?'#181d2e':'#252a40');
+  bg.addColorStop(1,D?'#0c0e18':'#181c2e');
+  ctx.fillStyle=bg; ctx.fill(); ctx.restore();
+
+  /* knurling grooves on barrel */
+  for(let i=0;i<36;i++){
+    const a=(i/36)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(a)*(R+6),cy+Math.sin(a)*(R+6));
+    ctx.lineTo(cx+Math.cos(a)*(R+13),cy+Math.sin(a)*(R+13));
+    ctx.strokeStyle=D?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.12)';
+    ctx.lineWidth=1; ctx.stroke();
+  }
+  /* outer ring lines */
+  [R+10,R+5,R,R-5].forEach((r,i)=>{
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle=D?`rgba(255,255,255,${0.07-i*0.012})`:`rgba(255,255,255,${0.13-i*0.02})`;
+    ctx.lineWidth=i===0?3:1.5; ctx.stroke();
+  });
+  /* gold accent ring */
+  ctx.beginPath(); ctx.arc(cx,cy,R+2,0,Math.PI*2);
+  ctx.strokeStyle=D?'rgba(233,184,74,0.5)':'rgba(180,130,30,0.55)';
+  ctx.lineWidth=2.5; ctx.stroke();
+  /* lens glass fill */
+  ctx.beginPath(); ctx.arc(cx,cy,R-6,0,Math.PI*2);
+  const glass=ctx.createRadialGradient(cx-35,cy-35,8,cx,cy,R-6);
+  glass.addColorStop(0,D?'rgba(75,156,245,0.07)':'rgba(75,156,245,0.05)');
+  glass.addColorStop(0.25,D?'rgba(7,8,13,0.97)':'rgba(18,22,38,0.94)');
+  glass.addColorStop(1,D?'rgba(4,5,9,0.99)':'rgba(10,14,24,0.97)');
+  ctx.fillStyle=glass; ctx.fill();
+  /* inner element rings */
+  [R-12,R-26,R-42].forEach((r,i)=>{
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle=D?`rgba(75,156,245,${0.14-i*0.03})`:`rgba(75,156,245,${0.18-i*0.04})`;
+    ctx.lineWidth=i===0?2:1.2; ctx.stroke();
+  });
+
+  /* ── aperture blades inside lens ── */
+  const blades=7, aR=R-46;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx,cy,aR,0,Math.PI*2); ctx.clip();
+  ctx.translate(cx,cy);
+  for(let i=0;i<blades;i++){
+    const ba=(i/blades)*Math.PI*2;
+    ctx.save(); ctx.rotate(ba);
+    const sp=(Math.PI*2/blades)*(0.76-prog*0.46);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,aR*0.9,-sp,sp); ctx.closePath();
+    const al=D?(0.28+prog*0.16):(0.22+prog*0.1);
+    ctx.fillStyle=D?`rgba(233,184,74,${al})`:`rgba(155,110,22,${al})`; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,aR*0.9,-sp,-sp+0.055); ctx.closePath();
+    ctx.fillStyle=D?'rgba(255,220,110,0.55)':'rgba(220,165,55,0.45)'; ctx.fill();
+    ctx.restore();
+  }
+  ctx.restore();
+  /* centre aperture glow */
+  const cr=aR*0.12+prog*aR*0.2;
+  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,cr);
+  cg.addColorStop(0,D?'rgba(233,184,74,0.75)':'rgba(233,184,74,0.65)');
+  cg.addColorStop(1,'rgba(233,184,74,0)');
+  ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2); ctx.fillStyle=cg; ctx.fill();
+  /* lens flare highlight */
+  ctx.beginPath(); ctx.arc(cx-R*0.52,cy-R*0.52,7,0,Math.PI*2);
+  ctx.fillStyle=D?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.12)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx-R*0.52,cy-R*0.52,3,0,Math.PI*2);
+  ctx.fillStyle=D?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.22)'; ctx.fill();
+}
+
+/* ── LCD screen (drone feed reflected) ── */
+function _lcdScreen(ctx, x, y, w, h, D, gold, blue, teal, prog) {
+  /* bezel */
+  ctx.beginPath(); ctx.roundRect(x-2,y-2,w+4,h+4,6);
+  ctx.fillStyle=D?'#07080d':'#0e1020'; ctx.fill();
+  /* screen */
+  ctx.beginPath(); ctx.roundRect(x,y,w,h,4);
+  const sg=ctx.createLinearGradient(x,y,x+w,y+h);
+  sg.addColorStop(0,D?'#0c1420':'#131c2e'); sg.addColorStop(1,D?'#08101a':'#0e1522');
+  ctx.fillStyle=sg; ctx.fill();
+  /* blue border glow */
+  ctx.strokeStyle=D?`rgba(75,156,245,0.55)`:` rgba(75,156,245,0.65)`;
+  ctx.lineWidth=1; ctx.beginPath(); ctx.roundRect(x,y,w,h,4); ctx.stroke();
+  /* clip drone content */
+  ctx.save();
+  ctx.beginPath(); ctx.roundRect(x+2,y+2,w-4,h-4,3); ctx.clip();
+  /* sky/ground tones */
+  ctx.fillStyle=D?'#08121e':'#0c1828'; ctx.fillRect(x,y,w,h);
+  /* ground pattern (top-down streets) */
+  ctx.fillStyle=D?'#131825':'#1c2234';
+  ctx.fillRect(x+w/2-6,y,12,h);   // road
+  ctx.fillRect(x,y+h/2-6,w,12);   // cross road
+  ctx.strokeStyle=D?'rgba(233,184,74,0.38)':'rgba(233,184,74,0.45)';
+  ctx.lineWidth=0.8; ctx.setLineDash([3,4]);
+  [[x+w/2,y+4,x+w/2,y+h-4],[x+4,y+h/2,x+w-4,y+h/2]].forEach(([x1,y1,x2,y2])=>{
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  });
+  ctx.setLineDash([]);
+  /* buildings (top-down) */
+  [[x+6,y+8,16,12],[x+60,y+6,14,16],[x+8,y+54,18,14],[x+58,y+56,14,12],
+   [x+6,y+30,12,14],[x+62,y+30,12,14]].forEach(([bx,by,bw,bh])=>{
+    ctx.fillStyle=D?'#1b2238':'#232c44'; ctx.fillRect(bx,by,bw,bh);
+    ctx.strokeStyle=D?'rgba(75,156,245,0.18)':'rgba(75,156,245,0.28)';
+    ctx.lineWidth=0.6; ctx.strokeRect(bx,by,bw,bh);
+  });
+  /* videographer icon from above */
+  ctx.fillStyle=D?'rgba(233,184,74,0.65)':'rgba(180,130,30,0.72)';
+  ctx.beginPath(); ctx.arc(x+w/2+4,y+h/2+6,5,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=D?'rgba(233,184,74,0.4)':'rgba(180,130,30,0.45)';
+  ctx.fillRect(x+w/2-2,y+h/2+2,10,8);
+  /* crosshair reticle */
+  const rcx=x+w/2+4, rcy=y+h/2+6, rr=11;
+  ctx.strokeStyle=D?'rgba(62,203,169,0.72)':'rgba(62,203,169,0.82)';
+  ctx.lineWidth=0.9;
+  ctx.beginPath(); ctx.arc(rcx,rcy,rr,0,Math.PI*2); ctx.stroke();
+  [[rcx-rr-4,rcy,rcx-rr+4,rcy],[rcx+rr-4,rcy,rcx+rr+4,rcy],
+   [rcx,rcy-rr-4,rcx,rcy-rr+4],[rcx,rcy+rr-4,rcx,rcy+rr+4]].forEach(([x1,y1,x2,y2])=>{
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  });
+  /* REC dot */
+  ctx.fillStyle='rgba(232,90,90,0.92)'; ctx.beginPath();
+  ctx.arc(x+8,y+8,2.5,0,Math.PI*2); ctx.fill();
+  ctx.shadowColor='rgba(232,90,90,0.7)'; ctx.shadowBlur=4; ctx.fill(); ctx.shadowBlur=0;
+  ctx.font='6px system-ui'; ctx.fillStyle=D?'rgba(255,255,255,0.72)':'rgba(255,255,255,0.82)';
+  ctx.fillText('REC',x+13,y+11);
+  /* telemetry row */
+  ctx.font='5.5px system-ui'; ctx.fillStyle=D?'rgba(62,203,169,0.78)':'rgba(62,203,169,0.88)';
+  ctx.fillText('ALT 45m',x+4,y+h-6);
+  ctx.fillText('4K 60fps',x+w-36,y+h-6);
+  /* glare */
+  ctx.beginPath(); ctx.moveTo(x+3,y+3); ctx.lineTo(x+w*0.38,y+3); ctx.lineTo(x+3,y+h*0.28); ctx.closePath();
+  ctx.fillStyle='rgba(255,255,255,0.05)'; ctx.fill();
+  ctx.restore();
+}
+
+/* ── Scene animation loop ── */
+const heroCanvas = document.getElementById('aperture-canvas');
+
+function animateScene(ts) {
+  const dt = lastTS ? (ts - lastTS)/1000 : 0.016;
+  lastTS = ts;
+  rotorAngle += dt * 18; // fast rotor spin
+  sceneProg = Math.min(sceneProg + 0.016, 1);
+  drawHeroScene(heroCanvas, sceneProg);
+  sceneRAF = requestAnimationFrame(animateScene);
+}
+
+function redrawApertures() {
+  cancelAnimationFrame(sceneRAF);
+  sceneProg = 0; lastTS = 0;
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    sceneRAF = requestAnimationFrame(animateScene);
+  } else {
+    drawHeroScene(heroCanvas, 1);
+  }
+  document.querySelectorAll('.nav-logo-mark').forEach(c => drawLogoMark(c));
+}
+
+/* ─── Resize ─── */
+function resizeHeroCanvas() {
+  const sz = Math.min(460, window.innerWidth * 0.88);
+  heroCanvas.style.width = sz+'px'; heroCanvas.style.height = sz+'px';
+}
+window.addEventListener('resize', resizeHeroCanvas, { passive: true });
+
+/* ─── Init ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  resizeHeroCanvas();
+  setTimeout(redrawApertures, 150);
+  const isDark = getIsDark();
+  document.querySelector('.nav-theme').textContent = isDark ? '☀️' : '🌙';
+});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redrawApertures);
+</script>
+</body>
+</html>

@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Lumora — Creator Onboarding</title>
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root {
+  --bg:      #07080D;
+  --bg1:     #0C0E16;
+  --bg2:     #11141F;
+  --bg3:     #171B28;
+  --border:  rgba(255,255,255,0.07);
+  --bdrm:    rgba(255,255,255,0.13);
+  --text:    #F2F4FA;
+  --muted:   #6B7190;
+  --dim:     #373C52;
+  --gold:    #E9B84A;
+  --goldhi:  #F5D078;
+  --goldbg:  rgba(233,184,74,0.10);
+  --goldbdr: rgba(233,184,74,0.28);
+  --blue:    #4B9CF5;
+  --bluebg:  rgba(75,156,245,0.10);
+  --bluebdr: rgba(75,156,245,0.28);
+  --teal:    #3ECBA9;
+  --tealbg:  rgba(62,203,169,0.10);
+  --red:     #E85A5A;
+  --redbg:   rgba(232,90,90,0.10);
+  --r:       14px;
+  --rsm:     8px;
+  --rlg:     20px;
+  font-family: "Inter","Helvetica Neue",system-ui,-apple-system,sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+@media(prefers-color-scheme:light){
+  :root{
+    --bg:#F5F4F0;--bg1:#FFFFFF;--bg2:#F0EDE6;--bg3:#E8E4DC;
+    --border:rgba(0,0,0,0.08);--bdrm:rgba(0,0,0,0.15);
+    --text:#0A0C14;--muted:#60647A;--dim:#C0C3D0;
+    --goldbg:rgba(233,184,74,0.12);--bluebg:rgba(75,156,245,0.08);
+  }
+}
+:root[data-theme="dark"]{--bg:#07080D;--bg1:#0C0E16;--bg2:#11141F;--bg3:#171B28;--border:rgba(255,255,255,0.07);--bdrm:rgba(255,255,255,0.13);--text:#F2F4FA;--muted:#6B7190;--dim:#373C52;--goldbg:rgba(233,184,74,0.10);--bluebg:rgba(75,156,245,0.10);}
+:root[data-theme="light"]{--bg:#F5F4F0;--bg1:#FFFFFF;--bg2:#F0EDE6;--bg3:#E8E4DC;--border:rgba(0,0,0,0.08);--bdrm:rgba(0,0,0,0.15);--text:#0A0C14;--muted:#60647A;--dim:#C0C3D0;--goldbg:rgba(233,184,74,0.12);--bluebg:rgba(75,156,245,0.08);}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:inherit;}
+input,textarea,select{font-family:inherit;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--dim);border-radius:3px;}
+
+/* ═══════════════ NAV ═══════════════ */
+nav{
+  position:sticky;top:0;z-index:100;
+  height:60px;display:flex;align-items:center;
+  padding:0 28px;
+  background:rgba(7,8,13,0.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+@media(prefers-color-scheme:light){nav{background:rgba(245,244,240,0.92);}}
+:root[data-theme="light"] nav{background:rgba(245,244,240,0.92);}
+.nav-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0;}
+.nav-logo{font-size:18px;font-family:"Didot","Bodoni MT",Georgia,serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);display:flex;align-items:center;gap:8px;}
+.nav-logo canvas{width:26px;height:26px;}
+.nav-back{margin-left:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;transition:color 0.15s;}
+.nav-back:hover{color:var(--text);}
+
+/* ═══════════════ LAYOUT ═══════════════ */
+.page{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 60px);}
+@media(max-width:860px){.page{grid-template-columns:1fr;}}
+
+/* ═══════════════ SIDEBAR ═══════════════ */
+.sidebar{
+  background:var(--bg1);
+  border-right:1px solid var(--border);
+  padding:36px 28px;
+  position:sticky;top:60px;height:calc(100vh - 60px);
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+@media(max-width:860px){.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:24px 20px;}}
+.sidebar-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;}
+.steps{display:flex;flex-direction:column;gap:0;}
+.step-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 0;
+  position:relative;cursor:pointer;
+}
+.step-item:not(:last-child)::after{
+  content:'';position:absolute;left:15px;top:44px;bottom:0;
+  width:2px;background:var(--border);
+}
+.step-item.done:not(:last-child)::after{background:var(--gold);}
+.step-dot{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:var(--muted);
+  flex-shrink:0;transition:all 0.2s;
+  font-variant-numeric:tabular-nums;
+}
+.step-item.active .step-dot{border-color:var(--gold);background:var(--gold);color:#07080D;}
+.step-item.done .step-dot{border-color:var(--gold);background:var(--gold);color:#07080D;}
+.step-item.done .step-dot::before{content:'✓';}
+.step-label{padding-top:5px;}
+.step-name{font-size:13px;font-weight:700;color:var(--muted);transition:color 0.2s;}
+.step-item.active .step-name,.step-item.done .step-name{color:var(--text);}
+.step-desc{font-size:11px;color:var(--dim);margin-top:2px;}
+.step-item.active .step-desc{color:var(--muted);}
+.sidebar-footer{margin-top:auto;padding-top:24px;border-top:1px solid var(--border);}
+.sidebar-footer p{font-size:12px;color:var(--muted);line-height:1.6;}
+.sidebar-footer a{color:var(--gold);}
+
+/* ═══════════════ MAIN ═══════════════ */
+.main{padding:40px 48px 80px;max-width:720px;}
+@media(max-width:1000px){.main{padding:32px 28px 60px;}}
+@media(max-width:860px){.main{max-width:100%;}}
+
+/* Progress bar */
+.progress-bar-wrap{margin-bottom:36px;}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.progress-pct{font-size:13px;font-weight:700;color:var(--gold);}
+.progress-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--goldhi));border-radius:2px;transition:width 0.4s ease;}
+
+/* Step panels */
+.step-panel{display:none;}
+.step-panel.active{display:block;}
+.step-heading{font-size:clamp(22px,3vw,32px);font-family:"Didot","Bodoni MT",Georgia,serif;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;}
+.step-sub{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:32px;}
+
+/* Form elements */
+.form-row{display:grid;gap:16px;margin-bottom:20px;}
+.form-row.cols-2{grid-template-columns:1fr 1fr;}
+.form-row.cols-3{grid-template-columns:1fr 1fr 1fr;}
+@media(max-width:600px){.form-row.cols-2,.form-row.cols-3{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:6px;}
+label{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
+label .req{color:var(--gold);margin-left:2px;}
+.input,.select,.textarea{
+  width:100%;padding:12px 14px;
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:var(--rsm);
+  color:var(--text);
+  font-size:14px;
+  transition:border-color 0.15s,box-shadow 0.15s;
+  outline:none;
+  appearance:none;
+}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldbg);}
+.input::placeholder,.textarea::placeholder{color:var(--dim);}
+.textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.select-wrap{position:relative;}
+.select-wrap::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:12px;}
+.select{padding-right:32px;}
+.input-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+.input-prefix{position:relative;}
+.input-prefix .prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none;}
+.input-prefix .input{padding-left:32px;}
+
+/* Type selector */
+.type-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;}
+@media(max-width:500px){.type-grid{grid-template-columns:1fr;}}
+.type-card{
+  background:var(--bg1);border:2px solid var(--border);
+  border-radius:var(--r);padding:20px 16px;
+  text-align:center;cursor:pointer;transition:all 0.2s;
+  position:relative;
+}
+.type-card:hover{border-color:var(--bdrm);}
+.type-card.selected{border-color:var(--gold);background:var(--goldbg);}
+.type-card input[type="radio"]{position:absolute;opacity:0;width:0;height:0;}
+.type-icon{font-size:32px;margin-bottom:8px;}
+.type-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.type-desc{font-size:11px;color:var(--muted);}
+.type-card.selected .type-name{color:var(--gold);}
+
+/* Specialty chips */
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chip{
+  padding:8px 14px;border-radius:50px;
+  border:1px solid var(--border);background:var(--bg1);
+  font-size:12px;font-weight:600;cursor:pointer;
+  transition:all 0.15s;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+  user-select:none;
+}
+.chip:hover{border-color:var(--bdrm);color:var(--text);}
+.chip.selected{border-color:var(--goldbdr);background:var(--goldbg);color:var(--gold);}
+.chip .chip-icon{font-size:14px;}
+
+/* Portfolio upload */
+.upload-zone{
+  border:2px dashed var(--border);
+  border-radius:var(--r);
+  padding:40px 24px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--goldbdr);background:var(--goldbg);}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.upload-icon{font-size:40px;margin-bottom:12px;}
+.upload-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.upload-hint{font-size:12px;color:var(--muted);}
+.upload-formats{font-size:11px;color:var(--dim);margin-top:8px;}
+.uploaded-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:16px;}
+.uploaded-item{
+  aspect-ratio:1;background:var(--bg3);border-radius:var(--rsm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;position:relative;border:1px solid var(--border);
+}
+.uploaded-item .remove{
+  position:absolute;top:-6px;right:-6px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--red);color:#fff;
+  border:none;font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+
+/* Availability calendar */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:20px;}
+.cal-head{font-size:10px;font-weight:700;text-align:center;color:var(--muted);padding:4px;}
+.cal-day{
+  aspect-ratio:1;border-radius:var(--rsm);
+  background:var(--bg1);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;cursor:pointer;transition:all 0.15s;
+  font-variant-numeric:tabular-nums;
+}
+.cal-day:hover{border-color:var(--bdrm);}
+.cal-day.available{background:var(--tealbg);border-color:rgba(62,203,169,0.3);color:var(--teal);}
+.cal-day.unavailable{background:var(--redbg);border-color:rgba(232,90,90,0.2);color:var(--red);}
+.cal-day.empty{background:transparent;border-color:transparent;cursor:default;}
+.avail-legend{display:flex;gap:16px;margin-bottom:16px;}
+.avail-legend span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.avail-legend span::before{content:'';width:10px;height:10px;border-radius:2px;display:block;}
+.avail-legend .l-avail::before{background:var(--teal);}
+.avail-legend .l-unavail::before{background:var(--red);}
+.avail-legend .l-default::before{background:var(--bg3);}
+
+/* Time slots */
+.time-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px;}
+.time-slot{
+  padding:8px;border-radius:var(--rsm);
+  border:1px solid var(--border);background:var(--bg1);
+  font-size:11px;font-weight:600;text-align:center;
+  cursor:pointer;transition:all 0.15s;color:var(--muted);
+}
+.time-slot:hover{border-color:var(--bdrm);}
+.time-slot.selected{border-color:var(--goldbdr);background:var(--goldbg);color:var(--gold);}
+
+/* Rate cards */
+.rate-package{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:var(--r);padding:20px;margin-bottom:14px;
+  position:relative;
+}
+.rate-package-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.rate-package-name{font-size:14px;font-weight:700;}
+.rate-remove{background:none;border:none;color:var(--muted);font-size:16px;line-height:1;padding:0;}
+.rate-remove:hover{color:var(--red);}
+.add-package-btn{
+  width:100%;padding:12px;
+  border:2px dashed var(--border);border-radius:var(--r);
+  background:transparent;color:var(--muted);
+  font-size:13px;font-weight:600;transition:all 0.2s;
+}
+.add-package-btn:hover{border-color:var(--goldbdr);color:var(--gold);}
+
+/* Location */
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.location-chip{
+  padding:12px 16px;border-radius:var(--rsm);
+  border:1px solid var(--border);background:var(--bg1);
+  font-size:13px;font-weight:600;cursor:pointer;
+  transition:all 0.15s;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.location-chip:hover{border-color:var(--bdrm);}
+.location-chip.selected{border-color:var(--bluebdr);background:var(--bluebg);color:var(--blue);}
+@media(max-width:500px){.location-grid{grid-template-columns:1fr;}}
+
+/* Review card */
+.review-section{margin-bottom:24px;}
+.review-section h4{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.review-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px;}
+.review-row .lbl{color:var(--muted);}
+.review-row .val{font-weight:600;}
+.review-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:700;}
+.rb-gold{background:var(--goldbg);color:var(--gold);border:1px solid var(--goldbdr);}
+.rb-blue{background:var(--bluebg);color:var(--blue);border:1px solid var(--bluebdr);}
+.profile-preview{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rlg);overflow:hidden;margin-bottom:28px;
+}
+.pp-banner{height:80px;background:linear-gradient(135deg,rgba(75,156,245,0.3),rgba(62,203,169,0.2));}
+.pp-body{padding:44px 20px 20px;position:relative;}
+.pp-avatar{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--teal));
+  border:3px solid var(--bg2);
+  position:absolute;top:-28px;left:20px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.pp-name{font-size:16px;font-weight:700;margin-bottom:2px;}
+.pp-spec{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.pp-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.pp-tag{font-size:11px;padding:3px 10px;border-radius:50px;background:var(--bluebg);color:var(--blue);border:1px solid var(--bluebdr);}
+
+/* Range slider */
+.range-row{display:flex;align-items:center;gap:14px;}
+.range-input{flex:1;appearance:none;height:4px;background:var(--bg3);border-radius:2px;outline:none;}
+.range-input::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--bg);}
+.range-val{font-size:14px;font-weight:700;color:var(--gold);min-width:56px;text-align:right;font-variant-numeric:tabular-nums;}
+
+/* Toggle switch */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-label{font-size:13px;font-weight:600;}
+.toggle-sub{font-size:12px;color:var(--muted);}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-track{
+  position:absolute;inset:0;background:var(--bg3);
+  border-radius:12px;cursor:pointer;transition:background 0.2s;
+}
+.toggle input:checked+.toggle-track{background:var(--gold);}
+.toggle-thumb{
+  position:absolute;left:3px;top:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;transition:transform 0.2s;pointer-events:none;
+}
+.toggle input:checked~.toggle-thumb{transform:translateX(20px);}
+
+/* Buttons */
+.btn-row{display:flex;gap:12px;padding-top:32px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;border-radius:50px;
+  font-size:14px;font-weight:700;cursor:pointer;border:none;
+  transition:all 0.2s;white-space:nowrap;
+}
+.btn-primary{background:var(--gold);color:#07080D;}
+.btn-primary:hover{background:var(--goldhi);transform:translateY(-1px);box-shadow:0 8px 24px rgba(233,184,74,0.3);}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--bdrm);}
+.btn-ghost:hover{background:var(--bg2);}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(75,156,245,0.3);}
+
+/* Success screen */
+.success-screen{text-align:center;padding:60px 20px;}
+.success-icon{font-size:64px;margin-bottom:20px;}
+.success-title{font-size:clamp(28px,4vw,44px);font-family:"Didot",Georgia,serif;font-weight:700;letter-spacing:-0.03em;margin-bottom:12px;}
+.success-sub{font-size:16px;color:var(--muted);max-width:440px;margin:0 auto 32px;line-height:1.7;}
+.success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.success-next-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:680px;margin:40px auto 0;text-align:left;}
+.sns-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);padding:20px;}
+.sns-icon{font-size:24px;margin-bottom:8px;}
+.sns-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.sns-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* Alert */
+.alert{padding:12px 16px;border-radius:var(--rsm);font-size:13px;line-height:1.5;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;}
+.alert-info{background:var(--bluebg);border:1px solid var(--bluebdr);color:var(--text);}
+.alert-gold{background:var(--goldbg);border:1px solid var(--goldbdr);color:var(--text);}
+.alert-icon{font-size:16px;flex-shrink:0;}
+
+/* Misc */
+.section-divider{height:1px;background:var(--border);margin:28px 0;}
+.char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:4px;}
+.optional{font-size:10px;color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <canvas id="nav-aperture" width="52" height="52"></canvas>
+      Lumora
+    </a>
+    <a href="../index.html" class="nav-back">← Back to Lumora</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Application Progress</div>
+    <div class="steps" id="steps-nav">
+      <div class="step-item active" data-step="1" onclick="goToStep(1)">
+        <div class="step-dot">1</div>
+        <div class="step-label">
+          <div class="step-name">Who you are</div>
+          <div class="step-desc">Name, email, creator type</div>
+        </div>
+      </div>
+      <div class="step-item" data-step="2" onclick="goToStep(2)">
+        <div class="step-dot">2</div>
+        <div class="step-label">
+          <div class="step-name">Your specialties</div>
+          <div class="step-desc">What you shoot</div>
+        </div>
+      </div>
+      <div class="step-item" data-step="3" onclick="goToStep(3)">
+        <div class="step-dot">3</div>
+        <div class="step-label">
+          <div class="step-name">Portfolio</div>
+          <div class="step-desc">Sample work (3–10 items)</div>
+        </div>
+      </div>
+      <div class="step-item" data-step="4" onclick="goToStep(4)">
+        <div class="step-dot">4</div>
+        <div class="step-label">
+          <div class="step-name">Availability</div>
+          <div class="step-desc">Days, hours, location radius</div>
+        </div>
+      </div>
+      <div class="step-item" data-step="5" onclick="goToStep(5)">
+        <div class="step-dot">5</div>
+        <div class="step-label">
+          <div class="step-name">Rates & packages</div>
+          <div class="step-desc">What you charge</div>
+        </div>
+      </div>
+      <div class="step-item" data-step="6" onclick="goToStep(6)">
+        <div class="step-dot">6</div>
+        <div class="step-label">
+          <div class="step-name">Review & submit</div>
+          <div class="step-desc">Final check before applying</div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <p>Questions? <a href="#">Read our Creator Guide</a> or <a href="#">chat with Lumora AI</a>.</p>
+      <p style="margin-top:8px;">We review applications within <strong style="color:var(--text);">48 hours</strong> and accept the top 15–20%.</p>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- Progress bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="progress-label" id="progress-label">Step 1 of 6</span>
+        <span class="progress-pct" id="progress-pct">17%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:17%"></div></div>
+    </div>
+
+    <!-- ══ STEP 1: Who You Are ══ -->
+    <div class="step-panel active" id="panel-1">
+      <h2 class="step-heading">Let's start with you</h2>
+      <p class="step-sub">Basic info so we can create your Lumora profile. Takes about 3 minutes.</p>
+
+      <div class="alert alert-gold">
+        <span class="alert-icon">✦</span>
+        <div>Only the <strong>top 15–20%</strong> of applicants are accepted. A complete, honest application gives you the best chance — and the Lumora Verified badge is worth the 20 minutes.</div>
+      </div>
+
+      <div class="form-row cols-2">
+        <div class="field">
+          <label>First name <span class="req">*</span></label>
+          <input class="input" type="text" placeholder="Emma" id="first-name">
+        </div>
+        <div class="field">
+          <label>Last name <span class="req">*</span></label>
+          <input class="input" type="text" placeholder="Rivera" id="last-name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Email address <span class="req">*</span></label>
+          <input class="input" type="email" placeholder="emma@example.com" id="email">
+        </div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="field">
+          <label>Phone number <span class="req">*</span></label>
+          <input class="input" type="tel" placeholder="+44 7700 900000" id="phone">
+        </div>
+        <div class="field">
+          <label>City / Base location <span class="req">*</span></label>
+          <input class="input" type="text" placeholder="London" id="city">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Your website or Instagram <span class="optional">(optional)</span></label>
+          <div class="input-prefix">
+            <span class="prefix">🔗</span>
+            <input class="input" type="url" placeholder="https://emmaphotography.co.uk">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">I am a <span class="req">*</span></p>
+      <div class="type-grid">
+        <label class="type-card selected" id="type-photo">
+          <input type="radio" name="creator-type" value="photographer" checked>
+          <div class="type-icon">📸</div>
+          <div class="type-name">Photographer</div>
+          <div class="type-desc">Stills, portraits, events</div>
+        </label>
+        <label class="type-card" id="type-video">
+          <input type="radio" name="creator-type" value="videographer">
+          <div class="type-icon">🎬</div>
+          <div class="type-name">Videographer</div>
+          <div class="type-desc">Video, reels, films</div>
+        </label>
+        <label class="type-card" id="type-both">
+          <input type="radio" name="creator-type" value="both">
+          <div class="type-icon">🎯</div>
+          <div class="type-name">Both</div>
+          <div class="type-desc">Photo & video</div>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Years of professional experience <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select class="select">
+              <option value="">Select…</option>
+              <option>Less than 1 year</option>
+              <option>1–2 years</option>
+              <option>3–5 years</option>
+              <option>6–10 years</option>
+              <option>10+ years</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 2: Specialties ══ -->
+    <div class="step-panel" id="panel-2">
+      <h2 class="step-heading">What do you shoot?</h2>
+      <p class="step-sub">Select all that apply. Clients filter by specialty — the more accurate you are, the better the matches.</p>
+
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Primary specialties <span style="color:var(--gold)">*</span> <span style="font-size:11px;color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0;">(select at least 1)</span></p>
+      <div class="chip-grid" id="specialty-chips">
+        <div class="chip selected" data-val="weddings"><span class="chip-icon">💍</span> Weddings</div>
+        <div class="chip" data-val="portraits"><span class="chip-icon">👤</span> Portraits</div>
+        <div class="chip" data-val="events"><span class="chip-icon">🎉</span> Events</div>
+        <div class="chip" data-val="corporate"><span class="chip-icon">🏢</span> Corporate</div>
+        <div class="chip" data-val="headshots"><span class="chip-icon">🤵</span> Headshots</div>
+        <div class="chip" data-val="real-estate"><span class="chip-icon">🏠</span> Real Estate</div>
+        <div class="chip" data-val="ecommerce"><span class="chip-icon">🛍️</span> E-Commerce</div>
+        <div class="chip" data-val="food"><span class="chip-icon">🍽️</span> Food & Hospitality</div>
+        <div class="chip" data-val="fashion"><span class="chip-icon">👗</span> Fashion</div>
+        <div class="chip" data-val="sports"><span class="chip-icon">⚽</span> Sports</div>
+        <div class="chip" data-val="drone"><span class="chip-icon">🚁</span> Drone</div>
+        <div class="chip" data-val="social"><span class="chip-icon">📱</span> Social Content</div>
+        <div class="chip" data-val="architecture"><span class="chip-icon">🏗️</span> Architecture</div>
+        <div class="chip" data-val="education"><span class="chip-icon">🎓</span> Education</div>
+        <div class="chip" data-val="healthcare"><span class="chip-icon">🏥</span> Healthcare</div>
+        <div class="chip" data-val="legal"><span class="chip-icon">⚖️</span> Legal</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Equipment you own</p>
+      <div class="chip-grid" id="gear-chips">
+        <div class="chip selected" data-val="dslr"><span class="chip-icon">📷</span> DSLR</div>
+        <div class="chip" data-val="mirrorless"><span class="chip-icon">📸</span> Mirrorless</div>
+        <div class="chip" data-val="drone-gear"><span class="chip-icon">🚁</span> Drone</div>
+        <div class="chip" data-val="video-rig"><span class="chip-icon">🎬</span> Video Rig</div>
+        <div class="chip" data-val="studio-lights"><span class="chip-icon">💡</span> Studio Lights</div>
+        <div class="chip" data-val="gimbal"><span class="chip-icon">🎯</span> Gimbal</div>
+        <div class="chip" data-val="360"><span class="chip-icon">🔄</span> 360 Camera</div>
+        <div class="chip" data-val="film"><span class="chip-icon">🎞️</span> Film Camera</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <div class="form-row">
+        <div class="field">
+          <label>Your professional bio <span class="req">*</span></label>
+          <textarea class="textarea" id="bio" rows="5" placeholder="Tell clients about your style, experience, and what makes your work special. Be specific — clients read this before booking." oninput="updateCharCount(this,'bio-count',400)"></textarea>
+          <div class="char-count"><span id="bio-count">0</span> / 400</div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 3: Portfolio ══ -->
+    <div class="step-panel" id="panel-3">
+      <h2 class="step-heading">Show your best work</h2>
+      <p class="step-sub">Upload 3–10 portfolio samples. Our review team will assess quality, range, and consistency. Only your best work — quantity doesn't help here.</p>
+
+      <div class="alert alert-info">
+        <span class="alert-icon">💡</span>
+        <div>Applications with <strong>diverse samples across your specialties</strong> have a 40% higher acceptance rate. Include both setups and candid shots where relevant.</div>
+      </div>
+
+      <div class="upload-zone" id="portfolio-zone">
+        <input type="file" accept="image/*,video/*" multiple onchange="handlePortfolioUpload(this)">
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">Drop your best shots here</div>
+        <div class="upload-hint">or click to browse files</div>
+        <div class="upload-formats">JPG, PNG, HEIC, MP4, MOV · Max 20MB per file</div>
+      </div>
+      <div class="uploaded-grid" id="uploaded-preview"></div>
+
+      <div class="section-divider"></div>
+      <div class="form-row">
+        <div class="field">
+          <label>Link to external portfolio <span class="optional">(optional)</span></label>
+          <div class="input-prefix">
+            <span class="prefix">🔗</span>
+            <input class="input" type="url" placeholder="https://behance.net/yourprofile or Flickr, 500px…">
+          </div>
+          <span class="input-hint">Behance, Flickr, 500px, Vimeo, YouTube — any public portfolio works.</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Work samples caption <span class="optional">(optional)</span></label>
+          <textarea class="textarea" rows="3" placeholder="Brief context for your samples — shoot conditions, gear used, editing approach…"></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 4: Availability ══ -->
+    <div class="step-panel" id="panel-4">
+      <h2 class="step-heading">When & where are you available?</h2>
+      <p class="step-sub">Clients see your real-time calendar. Set your default availability — you can always adjust it later from your dashboard.</p>
+
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Default working days</p>
+      <div class="chip-grid" style="margin-bottom:24px;">
+        <div class="chip selected" data-val="mon">Mon</div>
+        <div class="chip selected" data-val="tue">Tue</div>
+        <div class="chip selected" data-val="wed">Wed</div>
+        <div class="chip selected" data-val="thu">Thu</div>
+        <div class="chip selected" data-val="fri">Fri</div>
+        <div class="chip selected" data-val="sat">Sat</div>
+        <div class="chip" data-val="sun">Sun</div>
+      </div>
+
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Default working hours</p>
+      <div class="time-slots" id="time-slots" style="margin-bottom:24px;">
+        <div class="time-slot" data-val="early">6–9 AM</div>
+        <div class="time-slot selected" data-val="morning">9–12 PM</div>
+        <div class="time-slot selected" data-val="afternoon">12–5 PM</div>
+        <div class="time-slot selected" data-val="evening">5–9 PM</div>
+        <div class="time-slot" data-val="night">9 PM–late</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Travel radius from <strong style="color:var(--text);font-size:13px;text-transform:none;letter-spacing:0;" id="city-display">your city</strong></p>
+      <div class="range-row" style="margin-bottom:8px;">
+        <input type="range" class="range-input" min="5" max="100" value="30" id="radius-slider" oninput="document.getElementById('radius-val').textContent=this.value+'mi'">
+        <span class="range-val" id="radius-val">30mi</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Willing to travel further for the right job? You can mark individual bookings as negotiable.</p>
+
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Location preferences</p>
+      <div class="location-grid">
+        <div class="location-chip selected" data-val="client-loc"><span>📍</span> At client's location</div>
+        <div class="location-chip selected" data-val="outdoors"><span>🌳</span> Outdoors / on-location</div>
+        <div class="location-chip" data-val="studio"><span>🏛️</span> My own studio</div>
+        <div class="location-chip" data-val="hire-studio"><span>📐</span> Hired studio space</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Booking preferences</p>
+      <div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Accept instant bookings</div><div class="toggle-sub">Clients can book without pre-approval</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Accept same-day requests</div><div class="toggle-sub">Bookings made within 4 hours of shoot time</div></div>
+          <label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Open to B2B / enterprise work</div><div class="toggle-sub">Estate agents, brands, event companies</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Minimum booking duration</div><div class="toggle-sub">Shortest shoot you'll accept</div></div>
+          <div class="select-wrap" style="width:130px;">
+            <select class="select" style="padding:8px 28px 8px 10px;font-size:12px;">
+              <option>1 hour</option>
+              <option selected>2 hours</option>
+              <option>Half day</option>
+              <option>Full day</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 5: Rates ══ -->
+    <div class="step-panel" id="panel-5">
+      <h2 class="step-heading">Set your rates</h2>
+      <p class="step-sub">Transparent pricing is one of the most common reasons clients choose you over competitors. You can always update these later.</p>
+
+      <div class="alert alert-gold">
+        <span class="alert-icon">💰</span>
+        <div>Lumora charges <strong>20–22% commission</strong> on completed bookings only. No upfront fees, no pay-per-lead. You keep 78–80% of every job.</div>
+      </div>
+
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Your packages</p>
+
+      <div id="packages-list">
+        <div class="rate-package">
+          <div class="rate-package-head">
+            <div class="rate-package-name">📦 Package 1</div>
+            <button class="rate-remove" onclick="removePackage(this)">✕</button>
+          </div>
+          <div class="form-row cols-2">
+            <div class="field">
+              <label>Package name</label>
+              <input class="input" type="text" placeholder="e.g. Half-Day Wedding">
+            </div>
+            <div class="field">
+              <label>Price (£)</label>
+              <div class="input-prefix">
+                <span class="prefix">£</span>
+                <input class="input" type="number" placeholder="450" min="0">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>What's included</label>
+              <textarea class="textarea" rows="2" placeholder="e.g. 4 hours shooting, 150 edited images, private online gallery, 2-week delivery"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="rate-package">
+          <div class="rate-package-head">
+            <div class="rate-package-name">📦 Package 2</div>
+            <button class="rate-remove" onclick="removePackage(this)">✕</button>
+          </div>
+          <div class="form-row cols-2">
+            <div class="field">
+              <label>Package name</label>
+              <input class="input" type="text" placeholder="e.g. Full-Day Wedding">
+            </div>
+            <div class="field">
+              <label>Price (£)</label>
+              <div class="input-prefix">
+                <span class="prefix">£</span>
+                <input class="input" type="number" placeholder="900" min="0">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>What's included</label>
+              <textarea class="textarea" rows="2" placeholder="e.g. 8 hours, 400 edited images, video highlights reel, same-day preview gallery…"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="add-package-btn" onclick="addPackage()">+ Add another package</button>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Hourly rate (for custom bookings)</p>
+      <div class="form-row cols-2">
+        <div class="field">
+          <label>Hourly rate (£)</label>
+          <div class="input-prefix">
+            <span class="prefix">£</span>
+            <input class="input" type="number" placeholder="150" min="0" id="hourly-rate">
+          </div>
+          <span class="input-hint">Used when clients build custom bookings. Leave blank to use packages only.</span>
+        </div>
+        <div class="field">
+          <label>Rush / same-day premium</label>
+          <div class="select-wrap">
+            <select class="select">
+              <option value="">No premium</option>
+              <option>+15%</option>
+              <option>+25%</option>
+              <option>+50%</option>
+              <option>Negotiated per job</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Add-on services</p>
+      <div class="chip-grid">
+        <div class="chip" data-val="drone-addon"><span class="chip-icon">🚁</span> Drone (+£100)</div>
+        <div class="chip selected" data-val="editing"><span class="chip-icon">🎨</span> Advanced editing</div>
+        <div class="chip" data-val="album"><span class="chip-icon">📖</span> Printed album</div>
+        <div class="chip selected" data-val="gallery"><span class="chip-icon">🖼️</span> Online gallery</div>
+        <div class="chip" data-val="bts"><span class="chip-icon">🎬</span> BTS video</div>
+        <div class="chip" data-val="rush"><span class="chip-icon">⚡</span> Rush delivery (48h)</div>
+        <div class="chip" data-val="floor-plan"><span class="chip-icon">📐</span> Floor plan (RE)</div>
+        <div class="chip" data-val="virtual-tour"><span class="chip-icon">🔄</span> Virtual tour (RE)</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-primary" onclick="nextStep()">Review & Submit →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 6: Review ══ -->
+    <div class="step-panel" id="panel-6">
+      <h2 class="step-heading">Review your application</h2>
+      <p class="step-sub">Double-check everything before submitting. Our team reviews applications within 48 hours.</p>
+
+      <div class="profile-preview">
+        <div class="pp-banner"></div>
+        <div class="pp-body">
+          <div class="pp-avatar">📸</div>
+          <div class="pp-name" id="review-name">Emma Rivera</div>
+          <div class="pp-spec" id="review-spec">Photographer · London</div>
+          <div class="pp-tags" id="review-tags">
+            <span class="pp-tag">💍 Weddings</span>
+            <span class="pp-tag">👤 Portraits</span>
+            <span class="pp-tag">🎉 Events</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-section">
+        <h4>Basic info</h4>
+        <div class="review-row"><span class="lbl">Name</span><span class="val" id="rv-name">—</span></div>
+        <div class="review-row"><span class="lbl">Email</span><span class="val" id="rv-email">—</span></div>
+        <div class="review-row"><span class="lbl">City</span><span class="val" id="rv-city">—</span></div>
+        <div class="review-row"><span class="lbl">Type</span><span class="val"><span class="review-badge rb-gold" id="rv-type">Photographer</span></span></div>
+      </div>
+
+      <div class="review-section">
+        <h4>Specialties & availability</h4>
+        <div class="review-row"><span class="lbl">Portfolio items</span><span class="val" id="rv-portfolio">0 uploaded</span></div>
+        <div class="review-row"><span class="lbl">Travel radius</span><span class="val" id="rv-radius">30 miles</span></div>
+        <div class="review-row"><span class="lbl">Instant booking</span><span class="val"><span class="review-badge rb-blue">Enabled</span></span></div>
+      </div>
+
+      <div class="review-section">
+        <h4>Agreements</h4>
+        <div class="toggle-row">
+          <div><div class="toggle-label">I agree to the <a href="#" style="color:var(--gold)">Creator Terms of Service</a></div><div class="toggle-sub">Including commission structure and platform rules</div></div>
+          <label class="toggle" id="terms-toggle"><input type="checkbox" id="terms-check"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">I agree to the <a href="#" style="color:var(--gold)">Quality Standards</a></div><div class="toggle-sub">Minimum 4.5★ average, 90% completion rate</div></div>
+          <label class="toggle"><input type="checkbox" id="quality-check"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Lumora can use samples for platform promotion</div><div class="toggle-sub">Portfolio images may appear in marketing materials</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevStep()">← Back</button>
+        <button class="btn btn-blue" onclick="submitApplication()" id="submit-btn">Submit Application ✦</button>
+      </div>
+    </div>
+
+    <!-- ══ SUCCESS ══ -->
+    <div class="step-panel" id="panel-success">
+      <div class="success-screen">
+        <div class="success-icon">✨</div>
+        <h2 class="success-title">Application submitted!</h2>
+        <p class="success-sub">We've received your application and will review it within <strong>48 hours</strong>. You'll get an email at <span id="success-email" style="color:var(--gold)">your address</span> with our decision.</p>
+        <div class="success-actions">
+          <a href="../index.html" class="btn btn-primary">Back to Lumora</a>
+          <a href="#" class="btn btn-ghost">Share your application</a>
+        </div>
+        <div class="success-next-steps">
+          <div class="sns-card">
+            <div class="sns-icon">📧</div>
+            <div class="sns-title">Check your email</div>
+            <div class="sns-desc">Decision within 48 hours. Check spam if you don't hear from us.</div>
+          </div>
+          <div class="sns-card">
+            <div class="sns-icon">📸</div>
+            <div class="sns-title">Add more portfolio work</div>
+            <div class="sns-desc">More diverse samples = higher acceptance rate. Email us to add more.</div>
+          </div>
+          <div class="sns-card">
+            <div class="sns-icon">📖</div>
+            <div class="sns-title">Read the Creator Guide</div>
+            <div class="sns-desc">Learn how top earners on Lumora structure their profiles.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ─── State ─── */
+let currentStep = 1;
+const TOTAL_STEPS = 6;
+let portfolioCount = 0;
+let packageCount = 2;
+
+/* ─── Nav aperture ─── */
+function drawLogoAperture(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const size = 26;
+  canvas.width = size * dpr; canvas.height = size * dpr;
+  canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const cx = size/2, cy = size/2, R = size*0.42;
+  const isDark = document.documentElement.getAttribute('data-theme')==='dark' ||
+    (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme:dark)').matches);
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.strokeStyle = isDark ? 'rgba(233,184,74,0.7)' : 'rgba(180,130,30,0.8)';
+  ctx.lineWidth = size*0.06; ctx.stroke();
+  ctx.translate(cx,cy);
+  for(let i=0;i<6;i++){
+    const a=(i/6)*Math.PI*2;
+    ctx.save(); ctx.rotate(a);
+    ctx.beginPath(); ctx.moveTo(0,0);
+    ctx.arc(0,0,R*0.55,-0.5,0.5); ctx.closePath();
+    ctx.fillStyle=isDark?'rgba(233,184,74,0.55)':'rgba(180,130,30,0.6)';
+    ctx.fill(); ctx.restore();
+  }
+}
+
+/* ─── Step navigation ─── */
+function goToStep(n) {
+  if (n > currentStep + 1) return; // can't skip ahead
+  document.getElementById('panel-' + currentStep).classList.remove('active');
+  document.getElementById('panel-' + n).classList.add('active');
+  updateSidebarSteps(n);
+  updateProgress(n);
+  currentStep = n;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    const done = currentStep;
+    updateReviewData();
+    goToStep(currentStep + 1);
+    markStepDone(done);
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) goToStep(currentStep - 1);
+}
+
+function updateSidebarSteps(active) {
+  document.querySelectorAll('.step-item').forEach(item => {
+    const n = parseInt(item.dataset.step);
+    item.classList.remove('active');
+    if (n === active) item.classList.add('active');
+  });
+}
+
+function markStepDone(n) {
+  const item = document.querySelector(`.step-item[data-step="${n}"]`);
+  if (item) item.classList.add('done');
+}
+
+function updateProgress(step) {
+  const pct = Math.round((step / TOTAL_STEPS) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-label').textContent = `Step ${step} of ${TOTAL_STEPS}`;
+}
+
+/* ─── Type card selection ─── */
+document.querySelectorAll('.type-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  });
+});
+
+/* ─── Chip toggles ─── */
+document.querySelectorAll('.chip-grid').forEach(grid => {
+  grid.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  });
+});
+
+/* ─── Location chips ─── */
+document.querySelectorAll('.location-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('selected'));
+});
+
+/* ─── Time slot toggles ─── */
+document.querySelectorAll('.time-slot').forEach(slot => {
+  slot.addEventListener('click', () => slot.classList.toggle('selected'));
+});
+
+/* ─── Portfolio upload mock ─── */
+function handlePortfolioUpload(input) {
+  const preview = document.getElementById('uploaded-preview');
+  const emojis = ['🌸','🎭','🏙️','💍','🌿','👤','🎪','🏛️','⚽','🎨'];
+  Array.from(input.files).forEach((file, i) => {
+    if (portfolioCount >= 10) return;
+    portfolioCount++;
+    const item = document.createElement('div');
+    item.className = 'uploaded-item';
+    item.innerHTML = `<span>${emojis[portfolioCount % emojis.length]}</span>
+      <button class="remove" onclick="this.parentElement.remove();portfolioCount--">✕</button>`;
+    preview.appendChild(item);
+  });
+  document.getElementById('rv-portfolio').textContent = portfolioCount + ' uploaded';
+}
+
+/* Drag events on upload zone */
+const zone = document.getElementById('portfolio-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag'); });
+
+/* ─── Add package ─── */
+function addPackage() {
+  packageCount++;
+  const list = document.getElementById('packages-list');
+  const pkg = document.createElement('div');
+  pkg.className = 'rate-package';
+  pkg.innerHTML = `
+    <div class="rate-package-head">
+      <div class="rate-package-name">📦 Package ${packageCount}</div>
+      <button class="rate-remove" onclick="removePackage(this)">✕</button>
+    </div>
+    <div class="form-row cols-2">
+      <div class="field"><label>Package name</label><input class="input" type="text" placeholder="e.g. Portrait Session"></div>
+      <div class="field"><label>Price (£)</label><div class="input-prefix"><span class="prefix">£</span><input class="input" type="number" placeholder="200" min="0"></div></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>What's included</label><textarea class="textarea" rows="2" placeholder="Describe what's included…"></textarea></div>
+    </div>`;
+  list.appendChild(pkg);
+}
+
+function removePackage(btn) {
+  const pkg = btn.closest('.rate-package');
+  if (document.querySelectorAll('.rate-package').length > 1) pkg.remove();
+}
+
+/* ─── Char count ─── */
+function updateCharCount(el, countId, max) {
+  document.getElementById(countId).textContent = el.value.length;
+  if (el.value.length > max) el.value = el.value.slice(0, max);
+  document.getElementById(countId).textContent = el.value.length;
+}
+
+/* ─── Review data sync ─── */
+function updateReviewData() {
+  const fn = document.getElementById('first-name')?.value || '';
+  const ln = document.getElementById('last-name')?.value || '';
+  const em = document.getElementById('email')?.value || '';
+  const ci = document.getElementById('city')?.value || 'your city';
+  const radius = document.getElementById('radius-slider')?.value || 30;
+  const type = document.querySelector('.type-card.selected')?.querySelector('input')?.value || 'photographer';
+
+  if (fn || ln) {
+    document.getElementById('rv-name').textContent = `${fn} ${ln}`.trim() || '—';
+    document.getElementById('review-name').textContent = `${fn} ${ln}`.trim() || 'Your Name';
+  }
+  document.getElementById('rv-email').textContent = em || '—';
+  document.getElementById('rv-city').textContent = ci || '—';
+  document.getElementById('rv-radius').textContent = radius + ' miles';
+  document.getElementById('rv-type').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+  document.getElementById('review-spec').textContent = type.charAt(0).toUpperCase() + type.slice(1) + ' · ' + ci;
+  document.getElementById('rv-portfolio').textContent = portfolioCount + ' uploaded';
+  if (document.getElementById('city-display')) {
+    document.getElementById('city-display').textContent = ci || 'your city';
+  }
+
+  const selected = document.querySelectorAll('#specialty-chips .chip.selected');
+  const tagsEl = document.getElementById('review-tags');
+  if (tagsEl && selected.length) {
+    tagsEl.innerHTML = Array.from(selected).slice(0,4).map(c =>
+      `<span class="pp-tag">${c.textContent.trim()}</span>`).join('');
+  }
+
+  if (em) document.getElementById('success-email').textContent = em;
+}
+
+/* ─── Submit ─── */
+function submitApplication() {
+  const terms = document.getElementById('terms-check').checked;
+  const quality = document.getElementById('quality-check').checked;
+  if (!terms || !quality) {
+    alert('Please agree to the Terms of Service and Quality Standards to proceed.');
+    return;
+  }
+  document.getElementById('panel-6').classList.remove('active');
+  document.getElementById('panel-success').classList.add('active');
+  document.querySelectorAll('.step-item').forEach(i => i.classList.add('done'));
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('progress-pct').textContent = '100%';
+  document.getElementById('progress-label').textContent = 'Complete!';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ─── Init ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  drawLogoAperture(document.getElementById('nav-aperture'));
+});
+window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', () => {
+  drawLogoAperture(document.getElementById('nav-aperture'));
+});
+</script>
+</body>
+</html>
