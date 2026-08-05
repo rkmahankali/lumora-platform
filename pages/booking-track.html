@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Track Booking — Lumora</title>
+<style>
+:root{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--gold:#E9B84A;--gold-bg:rgba(233,184,74,.10);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;--green:#4ade80;--amber:#fbbf24;--blue:#38bdf8;--purple:#a78bfa;--red:#f87171;--r:12px;--nav-h:64px}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}}
+:root[data-theme="light"]{--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}
+:root[data-theme="dark"]{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+a{color:inherit;text-decoration:none} button{cursor:pointer;font-family:inherit}
+nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(7,8,13,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem}
+.nav-logo canvas{width:28px;height:28px}
+.nav-right{display:flex;gap:10px;align-items:center}
+.nav-btn{padding:8px 16px;border-radius:100px;font-size:.875rem;font-weight:600;border:none}
+.nav-btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.theme-toggle{background:var(--srf2);border:1px solid var(--border);border-radius:100px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+/* booking header */
+.booking-header{background:var(--srf);border-bottom:1px solid var(--border);padding:20px 32px}
+.bh-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.bh-left{}
+.bh-breadcrumb{font-size:.75rem;color:var(--sub);margin-bottom:8px}
+.bh-breadcrumb a{color:var(--gold)}
+.bh-ref{font-size:.75rem;color:var(--sub);margin-bottom:6px}
+.bh-title{font-family:Georgia,serif;font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.bh-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bh-meta-item{font-size:.8rem;color:var(--sub);display:flex;align-items:center;gap:4px}
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-size:.78rem;font-weight:700}
+.status-confirmed{background:rgba(56,189,248,.14);color:var(--blue);border:1px solid rgba(56,189,248,.3)}
+.status-in-progress{background:rgba(251,191,36,.14);color:var(--amber);border:1px solid rgba(251,191,36,.3)}
+.status-delivered{background:rgba(74,222,128,.14);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.status-complete{background:rgba(233,184,74,.14);color:var(--gold);border:1px solid rgba(233,184,74,.3)}
+.bh-right{display:flex;gap:8px;flex-wrap:wrap}
+.hdr-btn{padding:9px 16px;border-radius:100px;font-size:.8rem;font-weight:700;border:1px solid var(--border);background:var(--srf2);color:var(--text);cursor:pointer;transition:all .15s}
+.hdr-btn:hover{border-color:var(--gold);color:var(--gold)}
+.hdr-btn-gold{background:var(--gold);color:#07080D;border-color:transparent}
+.hdr-btn-gold:hover{opacity:.88;color:#07080D}
+/* demo controls */
+.demo-bar{background:rgba(167,139,250,.06);border-bottom:1px solid rgba(167,139,250,.15);padding:8px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.demo-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--purple)}
+.demo-btn{padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:600;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple);cursor:pointer}
+.demo-btn.current{background:rgba(167,139,250,.3);border-color:var(--purple)}
+.demo-btn:hover{background:rgba(167,139,250,.22)}
+/* body layout */
+.track-body{max-width:1100px;margin:0 auto;padding:28px 32px 60px;display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start}
+/* milestone stepper */
+.milestone-panel{background:var(--srf);border:1px solid var(--border);border-radius:18px;padding:20px;position:sticky;top:calc(var(--nav-h) + 16px)}
+.mp-title{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:16px}
+.milestones{display:flex;flex-direction:column;gap:0}
+.milestone{display:flex;gap:12px;position:relative}
+.ms-left{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.ms-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;z-index:1;transition:all .3s}
+.ms-dot.done{background:var(--green);color:#07080D}
+.ms-dot.current{background:var(--gold);color:#07080D;box-shadow:0 0 0 4px rgba(233,184,74,.2)}
+.ms-dot.current.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(233,184,74,.2)}50%{box-shadow:0 0 0 8px rgba(233,184,74,.08)}}
+.ms-dot.pending{background:var(--srf2);border:2px solid var(--border);color:var(--muted)}
+.ms-line{flex:1;width:2px;background:var(--srf2);margin:2px 0;min-height:24px}
+.ms-line.done{background:var(--green)}
+.ms-right{padding:2px 0 20px;flex:1}
+.ms-label{font-size:.85rem;font-weight:700;margin-bottom:2px}
+.ms-label.current{color:var(--gold)}
+.ms-date{font-size:.72rem;color:var(--sub)}
+.ms-note{font-size:.72rem;color:var(--sub);margin-top:3px;line-height:1.4}
+/* main content area */
+.main-content{display:flex;flex-direction:column;gap:20px}
+/* current action card */
+.action-card{background:var(--srf);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.ac-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.ac-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.ac-title{font-size:1rem;font-weight:700}
+.ac-sub{font-size:.78rem;color:var(--sub);margin-top:2px}
+.ac-body{padding:16px 20px}
+/* creator card in action */
+.creator-brief{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--srf2);border-radius:var(--r);margin-bottom:14px}
+.cb-av{width:40px;height:40px;border-radius:50%;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0}
+.cb-name{font-weight:700;font-size:.9rem}
+.cb-meta{font-size:.75rem;color:var(--sub)}
+.cb-actions{margin-left:auto;display:flex;gap:6px}
+.cb-action-btn{padding:7px 13px;border-radius:9px;font-size:.75rem;font-weight:700;border:1px solid var(--border);background:var(--srf);color:var(--text);cursor:pointer}
+.cb-action-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cb-action-btn.gold{background:var(--gold);color:#07080D;border-color:transparent}
+/* action info */
+.action-info{font-size:.875rem;line-height:1.7;color:var(--sub);margin-bottom:14px}
+.action-info strong{color:var(--text)}
+.action-btns{display:flex;gap:8px;flex-wrap:wrap}
+.ac-btn{padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid var(--border)}
+.ac-btn-primary{background:var(--gold);color:#07080D;border-color:transparent}
+.ac-btn-primary:hover{opacity:.88}
+.ac-btn-ghost{background:var(--srf2);color:var(--text)}
+.ac-btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+/* booking summary card */
+.summary-card{background:var(--srf);border:1px solid var(--border);border-radius:18px;padding:18px 20px}
+.sc-title{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:14px}
+.sc-rows{display:flex;flex-direction:column;gap:8px}
+.sc-row{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.sc-row-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.sc-row-label{color:var(--sub);flex:1}
+.sc-row-val{font-weight:600}
+.sc-divider{border:none;border-top:1px solid var(--border);margin:10px 0}
+/* gallery section */
+.gallery-card{background:var(--srf);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.gallery-locked{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:12px}
+.gallery-lock-icon{width:56px;height:56px;background:var(--srf2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.gallery-locked h3{font-size:1rem;font-weight:700}
+.gallery-locked p{font-size:.82rem;color:var(--sub);max-width:260px}
+.gallery-locked .progress-wrap{width:100%;max-width:300px}
+.edit-progress-bar{width:100%;height:6px;background:var(--srf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.edit-progress-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 1s ease}
+.gallery-ready{padding:18px 20px}
+.gr-banner{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:12px;margin-bottom:16px}
+.gr-banner p{font-size:.875rem;color:var(--green);font-weight:600}
+.gr-banner .count{font-size:.78rem;color:var(--sub);margin-top:2px;display:block}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.gallery-thumb{aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;position:relative}
+.gallery-thumb canvas{width:100%;height:100%;display:block}
+.gallery-thumb:hover::after{content:'🔍';position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.gallery-actions{display:flex;gap:8px}
+.confirm-gallery-btn{flex:1;padding:12px;border-radius:12px;background:var(--gold);color:#07080D;font-size:.875rem;font-weight:800;border:none;cursor:pointer}
+.confirm-gallery-btn:hover{opacity:.88}
+.download-btn{padding:12px 18px;border-radius:12px;background:var(--srf2);border:1px solid var(--border);color:var(--text);font-size:.875rem;font-weight:600;cursor:pointer}
+.download-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* delivery confirmed */
+.delivery-confirmed{padding:24px;text-align:center}
+.dc-icon{font-size:2.5rem;margin-bottom:10px}
+.dc-title{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.dc-sub{font-size:.82rem;color:var(--sub);margin-bottom:16px}
+.leave-review-btn{padding:12px 28px;border-radius:100px;background:var(--gold);color:#07080D;font-size:.875rem;font-weight:800;border:none;cursor:pointer}
+/* chat panel */
+.chat-panel{display:none;position:fixed;bottom:0;right:24px;z-index:400;width:340px;height:500px;background:var(--srf);border:1px solid var(--border);border-radius:18px 18px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.45);flex-direction:column;overflow:hidden}
+.chat-panel.open{display:flex}
+.cp-header{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid var(--border);background:var(--srf2)}
+.cp-av{width:32px;height:32px;border-radius:50%;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+.cp-name{font-size:.875rem;font-weight:700;flex:1}
+.cp-status{font-size:.7rem;color:var(--green)}
+.cp-close{background:none;border:none;color:var(--sub);font-size:1.2rem;cursor:pointer}
+.chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+.chat-msg{max-width:80%;display:flex;flex-direction:column}
+.chat-msg.in{align-self:flex-start}
+.chat-msg.out{align-self:flex-end}
+.bubble{padding:8px 12px;border-radius:14px;font-size:.84rem;line-height:1.5}
+.chat-msg.in .bubble{background:var(--srf2);border-bottom-left-radius:3px}
+.chat-msg.out .bubble{background:var(--gold);color:#07080D;border-bottom-right-radius:3px}
+.chat-time{font-size:.66rem;color:var(--muted);margin-top:2px}
+.chat-msg.out .chat-time{text-align:right}
+.chat-input-row{display:flex;gap:7px;padding:10px 12px;border-top:1px solid var(--border)}
+.chat-in{flex:1;background:var(--srf2);border:1px solid var(--border);border-radius:100px;padding:8px 14px;font-size:.84rem;color:var(--text);outline:none}
+.chat-in:focus{border-color:var(--gold)}
+.chat-send{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#07080D;border:none;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+/* review modal */
+.overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.review-modal{background:var(--srf);border:1px solid var(--border);border-radius:22px;padding:28px;width:100%;max-width:440px;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+.rm-title{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;margin-bottom:4px}
+.rm-sub{font-size:.82rem;color:var(--sub);margin-bottom:20px}
+.star-picker{display:flex;gap:6px;margin-bottom:18px;justify-content:center}
+.star-pick{font-size:2.2rem;cursor:pointer;transition:transform .1s;color:var(--muted)}
+.star-pick.lit{color:var(--gold)}
+.star-pick:hover{transform:scale(1.15)}
+.cat-ratings{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.cat-row{display:flex;align-items:center;gap:12px}
+.cat-label{font-size:.8rem;color:var(--sub);width:110px;flex-shrink:0}
+.cat-stars{display:flex;gap:3px}
+.cs{font-size:1.1rem;cursor:pointer;color:var(--muted);transition:color .1s}
+.cs.lit{color:var(--gold)}
+.review-textarea{width:100%;padding:11px 14px;border-radius:var(--r);background:var(--srf2);border:1.5px solid var(--border);color:var(--text);font-family:inherit;font-size:.875rem;resize:vertical;min-height:80px;outline:none;margin-bottom:14px}
+.review-textarea:focus{border-color:var(--gold)}
+.rebook-row{display:flex;align-items:center;justify-content:space-between;font-size:.875rem;margin-bottom:18px}
+.rebook-btns{display:flex;gap:8px}
+.rb-yn{padding:7px 16px;border-radius:100px;font-size:.8rem;font-weight:600;background:var(--srf2);border:1px solid var(--border);color:var(--sub);cursor:pointer}
+.rb-yn.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.submit-review-btn{width:100%;padding:13px;border-radius:12px;background:var(--gold);color:#07080D;font-size:.9rem;font-weight:800;border:none;cursor:pointer}
+.submit-review-btn:hover{opacity:.88}
+@media(max-width:900px){.track-body{grid-template-columns:1fr}.milestone-panel{position:static}.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.track-body{padding:16px}.booking-header{padding:14px 16px}.demo-bar{padding:8px 16px}.gallery-grid{grid-template-columns:repeat(2,1fr)}.chat-panel{width:100%;right:0}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Lumora</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-btn">☀️</button>
+    <a href="dashboard-client.html" class="nav-btn nav-btn-outline">My Bookings</a>
+  </div>
+</nav>
+
+<!-- demo state bar -->
+<div class="demo-bar">
+  <span class="demo-label">🎮 Demo mode — simulate status:</span>
+  <button class="demo-btn" onclick="setStatus('confirmed')">Confirmed</button>
+  <button class="demo-btn" onclick="setStatus('pre-consult')">Pre-consult</button>
+  <button class="demo-btn current" id="demo-btn-editing" onclick="setStatus('editing')">Editing</button>
+  <button class="demo-btn" onclick="setStatus('delivered')">Delivered</button>
+  <button class="demo-btn" onclick="setStatus('complete')">Complete</button>
+</div>
+
+<!-- booking header -->
+<div class="booking-header">
+  <div class="bh-inner">
+    <div class="bh-left">
+      <p class="bh-breadcrumb"><a href="dashboard-client.html">← My Bookings</a></p>
+      <p class="bh-ref" id="bh-ref">Booking ref: LM-ABC-2026</p>
+      <h1 class="bh-title" id="bh-title">Sophie Clarke · Wedding Shoot</h1>
+      <div class="bh-meta">
+        <span class="bh-meta-item">📅 <span id="bh-date">14 August 2026</span></span>
+        <span class="bh-meta-item">⏰ <span id="bh-slot">9am – 1pm</span></span>
+        <span class="bh-meta-item">📦 <span id="bh-pkg">Full Day (8hrs)</span></span>
+        <span class="status-badge status-in-progress" id="status-badge">⚙️ Editing in Progress</span>
+      </div>
+    </div>
+    <div class="bh-right">
+      <button class="hdr-btn" onclick="openChat()">💬 Message Sophie</button>
+      <button class="hdr-btn" onclick="window.print()">🖨 Download receipt</button>
+      <button class="hdr-btn hdr-btn-gold" id="main-cta" onclick="handleMainCTA()">View Gallery</button>
+    </div>
+  </div>
+</div>
+
+<div class="track-body">
+  <!-- milestone stepper -->
+  <aside class="milestone-panel">
+    <p class="mp-title">Booking Progress</p>
+    <div class="milestones" id="milestones"></div>
+  </aside>
+
+  <!-- right column -->
+  <div class="main-content">
+    <!-- current action -->
+    <div class="action-card">
+      <div class="ac-header">
+        <div class="ac-icon" id="ac-icon" style="background:rgba(251,191,36,.15)">⚙️</div>
+        <div><div class="ac-title" id="ac-title">Editing in Progress</div><div class="ac-sub" id="ac-sub">Sophie is working on your photos</div></div>
+      </div>
+      <div class="ac-body">
+        <div class="creator-brief">
+          <div class="cb-av">SC</div>
+          <div><div class="cb-name">Sophie Clarke</div><div class="cb-meta">★ 4.9 · Photographer · Shoreditch</div></div>
+          <div class="cb-actions">
+            <button class="cb-action-btn" onclick="openChat()">💬 Chat</button>
+            <button class="cb-action-btn gold" onclick="window.location='profile.html'">Profile</button>
+          </div>
+        </div>
+        <p class="action-info" id="action-info">
+          Your shoot was a success! <strong>Sophie is now editing your photos</strong> with her signature editorial style. She's working through 600+ RAW files and applying custom retouching to each selected image. Expected delivery: <strong>28 August 2026</strong>.
+        </p>
+        <div class="action-btns" id="action-btns">
+          <button class="ac-btn ac-btn-ghost" onclick="openChat()">💬 Ask Sophie for an update</button>
+          <button class="ac-btn ac-btn-ghost" onclick="alert('Reminder set! You\'ll get a notification when your gallery is ready.')">🔔 Notify me when ready</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- gallery section -->
+    <div class="gallery-card" id="gallery-card">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:.9rem;font-weight:700">Your Gallery</div>
+          <div style="font-size:.75rem;color:var(--sub)" id="gallery-subtitle">Photos will appear here when delivered</div>
+        </div>
+        <span style="font-size:.75rem;color:var(--sub)" id="gallery-count"></span>
+      </div>
+      <div id="gallery-body"></div>
+    </div>
+
+    <!-- booking summary -->
+    <div class="summary-card">
+      <p class="sc-title">Booking Summary</p>
+      <div class="sc-rows">
+        <div class="sc-row"><span class="sc-row-icon">📷</span><span class="sc-row-label">Creator</span><span class="sc-row-val" id="sc-creator">Sophie Clarke</span></div>
+        <div class="sc-row"><span class="sc-row-icon">📅</span><span class="sc-row-label">Date</span><span class="sc-row-val" id="sc-date">14 August 2026</span></div>
+        <div class="sc-row"><span class="sc-row-icon">📦</span><span class="sc-row-label">Package</span><span class="sc-row-val" id="sc-pkg">Full Day (8hrs)</span></div>
+        <div class="sc-row"><span class="sc-row-icon">📍</span><span class="sc-row-label">Location</span><span class="sc-row-val" id="sc-loc">Kew Gardens</span></div>
+        <div class="sc-row"><span class="sc-row-icon">🎭</span><span class="sc-row-label">Event type</span><span class="sc-row-val" id="sc-event">Wedding</span></div>
+        <hr class="sc-divider">
+        <div class="sc-row"><span class="sc-row-icon">💰</span><span class="sc-row-label">Total paid</span><span class="sc-row-val" id="sc-total" style="color:var(--gold)">£1,882</span></div>
+        <div class="sc-row"><span class="sc-row-icon">🔒</span><span class="sc-row-label">Escrow status</span><span class="sc-row-val" id="sc-escrow" style="color:var(--amber)">Held · Releases on your approval</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- chat panel -->
+<div class="chat-panel" id="chat-panel">
+  <div class="cp-header">
+    <div class="cp-av">SC</div>
+    <div style="flex:1">
+      <div class="cp-name">Sophie Clarke</div>
+      <div class="cp-status">● Online · typically replies in &lt;2h</div>
+    </div>
+    <button class="cp-close" onclick="document.getElementById('chat-panel').classList.remove('open')">✕</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs">
+    <div style="text-align:center;font-size:.7rem;color:var(--muted);padding:4px 0">Today</div>
+    <div class="chat-msg in"><div class="bubble">Hi! Your shoot was absolutely incredible 📸 I'm currently about 40% through the editing — the golden hour shots are going to blow you away!</div><span class="chat-time">11:34</span></div>
+    <div class="chat-msg in"><div class="bubble">On track to deliver by Aug 28. I'll send you a sneak peek of 10 images tomorrow! ✨</div><span class="chat-time">11:35</span></div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-in" id="chat-in" type="text" placeholder="Message Sophie…" onkeydown="if(event.key==='Enter')sendChatMsg()">
+    <button class="chat-send" onclick="sendChatMsg()">➤</button>
+  </div>
+</div>
+
+<!-- review modal -->
+<div class="overlay" id="review-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="review-modal">
+    <h2 class="rm-title">How was your shoot?</h2>
+    <p class="rm-sub">Share your experience with Sophie and help other clients.</p>
+    <div class="star-picker" id="star-picker">
+      <span class="star-pick" onclick="setStars(1)">★</span>
+      <span class="star-pick" onclick="setStars(2)">★</span>
+      <span class="star-pick" onclick="setStars(3)">★</span>
+      <span class="star-pick lit" onclick="setStars(4)">★</span>
+      <span class="star-pick lit" onclick="setStars(5)">★</span>
+    </div>
+    <div class="cat-ratings">
+      <div class="cat-row"><span class="cat-label">Communication</span><div class="cat-stars" data-cat="comm"><span class="cs lit" onclick="setCat('comm',1)">★</span><span class="cs lit" onclick="setCat('comm',2)">★</span><span class="cs lit" onclick="setCat('comm',3)">★</span><span class="cs lit" onclick="setCat('comm',4)">★</span><span class="cs lit" onclick="setCat('comm',5)">★</span></div></div>
+      <div class="cat-row"><span class="cat-label">Photo Quality</span><div class="cat-stars" data-cat="quality"><span class="cs lit" onclick="setCat('quality',1)">★</span><span class="cs lit" onclick="setCat('quality',2)">★</span><span class="cs lit" onclick="setCat('quality',3)">★</span><span class="cs lit" onclick="setCat('quality',4)">★</span><span class="cs lit" onclick="setCat('quality',5)">★</span></div></div>
+      <div class="cat-row"><span class="cat-label">Punctuality</span><div class="cat-stars" data-cat="time"><span class="cs lit" onclick="setCat('time',1)">★</span><span class="cs lit" onclick="setCat('time',2)">★</span><span class="cs lit" onclick="setCat('time',3)">★</span><span class="cs lit" onclick="setCat('time',4)">★</span><span class="cs" onclick="setCat('time',5)">★</span></div></div>
+      <div class="cat-row"><span class="cat-label">Value</span><div class="cat-stars" data-cat="value"><span class="cs lit" onclick="setCat('value',1)">★</span><span class="cs lit" onclick="setCat('value',2)">★</span><span class="cs lit" onclick="setCat('value',3)">★</span><span class="cs lit" onclick="setCat('value',4)">★</span><span class="cs" onclick="setCat('value',5)">★</span></div></div>
+    </div>
+    <textarea class="review-textarea" id="review-text" placeholder="Tell others about your experience — what made it special?"></textarea>
+    <div class="rebook-row">
+      <span style="font-size:.875rem;font-weight:600">Would you book Sophie again?</span>
+      <div class="rebook-btns">
+        <button class="rb-yn on" id="rebook-yes" onclick="setRebook(true)">👍 Yes</button>
+        <button class="rb-yn" id="rebook-no" onclick="setRebook(false)">No</button>
+      </div>
+    </div>
+    <button class="submit-review-btn" onclick="submitReview()">Submit Review</button>
+  </div>
+</div>
+
+<script>
+/* ── state ─────────────────────────────────────────────────────── */
+const MILESTONES = [
+  {label:'Booking Requested',icon:'📋',note:'Your request was sent to Sophie.'},
+  {label:'Creator Confirmed',icon:'✅',note:'Sophie accepted your booking.'},
+  {label:'Deposit Paid',icon:'💳',note:'50% deposit secured in escrow.'},
+  {label:'Pre-shoot Consultation',icon:'💬',note:'Video call to plan the shoot.'},
+  {label:'Shoot Day',icon:'📸',note:'Sophie is on location capturing your event.'},
+  {label:'Editing & Retouching',icon:'⚙️',note:'Photos being professionally edited.'},
+  {label:'Gallery Delivered',icon:'🖼',note:'Your private gallery is ready to view.'},
+  {label:'Your Confirmation',icon:'✓',note:'You confirm receipt & approve the gallery.'},
+  {label:'Payment Released',icon:'💸',note:'Funds released from escrow to Sophie.'},
+];
+const STATUS_MAP = {
+  'confirmed':   {milestoneIdx:2, badge:'status-confirmed',  badgeTxt:'✅ Confirmed',         acIcon:'✅', acIconBg:'rgba(56,189,248,.12)',  acTitle:'Booking Confirmed!',       acSub:'Sophie has accepted your booking',          info:'Great news! <strong>Sophie has confirmed your booking</strong>. She\'ll reach out within 24 hours to schedule a pre-shoot consultation call where you\'ll discuss your vision, preferred shots, and logistics.', ctaTxt:'Message Sophie', ctaFn:'openChat()', editing:false, delivered:false},
+  'pre-consult': {milestoneIdx:3, badge:'status-confirmed',  badgeTxt:'📞 Pre-consult Scheduled', acIcon:'💬', acIconBg:'rgba(56,189,248,.12)',  acTitle:'Pre-shoot Consultation',   acSub:'Scheduled for 12 August at 2pm BST',       info:'Your pre-shoot consultation is <strong>scheduled for 12 August at 2:00 PM BST</strong>. Sophie will video call you to discuss your preferred shots, locations, timing, and any special requests. Have your ideas ready!', ctaTxt:'Add to Calendar', ctaFn:'alert(\'Calendar invite sent to your email!\')', editing:false, delivered:false},
+  'editing':     {milestoneIdx:5, badge:'status-in-progress',badgeTxt:'⚙️ Editing in Progress',  acIcon:'⚙️', acIconBg:'rgba(251,191,36,.12)', acTitle:'Editing in Progress',      acSub:'Sophie is working on your photos',          info:'Your shoot was a success! <strong>Sophie is editing your photos</strong> with her signature editorial style. She\'s working through 600+ RAW files applying custom retouching. Expected delivery: <strong>28 August 2026</strong>.', ctaTxt:'View Gallery', ctaFn:'document.getElementById(\'gallery-card\').scrollIntoView({behavior:\'smooth\'})', editing:true, delivered:false},
+  'delivered':   {milestoneIdx:6, badge:'status-delivered',  badgeTxt:'🎉 Gallery Delivered',    acIcon:'🖼', acIconBg:'rgba(74,222,128,.12)',  acTitle:'Your Gallery is Ready!',   acSub:'247 edited photos awaiting your approval', info:'<strong>Sophie has delivered your gallery!</strong> 247 professionally edited photos are now in your private Lumora gallery. Please review them and confirm receipt to release payment to Sophie.', ctaTxt:'Confirm & Approve Gallery', ctaFn:'confirmGallery()', editing:false, delivered:true},
+  'complete':    {milestoneIdx:8, badge:'status-complete',   badgeTxt:'⭐ Complete',            acIcon:'⭐', acIconBg:'rgba(233,184,74,.12)',  acTitle:'Booking Complete!',        acSub:'Payment released · Gallery saved forever', info:'Your booking is <strong>complete</strong>! Payment has been released to Sophie. Your gallery is saved permanently in your Lumora account. Thank you for choosing Lumora — we hope to see you again!', ctaTxt:'Leave a Review', ctaFn:'openReview()', editing:false, delivered:false},
+};
+let currentStatus = 'editing';
+
+/* ── init ─────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  drawLogo(); initTheme();
+  // Load from localStorage or use defaults
+  const b = JSON.parse(localStorage.getItem('lumora_active_booking') || '{}');
+  if(b.ref){ document.getElementById('bh-ref').textContent = 'Booking ref: ' + b.ref; document.getElementById('booking-ref')?.textContent = b.ref; }
+  if(b.date){ document.getElementById('bh-date').textContent = b.date; document.getElementById('sc-date').textContent = b.date; }
+  if(b.pkg) document.getElementById('bh-pkg').textContent = b.pkg.name + ' (' + b.pkg.hrs + 'hrs)';
+  if(b.total) document.getElementById('sc-total').textContent = '£' + b.total.toLocaleString();
+  if(b.client?.location) document.getElementById('sc-loc').textContent = b.client.location;
+  if(b.client?.eventType) document.getElementById('sc-event').textContent = b.client.eventType;
+  setStatus(currentStatus);
+});
+
+/* ── status setter ─────────────────────────────────────────────── */
+function setStatus(status) {
+  currentStatus = status;
+  const s = STATUS_MAP[status];
+  // Demo buttons
+  document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('current'));
+  const db = document.querySelector(`.demo-btn[onclick="setStatus('${status}')"]`);
+  if(db) db.classList.add('current');
+  // Header badge
+  const badge = document.getElementById('status-badge');
+  badge.className = 'status-badge ' + s.badge;
+  badge.textContent = s.badgeTxt;
+  // Main CTA
+  const cta = document.getElementById('main-cta');
+  cta.textContent = s.delivered ? '✓ Confirm Gallery' : s.ctaTxt;
+  cta.onclick = new Function(s.delivered ? 'confirmGallery()' : s.ctaFn);
+  // Action card
+  const icon = document.getElementById('ac-icon');
+  icon.textContent = s.acIcon; icon.style.background = s.acIconBg;
+  document.getElementById('ac-title').textContent = s.acTitle;
+  document.getElementById('ac-sub').textContent = s.acSub;
+  document.getElementById('action-info').innerHTML = s.info;
+  // Action buttons
+  const btns = document.getElementById('action-btns');
+  if(status === 'delivered') {
+    btns.innerHTML = `<button class="ac-btn ac-btn-primary" onclick="confirmGallery()">✓ Confirm & Approve Gallery</button><button class="ac-btn ac-btn-ghost" onclick="openChat()">💬 Message Sophie</button>`;
+  } else if(status === 'complete') {
+    btns.innerHTML = `<button class="ac-btn ac-btn-primary" onclick="openReview()">⭐ Leave a Review</button><button class="ac-btn ac-btn-ghost" onclick="window.location='search.html'">🔍 Book Another Creator</button>`;
+  } else {
+    btns.innerHTML = `<button class="ac-btn ac-btn-ghost" onclick="openChat()">💬 Message Sophie</button><button class="ac-btn ac-btn-ghost" onclick="alert('Reminder set!')">🔔 Get notified</button>`;
+  }
+  // Gallery
+  renderGallery(s);
+  // Milestones
+  renderMilestones(s.milestoneIdx);
+}
+
+/* ── milestones ─────────────────────────────────────────────────── */
+function renderMilestones(currentIdx) {
+  const container = document.getElementById('milestones');
+  const DATES = ['Aug 5','Aug 5','Aug 5','Aug 12','Aug 14','Aug 16–28','Aug 28 est.','—','—'];
+  container.innerHTML = MILESTONES.map((m, i) => {
+    const done = i < currentIdx;
+    const current = i === currentIdx;
+    const pending = i > currentIdx;
+    const dotCls = done ? 'ms-dot done' : current ? 'ms-dot current pulse' : 'ms-dot pending';
+    const dotTxt = done ? '✓' : (i+1);
+    const lineCls = 'ms-line' + (done ? ' done' : '');
+    return `<div class="milestone">
+      <div class="ms-left">
+        <div class="${dotCls}">${dotTxt}</div>
+        ${i < MILESTONES.length-1 ? `<div class="${lineCls}"></div>` : ''}
+      </div>
+      <div class="ms-right">
+        <div class="ms-label ${current ? 'current' : ''}">${m.label}</div>
+        <div class="ms-date">${DATES[i]}${current ? ' · <strong style="color:var(--gold)">Now</strong>' : ''}</div>
+        ${current ? `<div class="ms-note">${m.note}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── gallery ────────────────────────────────────────────────────── */
+function renderGallery(s) {
+  const body = document.getElementById('gallery-body');
+  const sub = document.getElementById('gallery-subtitle');
+  const cnt = document.getElementById('gallery-count');
+  if(s.editing) {
+    sub.textContent = 'Sophie is still editing your photos';
+    cnt.textContent = '';
+    body.innerHTML = `<div class="gallery-locked">
+      <div class="gallery-lock-icon">🔒</div>
+      <h3>Gallery not yet ready</h3>
+      <p>Sophie is editing your 247 selected photos. You'll receive an email notification the moment your gallery is ready.</p>
+      <div class="progress-wrap">
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--sub);margin-bottom:4px"><span>Editing progress</span><span>42%</span></div>
+        <div class="edit-progress-bar"><div class="edit-progress-fill" id="edit-fill" style="width:0%"></div></div>
+      </div>
+    </div>`;
+    setTimeout(() => { const f = document.getElementById('edit-fill'); if(f) f.style.width='42%'; }, 100);
+  } else if(s.delivered) {
+    sub.textContent = '247 edited photos ready for download';
+    cnt.textContent = '247 photos';
+    body.innerHTML = `<div class="gallery-ready">
+      <div class="gr-banner">
+        <span style="font-size:1.4rem">🎉</span>
+        <div><p>Your gallery is ready!</p><span class="count">247 professionally edited photos · High resolution · Commercial licence included</span></div>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <div class="gallery-actions">
+        <button class="confirm-gallery-btn" onclick="confirmGallery()">✓ Confirm Receipt & Approve</button>
+        <button class="download-btn" onclick="alert('Download starting… (247 photos, 2.8 GB)')">⬇ Download All</button>
+      </div>
+    </div>`;
+    // Draw gallery thumbs
+    setTimeout(drawGalleryThumbs, 50);
+  } else if(s.milestoneIdx >= 7) {
+    sub.textContent = 'Gallery confirmed ✓';
+    cnt.textContent = '247 photos';
+    body.innerHTML = `<div class="delivery-confirmed">
+      <div class="dc-icon">✅</div>
+      <h3 class="dc-title">Gallery Approved!</h3>
+      <p class="dc-sub">You've confirmed your gallery. Payment has been released to Sophie. Your photos are saved permanently in your Lumora account.</p>
+      <button class="leave-review-btn" onclick="openReview()">⭐ Leave a Review for Sophie</button>
+    </div>`;
+  } else {
+    sub.textContent = 'Photos will appear here when delivered';
+    cnt.textContent = '';
+    body.innerHTML = `<div class="gallery-locked"><div class="gallery-lock-icon">🔒</div><h3>Gallery locked</h3><p>Your gallery will unlock once Sophie delivers your edited photos.</p></div>`;
+  }
+}
+
+function drawGalleryThumbs() {
+  const grid = document.getElementById('gallery-grid'); if(!grid) return;
+  const palettes = [['#1a0d26','#e9b84a'],['#0d1117','#a78bfa'],['#0a0f0d','#34d399'],['#120d0a','#fb923c'],['#0a0d12','#38bdf8'],['#120a0a','#f87171'],['#0d100a','#84cc16'],['#0a0d0f','#06b6d4']];
+  grid.innerHTML = Array(8).fill(0).map((_,i) => `<div class="gallery-thumb"><canvas id="gthumb${i}" width="120" height="120"></canvas></div>`).join('');
+  palettes.forEach((pal, i) => {
+    setTimeout(() => {
+      const c = document.getElementById('gthumb'+i); if(!c) return;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0,0,120,120);
+      g.addColorStop(0, pal[0]); g.addColorStop(1, hex2rgba(pal[1],.3));
+      ctx.fillStyle = g; ctx.fillRect(0,0,120,120);
+      ctx.strokeStyle = pal[1]; ctx.lineWidth = .5; ctx.globalAlpha = .15;
+      ctx.beginPath(); ctx.arc(60,60,40,0,Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(60,60,25,0,Math.PI*2); ctx.stroke();
+      ctx.globalAlpha = .08;
+      ctx.beginPath(); ctx.arc(60,60,55,0,Math.PI*2); ctx.fillStyle=pal[1]; ctx.fill();
+    }, i * 30);
+  });
+}
+
+function hex2rgba(hex, a) { const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return `rgba(${r},${g},${b},${a})`; }
+
+function confirmGallery() {
+  if(currentStatus !== 'delivered') return;
+  setStatus('complete');
+  document.getElementById('sc-escrow').textContent = '✅ Released to Sophie';
+  document.getElementById('sc-escrow').style.color = 'var(--green)';
+  setTimeout(() => openReview(), 600);
+}
+
+/* ── chat ───────────────────────────────────────────────────────── */
+function openChat() { document.getElementById('chat-panel').classList.add('open'); }
+function sendChatMsg() {
+  const inp = document.getElementById('chat-in');
+  const txt = inp.value.trim(); if(!txt) return;
+  const msgs = document.getElementById('chat-msgs');
+  const d = document.createElement('div'); d.className='chat-msg out';
+  d.innerHTML=`<div class="bubble">${txt}</div><span class="chat-time">Just now · ✓ Sent</span>`;
+  msgs.appendChild(d); inp.value=''; msgs.scrollTop = msgs.scrollHeight;
+  const replies = ['On it! I\'ll send you a sneak peek tomorrow 📸','That\'s a great idea, I\'ll incorporate that!','Noted! I\'ll prioritise those shots in the edit.','Almost done with the first pass — looking amazing so far! ✨'];
+  setTimeout(() => {
+    const r = document.createElement('div'); r.className='chat-msg in';
+    r.innerHTML=`<div class="bubble">${replies[Math.floor(Math.random()*replies.length)]}</div><span class="chat-time">Just now</span>`;
+    msgs.appendChild(r); msgs.scrollTop = msgs.scrollHeight;
+  }, 1400);
+}
+
+/* ── review ─────────────────────────────────────────────────────── */
+let overallStars = 5, rebookYes = true;
+function openReview() { document.getElementById('review-overlay').classList.add('open'); }
+function setStars(n) { overallStars=n; document.querySelectorAll('.star-pick').forEach((s,i)=>s.classList.toggle('lit',i<n)); }
+function setCat(cat, n) { document.querySelectorAll(`[data-cat="${cat}"] .cs`).forEach((s,i)=>s.classList.toggle('lit',i<n)); }
+function setRebook(v) { rebookYes=v; document.getElementById('rebook-yes').classList.toggle('on',v); document.getElementById('rebook-no').classList.toggle('on',!v); }
+function submitReview() {
+  document.getElementById('review-overlay').classList.remove('open');
+  setTimeout(() => alert('🌟 Thank you! Your review has been published. Sophie will be thrilled!'), 200);
+}
+
+/* ── utils ─────────────────────────────────────────────────────── */
+function drawLogo() {
+  const c=document.getElementById('logo-canvas');if(!c)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,28,28);ctx.strokeStyle='#E9B84A';ctx.lineWidth=1.5;
+  for(let i=0;i<7;i++){ctx.save();ctx.translate(14,14);ctx.rotate(i*Math.PI*2/7);ctx.beginPath();ctx.moveTo(-6,0);ctx.lineTo(0,-11);ctx.lineTo(6,0);ctx.closePath();ctx.fillStyle=`rgba(233,184,74,${.55+i*.07})`;ctx.fill();ctx.stroke();ctx.restore();}
+}
+function initTheme(){
+  const btn=document.getElementById('theme-btn');let isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';
+  btn.addEventListener('click',()=>{isDark=!isDark;document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';});
+}
+function handleMainCTA(){ document.getElementById('gallery-card').scrollIntoView({behavior:'smooth'}); }
+</script>
+</body>
+</html>

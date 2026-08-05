@@ -700,7 +700,7 @@
       </div>
 
       <!-- book button -->
-      <button class="book-btn" id="book-btn" onclick="openBookingSuccess()">Request to Book</button>
+      <button class="book-btn" id="book-btn" onclick="startBookingFlow()">Request to Book</button>
       <p class="resp-time">⚡ Sophie typically responds in under 2 hours</p>
 
       <!-- chat section -->
@@ -936,7 +936,7 @@ function selectPkg(idx) {
   document.getElementById('sc-total').textContent=`£${pkg.base+fee}`;
 }
 
-/* ── booking success ──────────────────────────────────────────── */
+/* ── booking success (legacy modal, kept for fallback) ─────────── */
 function openBookingSuccess() {
   if(!selectedDay){
     document.getElementById('availability').scrollIntoView({behavior:'smooth'});
@@ -946,6 +946,38 @@ function openBookingSuccess() {
   document.getElementById('success-overlay').classList.add('open');
 }
 function closeSuccess(){ document.getElementById('success-overlay').classList.remove('open'); }
+
+/* ── real booking flow → saves draft + navigates ──────────────── */
+function startBookingFlow() {
+  if(!selectedDay){
+    document.getElementById('availability').scrollIntoView({behavior:'smooth'});
+    document.getElementById('date-btn').style.borderColor='var(--gold)';
+    return;
+  }
+  const pkgEl = document.querySelector('.pkg-card.active');
+  const pkgName = pkgEl ? pkgEl.querySelector('.pkg-name').textContent : 'Full Day';
+  const totalEl = document.getElementById('pb-total');
+  const totalText = totalEl ? totalEl.textContent : '£1,882';
+  const draft = {
+    creatorId: 1,
+    creatorName: 'Sophie Clarke',
+    creatorType: 'Photographer',
+    creatorLoc: 'Shoreditch, London',
+    creatorRating: 4.9,
+    creatorIg: 'sophieclarke.photo',
+    creatorWa: '447700900001',
+    avatarC1: '#1a0d26', avatarC2: '#e9b84a',
+    package: pkgName,
+    date: '14 August 2026',
+    slot: selectedDay <= 5 ? '9am – 5pm (Full Day)' : '2pm – 6pm (Half Day)',
+    location: 'Kew Gardens, London',
+    total: totalText,
+    deposit: '£' + Math.round(parseInt(totalText.replace(/[^0-9]/g,'')) / 2).toLocaleString(),
+    createdAt: new Date().toISOString()
+  };
+  localStorage.setItem('lumora_draft_booking', JSON.stringify(draft));
+  window.location.href = 'booking-flow.html';
+}
 
 /* ── chat panel ───────────────────────────────────────────────── */
 function openChatPanel(){ document.getElementById('chat-panel').classList.add('open'); }
