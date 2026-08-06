@@ -5,35 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Find a Creator — Lumora</title>
   <style>
-    /* ── design tokens ───────────────────────────────────────── */
+    /* ── design tokens ──────────────────────────────────────────── */
     :root {
-      --bg:       #07080D;
-      --srf:      #111318;
-      --srf2:     #1A1D26;
-      --border:   rgba(255,255,255,0.07);
-      --gold:     #E9B84A;
-      --gold-bg:  rgba(233,184,74,0.10);
-      --text:     #E8E6DF;
-      --sub:      #9A9CAA;
-      --muted:    #4A4D5E;
-      --green:    #4ade80;
-      --amber:    #fbbf24;
-      --blue:     #38bdf8;
-      --purple:   #a78bfa;
-      --r:        12px;
-      --nav-h:    64px;
+      --bg:      #07080D;
+      --srf:     #111318;
+      --srf2:    #1A1D26;
+      --border:  rgba(255,255,255,0.07);
+      --gold:    #E9B84A;
+      --gold-bg: rgba(233,184,74,0.10);
+      --text:    #E8E6DF;
+      --sub:     #9A9CAA;
+      --muted:   #4A4D5E;
+      --green:   #4ade80;
+      --amber:   #fbbf24;
+      --blue:    #38bdf8;
+      --purple:  #a78bfa;
+      --r:       12px;
+      --nav-h:   64px;
     }
     @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
-      --bg:#F5F4F0; --srf:#FFF; --srf2:#ECEAE3; --border:rgba(0,0,0,0.08);
-      --text:#1A1A2E; --sub:#606272; --muted:#BCBDCC; --gold-bg:rgba(233,184,74,0.13);
+      --bg:#F5F4F0;--srf:#FFF;--srf2:#ECEAE3;--border:rgba(0,0,0,0.08);
+      --text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,0.13);
     }}
     :root[data-theme="light"] {
-      --bg:#F5F4F0; --srf:#FFF; --srf2:#ECEAE3; --border:rgba(0,0,0,0.08);
-      --text:#1A1A2E; --sub:#606272; --muted:#BCBDCC; --gold-bg:rgba(233,184,74,0.13);
+      --bg:#F5F4F0;--srf:#FFF;--srf2:#ECEAE3;--border:rgba(0,0,0,0.08);
+      --text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,0.13);
     }
     :root[data-theme="dark"] {
-      --bg:#07080D; --srf:#111318; --srf2:#1A1D26; --border:rgba(255,255,255,0.07);
-      --text:#E8E6DF; --sub:#9A9CAA; --muted:#4A4D5E;
+      --bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,0.07);
+      --text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -41,14 +41,16 @@
     button{cursor:pointer;font-family:inherit}
     input,select,textarea{font-family:inherit}
 
-    /* ── nav ─────────────────────────────────────────────────── */
+    /* ── nav ────────────────────────────────────────────────────── */
     nav{
-      position:sticky;top:0;z-index:100;height:var(--nav-h);
+      position:sticky;top:0;z-index:200;height:var(--nav-h);
       display:flex;align-items:center;justify-content:space-between;
       padding:0 32px;
       background:rgba(7,8,13,0.88);backdrop-filter:blur(20px);
       border-bottom:1px solid var(--border);
     }
+    @media(prefers-color-scheme:light){nav{background:rgba(245,244,240,0.92)}}
+    :root[data-theme="light"] nav{background:rgba(245,244,240,0.92)}
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem}
     .nav-logo canvas{width:28px;height:28px}
     .nav-center{display:flex;gap:24px}
@@ -63,7 +65,7 @@
       width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1rem;
     }
 
-    /* ── search hero ─────────────────────────────────────────── */
+    /* ── search hero ────────────────────────────────────────────── */
     .search-hero{background:var(--srf);border-bottom:1px solid var(--border);padding:18px 32px}
     .search-bar{
       max-width:860px;margin:0 auto;
@@ -74,10 +76,7 @@
     .search-bar:focus-within{border-color:var(--gold)}
     .search-field{flex:1;display:flex;align-items:center;gap:8px;padding:11px 20px}
     .search-field:first-child{flex:1.3}
-    .search-field input,.search-field select{
-      background:transparent;border:none;outline:none;
-      color:var(--text);font-size:.88rem;width:100%;
-    }
+    .search-field input,.search-field select{background:transparent;border:none;outline:none;color:var(--text);font-size:.88rem;width:100%}
     .search-field select option{background:var(--srf2)}
     .field-icon{font-size:.95rem;flex-shrink:0}
     .field-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);display:block;margin-bottom:1px}
@@ -89,31 +88,145 @@
     }
     .search-submit:hover{opacity:.88}
 
-    /* ── body layout ─────────────────────────────────────────── */
-    .search-body{
-      display:flex;align-items:flex-start;
-      max-width:1440px;margin:0 auto;padding:24px 32px 60px;gap:28px;
+    /* ── filter bar ─────────────────────────────────────────────── */
+    .filter-bar{
+      position:sticky;top:var(--nav-h);z-index:150;
+      background:var(--srf);border-bottom:1px solid var(--border);
+      padding:10px 32px;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
+    .filter-toggle-btn{
+      display:flex;align-items:center;gap:7px;
+      padding:7px 16px;border-radius:100px;font-size:.82rem;font-weight:700;
+      background:var(--srf2);border:1px solid var(--border);color:var(--text);
+      transition:all .15s;flex-shrink:0;white-space:nowrap;
+    }
+    .filter-toggle-btn:hover,.filter-toggle-btn.active{border-color:var(--gold);color:var(--gold)}
+    .filter-divider{width:1px;height:20px;background:var(--border);flex-shrink:0}
+    .sort-pills{display:flex;gap:5px;flex-wrap:wrap}
+    .s-pill{
+      padding:6px 13px;border-radius:100px;font-size:.78rem;font-weight:600;
+      background:transparent;border:1px solid var(--border);color:var(--sub);
+      cursor:pointer;white-space:nowrap;transition:all .15s;
+    }
+    .s-pill.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+    .filter-bar-right{margin-left:auto;font-size:.82rem;color:var(--sub);white-space:nowrap;flex-shrink:0}
+    .filter-bar-right strong{color:var(--text)}
 
-    /* ── sidebar ─────────────────────────────────────────────── */
-    .filters-sidebar{
-      width:260px;flex-shrink:0;
-      position:sticky;top:calc(var(--nav-h) + 16px);
-      max-height:calc(100vh - var(--nav-h) - 32px);overflow-y:auto;
+    /* active chips */
+    .active-chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+    .act-chip{
+      display:flex;align-items:center;gap:4px;
+      padding:4px 8px 4px 11px;border-radius:100px;
+      background:var(--gold-bg);border:1px solid rgba(233,184,74,.3);
+      color:var(--gold);font-size:.73rem;font-weight:600;
     }
-    .filters-sidebar::-webkit-scrollbar{width:3px}
-    .filters-sidebar::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+    .act-chip button{background:none;border:none;color:var(--gold);font-size:.9rem;line-height:1;padding:0 0 0 2px;cursor:pointer}
+
+    /* ── main grid area ─────────────────────────────────────────── */
+    .search-main{max-width:1440px;margin:0 auto;padding:20px 32px 60px}
+
+    /* ── minimal creator card ───────────────────────────────────── */
+    .creators-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+      gap:9px;
+    }
+    .c-card{
+      display:flex;align-items:center;gap:13px;
+      padding:14px 15px;
+      background:var(--srf);border:1px solid var(--border);
+      border-radius:13px;cursor:pointer;
+      position:relative;
+      transition:border-color .18s,box-shadow .18s,transform .18s;
+    }
+    .c-card:hover{
+      border-color:rgba(233,184,74,.35);
+      box-shadow:0 8px 28px rgba(0,0,0,.32);
+      transform:translateY(-1px);
+    }
+    .c-av{
+      width:50px;height:50px;border-radius:50%;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:.95rem;letter-spacing:-.5px;
+    }
+    .c-info{flex:1;min-width:0}
+    .c-name{
+      font-size:.88rem;font-weight:700;
+      display:flex;align-items:center;gap:5px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .c-vtick{
+      width:14px;height:14px;border-radius:50%;
+      background:var(--gold);color:#07080D;
+      font-size:.55rem;font-weight:900;
+      display:inline-flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .c-meta{
+      font-size:.74rem;color:var(--sub);
+      margin-top:3px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .c-foot{display:flex;align-items:center;gap:8px;margin-top:5px}
+    .c-rating{font-size:.74rem;font-weight:700;color:var(--gold)}
+    .c-rev{font-size:.72rem;color:var(--muted)}
+    .c-price{font-size:.74rem;color:var(--sub);margin-left:auto}
+    .c-avail{
+      position:absolute;top:11px;right:11px;
+      width:8px;height:8px;border-radius:50%;
+    }
+    .av-today{background:var(--green);box-shadow:0 0 7px var(--green)}
+    .av-tomorrow{background:var(--amber)}
+    .av-week{background:var(--blue)}
+
+    .empty-state{text-align:center;padding:60px 20px;color:var(--sub);grid-column:1/-1}
+    .empty-state h3{font-size:1.1rem;margin-bottom:8px;color:var(--text)}
+
+    .load-more-row{text-align:center;margin-top:28px}
+    .load-more{
+      padding:11px 40px;border-radius:100px;font-size:.88rem;font-weight:700;
+      background:var(--srf2);border:1px solid var(--border);color:var(--sub);
+      cursor:pointer;transition:all .2s;
+    }
+    .load-more:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* ── filter drawer (left) ───────────────────────────────────── */
+    .filter-drawer{position:fixed;inset:0;z-index:400;pointer-events:none}
+    .filter-drawer.open{pointer-events:all}
+    .fd-backdrop{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0);backdrop-filter:blur(0px);
+      transition:background .28s,backdrop-filter .28s;
+    }
+    .filter-drawer.open .fd-backdrop{
+      background:rgba(0,0,0,.52);backdrop-filter:blur(4px);
+    }
+    .fd-panel{
+      position:absolute;top:0;left:0;height:100%;width:min(340px,100vw);
+      background:var(--srf);border-right:1px solid var(--border);
+      overflow-y:auto;
+      transform:translateX(-100%);
+      transition:transform .3s cubic-bezier(.22,1,.36,1);
+      display:flex;flex-direction:column;
+    }
+    .filter-drawer.open .fd-panel{transform:translateX(0)}
+    .fd-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 20px 14px;border-bottom:1px solid var(--border);
+      position:sticky;top:0;background:var(--srf);z-index:2;
+    }
+    .fd-title{font-size:.95rem;font-weight:800}
+    .fd-close{
+      background:var(--srf2);border:1px solid var(--border);border-radius:50%;
+      width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;color:var(--sub);
+    }
+    .fd-close:hover{color:var(--text)}
+    .fd-clear{font-size:.75rem;color:var(--gold);background:none;border:none;font-weight:600;cursor:pointer}
+    .fd-body{padding:16px 20px;flex:1}
     .filter-sec{margin-bottom:22px}
-    .filter-title{
-      font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
-      color:var(--sub);margin-bottom:10px;
-    }
-    .clear-filters{
-      float:right;font-size:.7rem;color:var(--gold);background:none;border:none;
-      font-weight:600;cursor:pointer;text-transform:none;letter-spacing:0;
-    }
-
-    /* availability quick */
+    .filter-title{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--sub);margin-bottom:10px}
     .avail-btns{display:flex;gap:5px;flex-wrap:wrap}
     .avail-btn{
       padding:5px 11px;border-radius:100px;font-size:.78rem;font-weight:600;
@@ -121,8 +234,6 @@
       cursor:pointer;transition:all .15s;
     }
     .avail-btn.active{background:rgba(74,222,128,.15);border-color:var(--green);color:var(--green)}
-
-    /* dual-range budget */
     .budget-vals{display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:8px}
     .dual-range{position:relative;height:24px;margin:4px 0 6px}
     .range-track{position:absolute;top:50%;transform:translateY(-50%);height:4px;width:100%;background:var(--srf2);border-radius:2px}
@@ -135,37 +246,25 @@
     .range-slider::-webkit-slider-thumb{
       -webkit-appearance:none;pointer-events:all;cursor:pointer;
       width:17px;height:17px;border-radius:50%;
-      background:var(--gold);border:3px solid var(--bg);
+      background:var(--gold);border:3px solid var(--srf);
       box-shadow:0 0 0 1px var(--gold);
     }
     .range-slider::-moz-range-thumb{
       pointer-events:all;cursor:pointer;border:none;
       width:17px;height:17px;border-radius:50%;
-      background:var(--gold);border:3px solid var(--bg);
+      background:var(--gold);
     }
-
-    /* single range */
     .dist-val{font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:8px}
-    input[type=range].s-range{
-      width:100%;-webkit-appearance:none;appearance:none;
-      height:4px;background:var(--srf2);border-radius:2px;outline:none;
-    }
-    input[type=range].s-range::-webkit-slider-thumb{
-      -webkit-appearance:none;width:17px;height:17px;border-radius:50%;
-      background:var(--gold);border:3px solid var(--bg);cursor:pointer;
-    }
-
-    /* chip grid */
+    input[type=range].s-range{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:var(--srf2);border-radius:2px;outline:none}
+    input[type=range].s-range::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);border:3px solid var(--srf);cursor:pointer}
     .chip-grid{display:flex;flex-wrap:wrap;gap:5px}
     .f-chip{
-      padding:5px 11px;border-radius:100px;font-size:.78rem;font-weight:500;
+      padding:5px 10px;border-radius:100px;font-size:.76rem;font-weight:500;
       background:var(--srf2);border:1px solid var(--border);color:var(--sub);
       cursor:pointer;transition:all .15s;
     }
     .f-chip:hover{border-color:var(--gold);color:var(--text)}
     .f-chip.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
-
-    /* type toggle */
     .type-toggle{display:flex;gap:5px}
     .type-btn{
       flex:1;padding:7px;border-radius:var(--r);font-size:.78rem;font-weight:600;
@@ -173,183 +272,140 @@
       cursor:pointer;text-align:center;transition:all .15s;
     }
     .type-btn.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
-
-    /* rating */
     .star-row{display:flex;gap:2px}
     .star-b{background:none;border:none;font-size:1.3rem;color:var(--muted);cursor:pointer;transition:color .1s}
     .star-b.lit{color:var(--gold)}
+    .city-chips{display:flex;flex-wrap:wrap;gap:5px}
+    .city-chip{padding:5px 11px;border-radius:100px;font-size:.75rem;font-weight:600;background:var(--srf2);border:1px solid var(--border);color:var(--sub);cursor:pointer;transition:all .15s}
+    .city-chip.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+    .feat-toggles{display:flex;flex-direction:column;gap:7px}
+    .feat-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+    .feat-toggle label{font-size:.8rem;color:var(--sub);cursor:pointer}
+    .toggle-sw{width:32px;height:17px;background:var(--muted);border-radius:9px;position:relative;transition:background .2s;flex-shrink:0}
+    .toggle-sw::after{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
+    .toggle-sw.on{background:var(--gold)}
+    .toggle-sw.on::after{left:17px}
 
-    /* sort select */
-    .sort-sel{
-      width:100%;padding:9px 12px;border-radius:var(--r);
-      background:var(--srf2);border:1px solid var(--border);
-      color:var(--text);font-size:.82rem;outline:none;cursor:pointer;
+    /* ── profile drawer (right) ─────────────────────────────────── */
+    .profile-drawer{position:fixed;inset:0;z-index:350;pointer-events:none}
+    .profile-drawer.open{pointer-events:all}
+    .pd-backdrop{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0);backdrop-filter:blur(0px);
+      transition:background .28s,backdrop-filter .28s;
     }
-
-    /* ── results area ────────────────────────────────────────── */
-    .results-area{flex:1;min-width:0}
-
-    /* active filter chips */
-    .active-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;min-height:0}
-    .act-chip{
-      display:flex;align-items:center;gap:4px;
-      padding:4px 10px 4px 12px;border-radius:100px;
-      background:var(--gold-bg);border:1px solid rgba(233,184,74,.3);
-      color:var(--gold);font-size:.75rem;font-weight:600;
+    .profile-drawer.open .pd-backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(5px)}
+    .pd-panel{
+      position:absolute;top:0;right:0;height:100%;width:min(480px,100vw);
+      background:var(--srf);border-left:1px solid var(--border);
+      overflow-y:auto;
+      transform:translateX(100%);
+      transition:transform .32s cubic-bezier(.22,1,.36,1);
     }
-    .act-chip button{background:none;border:none;color:var(--gold);font-size:1rem;line-height:1;padding:0 0 0 2px;cursor:pointer}
+    .pd-panel::-webkit-scrollbar{width:3px}
+    .pd-panel::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+    .profile-drawer.open .pd-panel{transform:translateX(0)}
 
-    /* trending strip */
-    .trending-sec{margin-bottom:18px}
-    .sec-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:10px}
-    .rebook-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:3px}
-    .rebook-strip::-webkit-scrollbar{height:0}
-    .rebook-card{
-      flex-shrink:0;display:flex;align-items:center;gap:10px;
-      padding:10px 14px;border-radius:12px;
-      background:var(--srf);border:1px solid var(--border);
-      cursor:pointer;transition:border-color .15s;min-width:190px;
+    /* profile panel inner */
+    .pd-top{
+      padding:24px 24px 20px;
+      border-bottom:1px solid var(--border);
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      gap:10px;position:relative;
     }
-    .rebook-card:hover{border-color:rgba(233,184,74,.35)}
-    .rb-avatar{
-      width:34px;height:34px;border-radius:50%;
+    .pd-close-btn{
+      position:absolute;top:16px;left:16px;
+      background:var(--srf2);border:1px solid var(--border);border-radius:50%;
+      width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;color:var(--sub);
+    }
+    .pd-close-btn:hover{color:var(--text)}
+    .pd-av{
+      width:80px;height:80px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:.8rem;flex-shrink:0;
+      font-weight:800;font-size:1.6rem;letter-spacing:-.5px;
+      border:3px solid var(--border);
     }
-    .rb-info{min-width:0;flex:1}
-    .rb-name{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .rb-sub{font-size:.72rem;color:var(--sub);white-space:nowrap}
-    .rb-badge{
-      padding:2px 7px;border-radius:100px;font-size:.68rem;font-weight:800;
-      text-transform:uppercase;background:var(--gold-bg);color:var(--gold);
-      border:1px solid rgba(233,184,74,.25);white-space:nowrap;flex-shrink:0;
+    .pd-name{font-size:1.15rem;font-weight:800;display:flex;align-items:center;gap:7px;justify-content:center}
+    .pd-vtick{
+      width:18px;height:18px;border-radius:50%;background:var(--gold);color:#07080D;
+      font-size:.65rem;font-weight:900;
+      display:inline-flex;align-items:center;justify-content:center;
     }
+    .pd-type{font-size:.82rem;color:var(--sub)}
+    .pd-stats{
+      display:grid;grid-template-columns:repeat(4,1fr);
+      border-bottom:1px solid var(--border);
+    }
+    .pd-stat{
+      padding:14px 6px;text-align:center;
+      border-right:1px solid var(--border);
+    }
+    .pd-stat:last-child{border-right:none}
+    .pd-stat-val{font-size:1rem;font-weight:800;color:var(--gold)}
+    .pd-stat-lbl{font-size:.68rem;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+    .pd-section{padding:18px 24px;border-bottom:1px solid var(--border)}
+    .pd-sec-title{font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--sub);margin-bottom:10px}
+    .pd-chips{display:flex;flex-wrap:wrap;gap:6px}
+    .pd-chip{
+      padding:5px 12px;border-radius:100px;
+      background:var(--srf2);border:1px solid var(--border);
+      font-size:.78rem;color:var(--sub);
+    }
+    .pd-avail-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .pd-avail-badge{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:5px 12px;border-radius:100px;font-size:.78rem;font-weight:700;
+    }
+    .pd-avail-badge.av-today{background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.3);color:var(--green)}
+    .pd-avail-badge.av-tomorrow{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);color:var(--amber)}
+    .pd-avail-badge.av-week{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:var(--blue)}
+    .pd-badge{
+      padding:4px 10px;border-radius:100px;font-size:.75rem;font-weight:700;
+    }
+    .pd-b-rush{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:var(--green)}
+    .pd-b-instant{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:var(--blue)}
+    .pd-b-insured{background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:var(--gold)}
+    .pd-b-discount{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple)}
+    .pd-bio{font-size:.84rem;color:var(--sub);line-height:1.65}
+    .pd-score{
+      display:inline-flex;align-items:center;gap:7px;
+      padding:8px 14px;border-radius:10px;
+      background:var(--gold-bg);border:1px solid rgba(233,184,74,.25);
+      font-size:.82rem;font-weight:700;color:var(--gold);
+    }
+    .pd-kv{display:flex;flex-direction:column;gap:7px}
+    .pd-kv-row{display:flex;gap:10px;font-size:.82rem}
+    .pd-kv-label{color:var(--sub);width:90px;flex-shrink:0;font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;padding-top:1px}
+    .pd-kv-val{color:var(--text);flex:1;line-height:1.5}
 
-    /* AI match */
-    .ai-banner{
-      display:flex;align-items:center;gap:14px;
-      padding:14px 18px;border-radius:14px;
-      background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(99,102,241,.06));
-      border:1px solid rgba(167,139,250,.25);margin-bottom:18px;
+    /* CTA row */
+    .pd-cta{
+      position:sticky;bottom:0;
+      padding:14px 24px;background:var(--srf);border-top:1px solid var(--border);
+      display:flex;gap:8px;align-items:center;
     }
-    .ai-icon{font-size:1.4rem;flex-shrink:0}
-    .ai-text{flex:1}
-    .ai-text strong{font-size:.88rem;color:var(--purple);display:block}
-    .ai-text p{font-size:.78rem;color:var(--sub);margin-top:2px}
-    .ai-btn{
-      padding:8px 16px;border-radius:100px;font-size:.78rem;font-weight:700;
-      background:rgba(167,139,250,.18);border:1px solid rgba(167,139,250,.35);
-      color:var(--purple);cursor:pointer;white-space:nowrap;flex-shrink:0;
+    .pd-book-btn{
+      flex:1;padding:12px;border-radius:100px;
+      background:var(--gold);color:#07080D;font-weight:800;font-size:.92rem;
+      border:none;
     }
-    .ai-btn:hover{background:rgba(167,139,250,.28)}
+    .pd-book-btn:hover{opacity:.88}
+    .pd-msg-btn{
+      flex:1;padding:12px;border-radius:100px;
+      background:var(--srf2);border:1px solid var(--border);
+      color:var(--text);font-weight:700;font-size:.92rem;
+    }
+    .pd-msg-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .pd-profile-link{
+      font-size:.78rem;color:var(--sub);text-decoration:none;
+      white-space:nowrap;flex-shrink:0;
+    }
+    .pd-profile-link:hover{color:var(--gold)}
 
-    /* results meta */
-    .results-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;flex-wrap:wrap}
-    .res-count{font-size:.88rem;color:var(--sub)}
-    .res-count strong{color:var(--text)}
-    .sort-pills{display:flex;gap:6px;flex-wrap:wrap}
-    .s-pill{
-      padding:5px 12px;border-radius:100px;font-size:.78rem;font-weight:600;
-      background:var(--srf2);border:1px solid var(--border);color:var(--sub);
-      cursor:pointer;white-space:nowrap;transition:all .15s;
-    }
-    .s-pill.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
-
-    /* creator grid */
-    .creators-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(256px,1fr));
-      gap:16px;
-    }
-    .creator-card{
-      background:var(--srf);border:1px solid var(--border);
-      border-radius:16px;overflow:hidden;
-      transition:transform .2s,border-color .2s,box-shadow .2s;cursor:pointer;
-    }
-    .creator-card:hover{
-      transform:translateY(-3px);
-      border-color:rgba(233,184,74,.28);
-      box-shadow:0 14px 40px rgba(0,0,0,.4);
-    }
-
-    /* card media */
-    .card-media{position:relative;height:178px;overflow:hidden}
-    .card-img{
-      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden;
-    }
-    .card-initial{
-      position:absolute;font-size:4.5rem;font-weight:900;opacity:.12;
-      letter-spacing:-3px;user-select:none;color:white;
-    }
-    .card-svg{position:absolute;inset:0;width:100%;height:100%}
-    .avail-badge{
-      position:absolute;top:10px;left:12px;z-index:2;
-      padding:3px 9px;border-radius:100px;font-size:.68rem;font-weight:700;
-    }
-    .av-today{background:rgba(74,222,128,.22);color:#4ade80;border:1px solid rgba(74,222,128,.38)}
-    .av-tomorrow{background:rgba(251,191,36,.18);color:#fbbf24;border:1px solid rgba(251,191,36,.32)}
-    .av-week{background:rgba(56,189,248,.18);color:#38bdf8;border:1px solid rgba(56,189,248,.32)}
-    .save-btn{
-      position:absolute;top:10px;right:12px;z-index:2;
-      width:30px;height:30px;border-radius:50%;
-      background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,.15);color:white;
-      font-size:.95rem;display:flex;align-items:center;justify-content:center;
-      transition:all .15s;
-    }
-    .save-btn:hover,.save-btn.saved{background:rgba(233,184,74,.28);border-color:var(--gold);color:var(--gold)}
-
-    /* card body */
-    .card-body{padding:13px 15px 15px}
-    .card-row1{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2px}
-    .card-name{font-size:.95rem;font-weight:700}
-    .v-badge{
-      width:17px;height:17px;border-radius:50%;background:var(--gold);color:#07080D;
-      font-size:.6rem;font-weight:900;display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;margin-top:2px;
-    }
-    .card-type{font-size:.73rem;color:var(--sub);margin-bottom:5px}
-    .card-loc{font-size:.78rem;color:var(--sub);margin-bottom:7px}
-    .card-specs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px}
-    .card-spec{padding:2px 7px;border-radius:100px;background:var(--srf2);font-size:.7rem;color:var(--sub)}
-    .pop-row{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--muted);margin-bottom:8px}
-    .pop-bar{flex:1;height:3px;background:var(--srf2);border-radius:2px;overflow:hidden}
-    .pop-fill{height:100%;background:var(--gold);border-radius:2px}
-    .card-footer{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
-    .card-rating{display:flex;align-items:center;gap:3px;font-size:.8rem}
-    .c-stars{color:var(--gold);font-size:.82rem;letter-spacing:-.5px}
-    .c-reviews{color:var(--sub)}
-    .card-price{font-size:.88rem;font-weight:700}
-    .card-price em{font-size:.72rem;font-weight:400;font-style:normal;color:var(--sub)}
-    .card-actions{display:flex;gap:7px}
-    .btn-profile{
-      flex:1;padding:8px;border-radius:9px;font-size:.8rem;font-weight:700;
-      background:var(--srf2);border:1px solid var(--border);color:var(--text);
-      transition:all .15s;
-    }
-    .btn-profile:hover{border-color:var(--gold);color:var(--gold)}
-    .btn-chat-q{
-      padding:8px 12px;border-radius:9px;font-size:.8rem;font-weight:700;
-      background:var(--gold-bg);border:1px solid rgba(233,184,74,.3);color:var(--gold);
-      transition:all .15s;white-space:nowrap;
-    }
-    .btn-chat-q:hover{background:rgba(233,184,74,.2)}
-
-    .empty-state{text-align:center;padding:60px 20px;color:var(--sub)}
-    .empty-state h3{font-size:1.2rem;margin-bottom:8px;color:var(--text)}
-
-    .load-more-row{text-align:center;margin-top:28px}
-    .load-more{
-      padding:11px 40px;border-radius:100px;font-size:.88rem;font-weight:700;
-      background:var(--srf2);border:1px solid var(--border);color:var(--text);
-      cursor:pointer;transition:all .2s;
-    }
-    .load-more:hover{border-color:var(--gold);color:var(--gold)}
-
-    /* ── contact modal ───────────────────────────────────────── */
+    /* ── contact modal ──────────────────────────────────────────── */
     .overlay{
-      display:none;position:fixed;inset:0;z-index:300;
+      display:none;position:fixed;inset:0;z-index:500;
       background:rgba(0,0,0,.72);backdrop-filter:blur(10px);
       align-items:center;justify-content:center;padding:16px;
     }
@@ -360,26 +416,14 @@
       box-shadow:0 40px 80px rgba(0,0,0,.6);
     }
     .modal-hd{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-    .modal-av{
-      width:44px;height:44px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0;
-    }
+    .modal-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0}
     .modal-name{font-size:1rem;font-weight:700}
     .modal-sub{font-size:.78rem;color:var(--sub)}
-    .modal-close{
-      margin-left:auto;background:var(--srf2);border:1px solid var(--border);
-      border-radius:50%;width:30px;height:30px;color:var(--sub);font-size:1rem;
-      display:flex;align-items:center;justify-content:center;
-    }
+    .modal-close{margin-left:auto;background:var(--srf2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;color:var(--sub);font-size:1rem;display:flex;align-items:center;justify-content:center}
     .modal-close:hover{color:var(--text)}
     .contact-opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
-    .c-opt{
-      display:flex;align-items:center;gap:12px;
-      padding:13px 16px;border-radius:13px;border:1px solid var(--border);
-      font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--text);
-    }
+    .c-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:13px;border:1px solid var(--border);font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--text);background:none;width:100%;text-align:left}
     .c-opt-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
-    .c-opt-text{}
     .c-opt-label{font-size:.875rem;font-weight:700;display:block}
     .c-opt-sub{font-size:.73rem;font-weight:400;color:var(--sub);display:block}
     .c-opt.wa{background:rgba(37,211,102,.07);border-color:rgba(37,211,102,.22)}
@@ -393,115 +437,35 @@
     .c-opt.lm .c-opt-icon{background:rgba(233,184,74,.2)}
     .modal-note{font-size:.72rem;color:var(--muted);text-align:center}
 
-    /* ── chat panel ──────────────────────────────────────────── */
-    .chat-panel{
-      display:none;position:fixed;bottom:0;right:24px;z-index:400;
-      width:350px;height:510px;
-      background:var(--srf);border:1px solid var(--border);
-      border-radius:18px 18px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.45);
-      flex-direction:column;overflow:hidden;
-    }
-    .chat-panel.open{display:flex}
-    .cp-header{
-      display:flex;align-items:center;gap:9px;
-      padding:13px 15px;border-bottom:1px solid var(--border);background:var(--srf2);
-    }
-    .cp-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
-    .cp-info{flex:1;min-width:0}
-    .cp-name{font-size:.875rem;font-weight:700}
-    .cp-status{font-size:.7rem;color:var(--green)}
-    .cp-actions{display:flex;gap:6px}
-    .cp-action{background:var(--srf);border:1px solid var(--border);border-radius:7px;padding:5px 9px;font-size:.72rem;font-weight:600;color:var(--sub);cursor:pointer}
-    .cp-action:hover{color:var(--text)}
-    .cp-close{background:none;border:none;color:var(--sub);font-size:1.2rem;cursor:pointer;padding:2px}
-    .chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
-    .chat-msgs::-webkit-scrollbar{width:3px}
-    .chat-msgs::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
-    .chat-msg{display:flex;flex-direction:column;max-width:80%}
-    .chat-msg.in{align-self:flex-start}
-    .chat-msg.out{align-self:flex-end}
-    .bubble{padding:9px 13px;border-radius:16px;font-size:.84rem;line-height:1.5}
-    .chat-msg.in .bubble{background:var(--srf2);border-bottom-left-radius:4px}
-    .chat-msg.out .bubble{background:var(--gold);color:#07080D;border-bottom-right-radius:4px}
-    .chat-time{font-size:.68rem;color:var(--muted);margin-top:3px}
-    .chat-msg.out .chat-time{text-align:right}
-    .chat-date-sep{text-align:center;font-size:.7rem;color:var(--muted);padding:4px 0}
-    .chat-input-row{
-      display:flex;align-items:center;gap:7px;
-      padding:11px 14px;border-top:1px solid var(--border);
-    }
-    .chat-in{
-      flex:1;background:var(--srf2);border:1px solid var(--border);
-      border-radius:100px;padding:9px 15px;font-size:.84rem;
-      color:var(--text);outline:none;
-    }
-    .chat-in:focus{border-color:var(--gold)}
-    .chat-send{
-      width:36px;height:36px;border-radius:50%;
-      background:var(--gold);color:#07080D;border:none;
-      font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    }
-    .chat-send:hover{opacity:.85}
-
-    /* ── responsive ──────────────────────────────────────────── */
+    /* ── responsive ─────────────────────────────────────────────── */
     @media(max-width:960px){
-      .filters-sidebar{display:none}
-      .search-body{padding:16px 16px 40px}
       nav{padding:0 16px}
       .nav-center{display:none}
+      .search-hero{padding:12px 16px}
+      .filter-bar{padding:9px 16px}
+      .search-main{padding:16px 12px 40px}
     }
     @media(max-width:600px){
-      .search-hero{padding:12px 16px}
       .search-bar{flex-direction:column;border-radius:18px;padding:6px;gap:0}
       .search-field{padding:8px 12px}
       .sdiv{width:100%;height:1px}
       .search-submit{margin:4px;width:calc(100% - 8px)}
-      .chat-panel{width:100%;right:0}
+      .creators-grid{grid-template-columns:1fr 1fr;gap:7px}
+      .pd-panel{width:100vw}
+      .pd-stats{grid-template-columns:repeat(2,1fr)}
+      .pd-stat:nth-child(2){border-right:none}
+      .pd-stat:nth-child(1),.pd-stat:nth-child(2){border-bottom:1px solid var(--border)}
+      .pd-cta{flex-wrap:wrap}
+      .pd-profile-link{width:100%;text-align:center}
     }
-
-    /* ── Snappr-gap: new badges ───────────────────────────────────── */
-    .badge-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-    .b-badge{padding:2px 7px;border-radius:100px;font-size:.65rem;font-weight:700}
-    .b-rush{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:var(--green)}
-    .b-instant{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:var(--blue)}
-    .b-insured{background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:var(--gold)}
-    .b-discount{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple)}
-    .portfolio-score{position:absolute;bottom:8px;left:8px;background:rgba(7,8,13,.78);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:3px 8px;font-size:.68rem;font-weight:800;color:var(--gold);backdrop-filter:blur(8px);display:flex;align-items:center;gap:4px}
-    .card-langs{font-size:.68rem;color:var(--muted);margin-top:3px}
-    /* compare */
-    .compare-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--srf);border-top:1px solid var(--border);padding:12px 32px;align-items:center;gap:12px;flex-wrap:wrap}
-    .compare-bar.open{display:flex}
-    .compare-slots{display:flex;gap:8px}
-    .cmp-slot{width:44px;height:44px;border-radius:10px;border:1.5px dashed var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--muted)}
-    .cmp-slot.filled{border-style:solid;border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
-    .cmp-btn{padding:9px 20px;border-radius:100px;background:var(--gold);color:#07080D;font-size:.85rem;font-weight:800;border:none;cursor:pointer}
-    .cmp-clear{padding:9px 16px;border-radius:100px;background:transparent;border:1px solid var(--border);color:var(--sub);font-size:.82rem;cursor:pointer}
-    /* city pills */
-    .city-chips{display:flex;flex-wrap:wrap;gap:5px}
-    .city-chip{padding:5px 11px;border-radius:100px;font-size:.75rem;font-weight:600;background:var(--srf2);border:1px solid var(--border);color:var(--sub);cursor:pointer;transition:all .15s}
-    .city-chip.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
-    /* feature toggles */
-    .feat-toggles{display:flex;flex-direction:column;gap:7px}
-    .feat-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-    .feat-toggle label{font-size:.8rem;color:var(--sub);cursor:pointer}
-    .toggle-sw{width:32px;height:17px;background:var(--muted);border-radius:9px;position:relative;transition:background .2s;flex-shrink:0}
-    .toggle-sw::after{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
-    .toggle-sw.on{background:var(--gold)}
-    .toggle-sw.on::after{left:17px}
-    /* advantages */
-    .adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:14px 0}
-    .adv-card{background:var(--srf);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
-    .adv-icon{font-size:1.1rem;margin-bottom:4px}
-    .adv-title{font-size:.78rem;font-weight:700;margin-bottom:2px}
-    .adv-desc{font-size:.68rem;color:var(--muted);line-height:1.5}
-    .adv-toggle{background:none;border:none;font-size:.75rem;color:var(--gold);cursor:pointer;margin-top:4px;padding:0}
-
-    .hidden{display:none!important}
+    @media(max-width:400px){
+      .creators-grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
 
-<!-- ── nav ──────────────────────────────────────────────────── -->
+<!-- ── nav ────────────────────────────────────────────────────── -->
 <nav>
   <a href="../index.html" class="nav-logo">
     <canvas id="logo-canvas" width="28" height="28"></canvas>
@@ -519,7 +483,7 @@
   </div>
 </nav>
 
-<!-- ── search hero ───────────────────────────────────────────── -->
+<!-- ── search hero ─────────────────────────────────────────────── -->
 <section class="search-hero">
   <form class="search-bar" onsubmit="return false">
     <div class="search-field">
@@ -560,224 +524,178 @@
       <span class="field-icon">💷</span>
       <div style="flex:1">
         <span class="field-label">Max budget/hr</span>
-        <input id="budget-input" type="text" placeholder="Any budget" value="">
+        <input id="budget-input" type="text" placeholder="Any budget">
       </div>
     </div>
     <button class="search-submit" type="submit" onclick="applyFilters()">Search</button>
   </form>
 </section>
 
-<!-- ── main layout ───────────────────────────────────────────── -->
-<div class="search-body">
-
-  <!-- sidebar -->
-  <aside class="filters-sidebar">
-    <div class="filter-sec">
-      <div class="filter-title">Availability <button class="clear-filters" onclick="clearFilters()">Clear all</button></div>
-      <div class="avail-btns">
-        <button class="avail-btn active" data-avail="">Any time</button>
-        <button class="avail-btn" data-avail="today">Today</button>
-        <button class="avail-btn" data-avail="tomorrow">Tomorrow</button>
-        <button class="avail-btn" data-avail="this-week">This week</button>
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Budget per hour</div>
-      <div class="budget-vals">
-        <span id="bmin-val">£50</span>
-        <span id="bmax-val">£2,000+</span>
-      </div>
-      <div class="dual-range">
-        <div class="range-track"></div>
-        <div class="range-fill" id="range-fill"></div>
-        <input type="range" class="range-slider" id="b-low" min="50" max="2000" value="50" step="10">
-        <input type="range" class="range-slider" id="b-high" min="50" max="2000" value="2000" step="10">
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Distance</div>
-      <div class="dist-val" id="dist-val">Within 50 miles</div>
-      <input type="range" class="s-range" id="dist-range" min="1" max="50" value="50">
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Specialty</div>
-      <div class="chip-grid">
-        <button class="f-chip" data-spec="Weddings">💍 Weddings</button>
-        <button class="f-chip" data-spec="Portraits">👤 Portraits</button>
-        <button class="f-chip" data-spec="Events">🎉 Events</button>
-        <button class="f-chip" data-spec="Corporate">🏢 Corporate</button>
-        <button class="f-chip" data-spec="Drone">🚁 Drone</button>
-        <button class="f-chip" data-spec="Fashion">👗 Fashion</button>
-        <button class="f-chip" data-spec="Real Estate">🏠 Real Estate</button>
-        <button class="f-chip" data-spec="Social Content">📱 Social</button>
-        <button class="f-chip" data-spec="Headshots">🤵 Headshots</button>
-        <button class="f-chip" data-spec="Food">🍽 Food</button>
-        <button class="f-chip" data-spec="Music Videos">🎵 Music</button>
-        <button class="f-chip" data-spec="Documentary">🎞 Documentary</button>
-        <button class="f-chip" data-spec="Sports">⚽ Sports</button>
-        <button class="f-chip" data-spec="Newborn">👶 Newborn</button>
-        <button class="f-chip" data-spec="Architecture">🏛 Architecture</button>
-        <button class="f-chip" data-spec="Asian Weddings">🌸 Asian Wed.</button>
-        <button class="f-chip" data-spec="Aerial">🛸 Aerial</button>
-        <button class="f-chip" data-spec="Fitness">💪 Fitness</button>
-        <button class="f-chip" data-spec="Elopements">💑 Elopements</button>
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Creator type</div>
-      <div class="type-toggle">
-        <button class="type-btn on" data-type="">All</button>
-        <button class="type-btn" data-type="Photographer">📷</button>
-        <button class="type-btn" data-type="Videographer">🎬</button>
-        <button class="type-btn" data-type="Both">🎭 Both</button>
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Minimum rating</div>
-      <div class="star-row" id="star-filter">
-        <button class="star-b lit" data-r="1">★</button>
-        <button class="star-b lit" data-r="2">★</button>
-        <button class="star-b lit" data-r="3">★</button>
-        <button class="star-b lit" data-r="4">★</button>
-        <button class="star-b" data-r="5">★</button>
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Sort by</div>
-      <select class="sort-sel" id="sort-sel">
-        <option value="recommended">Recommended</option>
-        <option value="rating">Highest Rated</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-        <option value="popular">Most Booked</option>
-        <option value="distance">Nearest First</option>
-        <option value="portfolio">Portfolio Score</option>
-      </select>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">City</div>
-      <div class="city-chips">
-        <button class="city-chip on" data-city="">All UK</button>
-        <button class="city-chip" data-city="London">London</button>
-        <button class="city-chip" data-city="Manchester">Manchester</button>
-        <button class="city-chip" data-city="Birmingham">Birmingham</button>
-        <button class="city-chip" data-city="Edinburgh">Edinburgh</button>
-        <button class="city-chip" data-city="Bristol">Bristol</button>
-        <button class="city-chip" data-city="Leeds">Leeds</button>
-        <button class="city-chip" data-city="Liverpool">Liverpool</button>
-      </div>
-    </div>
-
-    <div class="filter-sec">
-      <div class="filter-title">Features</div>
-      <div class="feat-toggles">
-        <div class="feat-toggle" onclick="toggleFeat('rush',this)">
-          <label>⚡ Rush / same-day booking</label>
-          <div class="toggle-sw" id="feat-rush"></div>
-        </div>
-        <div class="feat-toggle" onclick="toggleFeat('instantConfirm',this)">
-          <label>🟢 Instant confirm</label>
-          <div class="toggle-sw" id="feat-instantConfirm"></div>
-        </div>
-        <div class="feat-toggle" onclick="toggleFeat('insurance',this)">
-          <label>🛡 Insurance verified</label>
-          <div class="toggle-sw" id="feat-insurance"></div>
-        </div>
-        <div class="feat-toggle" onclick="toggleFeat('verified',this)">
-          <label>✓ Lumora Verified</label>
-          <div class="toggle-sw" id="feat-verified"></div>
-        </div>
-        <div class="feat-toggle" onclick="toggleFeat('discount',this)">
-          <label>🔄 Repeat client discount</label>
-          <div class="toggle-sw" id="feat-discount"></div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- results -->
-  <main class="results-area">
-    <!-- active filter chips -->
-    <div class="active-chips" id="active-chips"></div>
-
-    <!-- trending / recently booked -->
-    <section class="trending-sec">
-      <p class="sec-eyebrow">🔥 Most booked this week</p>
-      <div class="rebook-strip" id="rebook-strip"></div>
-    </section>
-
-    <!-- AI match -->
-    <div class="ai-banner">
-      <span class="ai-icon">✨</span>
-      <div class="ai-text">
-        <strong>Lumora AI found <span id="ai-match-count">5</span> perfect matches for you</strong>
-        <p>Based on your location, style preferences, and budget — these creators have the highest match score.</p>
-      </div>
-      <button class="ai-btn" onclick="document.getElementById('adv-section').classList.toggle('hidden')">Why Lumora?</button>
-    </div>
-
-    <!-- Snappr gap: Lumora advantages -->
-    <div id="adv-section" class="hidden" style="margin-bottom:16px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)">Lumora vs Snappr — what we do better</span>
-        <button class="adv-toggle" onclick="document.getElementById('adv-section').classList.add('hidden')">✕ Close</button>
-      </div>
-      <div class="adv-grid" id="adv-grid"></div>
-    </div>
-
-    <!-- meta row -->
-    <div class="results-meta">
-      <p class="res-count" id="res-count"><strong>128</strong> creators near London</p>
-      <div class="sort-pills">
-        <button class="s-pill on" data-sort="recommended" onclick="setSortPill(this,'recommended')">Recommended</button>
-        <button class="s-pill" data-sort="rating" onclick="setSortPill(this,'rating')">Top Rated</button>
-        <button class="s-pill" data-sort="price-asc" onclick="setSortPill(this,'price-asc')">Price ↑</button>
-        <button class="s-pill" data-sort="popular" onclick="setSortPill(this,'popular')">Most Booked</button>
-        <button class="s-pill" data-sort="distance" onclick="setSortPill(this,'distance')">Nearby</button>
-      </div>
-    </div>
-
-    <!-- grid -->
-    <div class="creators-grid" id="creators-grid"></div>
-
-    <div class="load-more-row">
-      <button class="load-more" onclick="loadMore()">Show more creators</button>
-    </div>
-  </main>
-</div>
-
-<!-- compare bar -->
-<div class="compare-bar" id="compare-bar">
-  <div style="font-size:.82rem;font-weight:700;flex-shrink:0">Compare creators:</div>
-  <div class="compare-slots" id="compare-slots">
-    <div class="cmp-slot" id="cslot0">+</div>
-    <div class="cmp-slot" id="cslot1">+</div>
-    <div class="cmp-slot" id="cslot2">+</div>
+<!-- ── filter bar ──────────────────────────────────────────────── -->
+<div class="filter-bar">
+  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="openFilters()">
+    <span>⚙</span> Filters
+  </button>
+  <div class="filter-divider"></div>
+  <div class="sort-pills">
+    <button class="s-pill on" data-sort="recommended" onclick="setSortPill(this,'recommended')">Recommended</button>
+    <button class="s-pill" data-sort="rating" onclick="setSortPill(this,'rating')">Top Rated</button>
+    <button class="s-pill" data-sort="price-asc" onclick="setSortPill(this,'price-asc')">Price ↑</button>
+    <button class="s-pill" data-sort="popular" onclick="setSortPill(this,'popular')">Most Booked</button>
+    <button class="s-pill" data-sort="distance" onclick="setSortPill(this,'distance')">Nearby</button>
   </div>
-  <div style="font-size:.75rem;color:var(--sub);flex:1">Select up to 3 creators to compare side by side</div>
-  <button class="cmp-btn" onclick="openCompare()">Compare Now</button>
-  <button class="cmp-clear" onclick="clearCompare()">✕ Clear</button>
+  <div class="active-chips" id="active-chips"></div>
+  <div class="filter-bar-right" id="res-count"><strong>—</strong> creators</div>
 </div>
 
-<!-- compare modal -->
-<div class="overlay" id="compare-overlay" onclick="if(event.target===this)closeCompare()" style="z-index:600">
-  <div style="background:var(--srf);border-radius:20px;width:min(92vw,820px);max-height:85vh;overflow-y:auto;padding:28px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <h2 style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700">Side-by-side comparison</h2>
-      <button onclick="closeCompare()" style="background:none;border:none;color:var(--sub);font-size:1.4rem;cursor:pointer">✕</button>
+<!-- ── main results ────────────────────────────────────────────── -->
+<main class="search-main">
+  <div class="creators-grid" id="creators-grid"></div>
+  <div class="load-more-row">
+    <button class="load-more" onclick="loadMore()">Show more creators</button>
+  </div>
+</main>
+
+<!-- ── filter drawer (left) ───────────────────────────────────── -->
+<div class="filter-drawer" id="filter-drawer">
+  <div class="fd-backdrop" onclick="closeFilters()"></div>
+  <div class="fd-panel">
+    <div class="fd-head">
+      <span class="fd-title">Filters</span>
+      <button class="fd-clear" onclick="clearFilters()">Clear all</button>
+      <button class="fd-close" onclick="closeFilters()">✕</button>
     </div>
-    <div id="compare-content" style="overflow-x:auto"></div>
+    <div class="fd-body">
+
+      <div class="filter-sec">
+        <div class="filter-title">Availability</div>
+        <div class="avail-btns">
+          <button class="avail-btn active" data-avail="">Any time</button>
+          <button class="avail-btn" data-avail="today">Today</button>
+          <button class="avail-btn" data-avail="tomorrow">Tomorrow</button>
+          <button class="avail-btn" data-avail="this-week">This week</button>
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Budget per hour</div>
+        <div class="budget-vals">
+          <span id="bmin-val">£50</span>
+          <span id="bmax-val">£2,000+</span>
+        </div>
+        <div class="dual-range">
+          <div class="range-track"></div>
+          <div class="range-fill" id="range-fill"></div>
+          <input type="range" class="range-slider" id="b-low" min="50" max="2000" value="50" step="10">
+          <input type="range" class="range-slider" id="b-high" min="50" max="2000" value="2000" step="10">
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Distance</div>
+        <div class="dist-val" id="dist-val">Within 50 miles</div>
+        <input type="range" class="s-range" id="dist-range" min="1" max="50" value="50">
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Specialty</div>
+        <div class="chip-grid">
+          <button class="f-chip" data-spec="Weddings">💍 Weddings</button>
+          <button class="f-chip" data-spec="Portraits">👤 Portraits</button>
+          <button class="f-chip" data-spec="Events">🎉 Events</button>
+          <button class="f-chip" data-spec="Corporate">🏢 Corporate</button>
+          <button class="f-chip" data-spec="Drone">🚁 Drone</button>
+          <button class="f-chip" data-spec="Fashion">👗 Fashion</button>
+          <button class="f-chip" data-spec="Real Estate">🏠 Real Estate</button>
+          <button class="f-chip" data-spec="Social Content">📱 Social</button>
+          <button class="f-chip" data-spec="Headshots">🤵 Headshots</button>
+          <button class="f-chip" data-spec="Food">🍽 Food</button>
+          <button class="f-chip" data-spec="Music Videos">🎵 Music</button>
+          <button class="f-chip" data-spec="Documentary">🎞 Documentary</button>
+          <button class="f-chip" data-spec="Sports">⚽ Sports</button>
+          <button class="f-chip" data-spec="Newborn">👶 Newborn</button>
+          <button class="f-chip" data-spec="Architecture">🏛 Architecture</button>
+          <button class="f-chip" data-spec="Asian Weddings">🌸 Asian Wed.</button>
+          <button class="f-chip" data-spec="Aerial">🛸 Aerial</button>
+          <button class="f-chip" data-spec="Fitness">💪 Fitness</button>
+          <button class="f-chip" data-spec="Elopements">💑 Elopements</button>
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Creator type</div>
+        <div class="type-toggle">
+          <button class="type-btn on" data-type="">All</button>
+          <button class="type-btn" data-type="Photographer">📷</button>
+          <button class="type-btn" data-type="Videographer">🎬</button>
+          <button class="type-btn" data-type="Both">🎭 Both</button>
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Minimum rating</div>
+        <div class="star-row" id="star-filter">
+          <button class="star-b lit" data-r="1">★</button>
+          <button class="star-b lit" data-r="2">★</button>
+          <button class="star-b lit" data-r="3">★</button>
+          <button class="star-b lit" data-r="4">★</button>
+          <button class="star-b" data-r="5">★</button>
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">City</div>
+        <div class="city-chips">
+          <button class="city-chip on" data-city="">All UK</button>
+          <button class="city-chip" data-city="London">London</button>
+          <button class="city-chip" data-city="Manchester">Manchester</button>
+          <button class="city-chip" data-city="Birmingham">Birmingham</button>
+          <button class="city-chip" data-city="Edinburgh">Edinburgh</button>
+          <button class="city-chip" data-city="Bristol">Bristol</button>
+          <button class="city-chip" data-city="Leeds">Leeds</button>
+          <button class="city-chip" data-city="Liverpool">Liverpool</button>
+        </div>
+      </div>
+
+      <div class="filter-sec">
+        <div class="filter-title">Features</div>
+        <div class="feat-toggles">
+          <div class="feat-toggle" onclick="toggleFeat('rush',this)">
+            <label>⚡ Rush / same-day booking</label>
+            <div class="toggle-sw" id="feat-rush"></div>
+          </div>
+          <div class="feat-toggle" onclick="toggleFeat('instantConfirm',this)">
+            <label>🟢 Instant confirm</label>
+            <div class="toggle-sw" id="feat-instantConfirm"></div>
+          </div>
+          <div class="feat-toggle" onclick="toggleFeat('insurance',this)">
+            <label>🛡 Insurance verified</label>
+            <div class="toggle-sw" id="feat-insurance"></div>
+          </div>
+          <div class="feat-toggle" onclick="toggleFeat('verified',this)">
+            <label>✓ Lumora Verified</label>
+            <div class="toggle-sw" id="feat-verified"></div>
+          </div>
+          <div class="feat-toggle" onclick="toggleFeat('discount',this)">
+            <label>🔄 Repeat client discount</label>
+            <div class="toggle-sw" id="feat-discount"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /fd-body -->
+  </div><!-- /fd-panel -->
+</div><!-- /filter-drawer -->
+
+<!-- ── profile drawer (right) ──────────────────────────────────── -->
+<div class="profile-drawer" id="profile-drawer">
+  <div class="pd-backdrop" onclick="closeDrawer()"></div>
+  <div class="pd-panel" id="pd-panel">
+    <!-- filled by JS -->
   </div>
 </div>
 
-<!-- ── contact modal ─────────────────────────────────────────── -->
+<!-- ── contact modal ───────────────────────────────────────────── -->
 <div class="overlay" id="contact-overlay" onclick="if(event.target===this)closeContact()">
   <div class="contact-modal">
     <div class="modal-hd">
@@ -807,7 +725,7 @@
           <span class="c-opt-sub">View portfolio &amp; send a message</span>
         </div>
       </a>
-      <button class="c-opt lm" onclick="openLumoraChat(); closeContact()">
+      <button class="c-opt lm" onclick="closeContact()">
         <div class="c-opt-icon">🔮</div>
         <div class="c-opt-text">
           <span class="c-opt-label">Message on Lumora</span>
@@ -819,39 +737,12 @@
   </div>
 </div>
 
-<!-- ── lumora chat panel ──────────────────────────────────────── -->
-<div class="chat-panel" id="chat-panel">
-  <div class="cp-header">
-    <div class="cp-av" id="cp-av"></div>
-    <div class="cp-info">
-      <div class="cp-name" id="cp-name">Sophie Clarke</div>
-      <div class="cp-status">● Online now</div>
-    </div>
-    <div class="cp-actions">
-      <button class="cp-action" onclick="window.location='profile.html'">View Profile</button>
-      <button class="cp-action" id="book-btn-cp" onclick="window.location='profile.html#book'">Book</button>
-    </div>
-    <button class="cp-close" onclick="closeChatPanel()">✕</button>
-  </div>
-  <div class="chat-msgs" id="chat-msgs">
-    <div class="chat-date-sep">Today</div>
-    <div class="chat-msg in">
-      <div class="bubble">Hi there! 👋 I'm Sophie — thanks for reaching out via Lumora. I'd love to hear about your project!</div>
-      <span class="chat-time">Just now · <span style="color:var(--green)">✓✓ Seen</span></span>
-    </div>
-  </div>
-  <div class="chat-input-row">
-    <input class="chat-in" id="chat-in" type="text" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
-    <button class="chat-send" onclick="sendMsg()">➤</button>
-  </div>
-</div>
-
 <script src="../js/seed-data.js"></script>
 <script>
-/* ── data from seed-data.js ───────────────────────────────────── */
+/* ── data ──────────────────────────────────────────────────────── */
 const creators = window.LUMORA_CREATORS || [];
 
-/* ── filter state ─────────────────────────────────────────────── */
+/* ── filter state ──────────────────────────────────────────────── */
 let filters = {
   avail:'', budgetMin:50, budgetMax:2000, dist:50,
   specs:[], type:'', ratingMin:0, sort:'recommended',
@@ -859,10 +750,9 @@ let filters = {
   verified:false, discount:false
 };
 let activeContactCreator = null;
-let shownCount = 12;
-let compareList = [];
+let shownCount = 24;
 
-/* ── init ─────────────────────────────────────────────────────── */
+/* ── init ──────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   drawLogo();
   initDualRange();
@@ -872,14 +762,11 @@ window.addEventListener('DOMContentLoaded', () => {
   initSpecChips();
   initTypeToggle();
   initCityChips();
-  document.getElementById('sort-sel').addEventListener('change', e => { filters.sort = e.target.value; applyFilters(); });
-  renderRebookStrip();
-  renderAdvantages();
   applyFilters();
   initTheme();
 });
 
-/* ── logo aperture ────────────────────────────────────────────── */
+/* ── logo ──────────────────────────────────────────────────────── */
 function drawLogo() {
   const c = document.getElementById('logo-canvas');
   if (!c) return;
@@ -887,29 +774,25 @@ function drawLogo() {
   ctx.clearRect(0,0,28,28);
   ctx.strokeStyle = '#E9B84A'; ctx.lineWidth = 1.5;
   for (let i = 0; i < 7; i++) {
-    ctx.save();
-    ctx.translate(14,14);
-    ctx.rotate(i * Math.PI * 2 / 7);
-    ctx.beginPath();
-    ctx.moveTo(-6,0); ctx.lineTo(0,-11); ctx.lineTo(6,0);
+    ctx.save(); ctx.translate(14,14); ctx.rotate(i * Math.PI * 2 / 7);
+    ctx.beginPath(); ctx.moveTo(-6,0); ctx.lineTo(0,-11); ctx.lineTo(6,0);
     ctx.closePath();
     ctx.fillStyle = `rgba(233,184,74,${0.55 + i*0.07})`;
-    ctx.fill(); ctx.stroke();
-    ctx.restore();
+    ctx.fill(); ctx.stroke(); ctx.restore();
   }
 }
 
-/* ── dual range budget ────────────────────────────────────────── */
+/* ── dual range ────────────────────────────────────────────────── */
 function initDualRange() {
   const lo = document.getElementById('b-low');
   const hi = document.getElementById('b-high');
   const fill = document.getElementById('range-fill');
   const bmin = document.getElementById('bmin-val');
   const bmax = document.getElementById('bmax-val');
-  const update = () => {
+  const update = (e) => {
     let l = +lo.value, h = +hi.value;
-    if (l > h - 50) { if (event && event.target === lo) lo.value = h - 50; else hi.value = l + 50; l = +lo.value; h = +hi.value; }
-    const pct = (v) => (v - 50) / 1950 * 100;
+    if (l > h - 50) { if (e && e.target === lo) lo.value = h - 50; else hi.value = l + 50; l = +lo.value; h = +hi.value; }
+    const pct = v => (v - 50) / 1950 * 100;
     fill.style.left = pct(l) + '%'; fill.style.width = (pct(h) - pct(l)) + '%';
     bmin.textContent = '£' + l;
     bmax.textContent = h >= 2000 ? '£2,000+' : '£' + h;
@@ -919,7 +802,7 @@ function initDualRange() {
   lo.addEventListener('input', update); hi.addEventListener('input', update); update();
 }
 
-/* ── distance range ───────────────────────────────────────────── */
+/* ── distance ──────────────────────────────────────────────────── */
 function initDistRange() {
   const r = document.getElementById('dist-range');
   const v = document.getElementById('dist-val');
@@ -930,7 +813,7 @@ function initDistRange() {
   });
 }
 
-/* ── star filter ──────────────────────────────────────────────── */
+/* ── stars ─────────────────────────────────────────────────────── */
 function initStarFilter() {
   const stars = document.querySelectorAll('.star-b');
   stars.forEach(btn => btn.addEventListener('click', () => {
@@ -941,7 +824,7 @@ function initStarFilter() {
   }));
 }
 
-/* ── avail buttons ────────────────────────────────────────────── */
+/* ── availability ──────────────────────────────────────────────── */
 function initAvailBtns() {
   document.querySelectorAll('.avail-btn').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('.avail-btn').forEach(b => b.classList.remove('active'));
@@ -949,7 +832,7 @@ function initAvailBtns() {
   }));
 }
 
-/* ── spec chips ───────────────────────────────────────────────── */
+/* ── specs ─────────────────────────────────────────────────────── */
 function initSpecChips() {
   document.querySelectorAll('.f-chip').forEach(chip => chip.addEventListener('click', () => {
     chip.classList.toggle('on');
@@ -960,7 +843,7 @@ function initSpecChips() {
   }));
 }
 
-/* ── type toggle ──────────────────────────────────────────────── */
+/* ── type ──────────────────────────────────────────────────────── */
 function initTypeToggle() {
   document.querySelectorAll('.type-btn').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('on'));
@@ -968,18 +851,32 @@ function initTypeToggle() {
   }));
 }
 
-/* ── sort pills ───────────────────────────────────────────────── */
+/* ── sort pills ────────────────────────────────────────────────── */
 function setSortPill(btn, sort) {
   document.querySelectorAll('.s-pill').forEach(p => p.classList.remove('on'));
   btn.classList.add('on');
   filters.sort = sort;
-  document.getElementById('sort-sel').value = sort;
   applyFilters();
 }
 
-/* ── clear ────────────────────────────────────────────────────── */
+/* ── city ──────────────────────────────────────────────────────── */
+function initCityChips() {
+  document.querySelectorAll('.city-chip').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.city-chip').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on'); filters.city = btn.dataset.city; applyFilters();
+  }));
+}
+
+/* ── feature toggles ───────────────────────────────────────────── */
+function toggleFeat(key, row) {
+  filters[key] = !filters[key];
+  row.querySelector('.toggle-sw').classList.toggle('on', filters[key]);
+  applyFilters();
+}
+
+/* ── clear ─────────────────────────────────────────────────────── */
 function clearFilters() {
-  filters = { avail:'', budgetMin:50, budgetMax:2000, dist:50, specs:[], type:'', ratingMin:0, sort:'recommended', city:'', rush:false, instantConfirm:false, insurance:false, verified:false, discount:false };
+  filters = { avail:'', budgetMin:50, budgetMax:2000, dist:50, specs:[], type:'', ratingMin:0, sort:filters.sort, city:'', rush:false, instantConfirm:false, insurance:false, verified:false, discount:false };
   document.querySelectorAll('.avail-btn').forEach((b,i) => b.classList.toggle('active', i===0));
   document.getElementById('b-low').value = 50; document.getElementById('b-high').value = 2000;
   document.getElementById('dist-range').value = 50;
@@ -987,7 +884,6 @@ function clearFilters() {
   document.querySelectorAll('.f-chip').forEach(c => c.classList.remove('on'));
   document.querySelectorAll('.type-btn').forEach((b,i) => b.classList.toggle('on', i===0));
   document.querySelectorAll('.star-b').forEach(s => s.classList.remove('lit'));
-  document.getElementById('sort-sel').value = 'recommended';
   document.querySelectorAll('.city-chip').forEach((b,i) => b.classList.toggle('on', i===0));
   ['rush','instantConfirm','insurance','verified','discount'].forEach(k => {
     const sw = document.getElementById('feat-'+k); if(sw) sw.classList.remove('on');
@@ -995,7 +891,7 @@ function clearFilters() {
   applyFilters();
 }
 
-/* ── apply filters + render ───────────────────────────────────── */
+/* ── apply + render ────────────────────────────────────────────── */
 function applyFilters() {
   let r = creators.filter(c => {
     if (filters.avail && c.avail !== filters.avail) return false;
@@ -1025,13 +921,14 @@ function applyFilters() {
   });
   const locLabel = filters.city || 'UK';
   document.getElementById('res-count').innerHTML = `<strong>${r.length}</strong> creators in ${locLabel}`;
-  const matchCount = Math.max(1, Math.min(5, Math.floor(r.length * 0.1)));
-  document.getElementById('ai-match-count').textContent = matchCount;
   renderGrid(r.slice(0, shownCount));
   renderActiveChips();
+  // Update filter button state
+  const hasFilters = filters.avail||filters.specs.length||filters.type||filters.ratingMin||filters.city||filters.rush||filters.instantConfirm||filters.insurance||filters.verified||filters.discount||filters.budgetMin>50||filters.budgetMax<2000||filters.dist<50;
+  document.getElementById('filter-toggle-btn').classList.toggle('active', !!hasFilters);
 }
 
-/* ── render grid ──────────────────────────────────────────────── */
+/* ── render grid ───────────────────────────────────────────────── */
 function renderGrid(list) {
   const grid = document.getElementById('creators-grid');
   if (!list.length) {
@@ -1041,176 +938,44 @@ function renderGrid(list) {
   grid.innerHTML = list.map(c => cardHTML(c)).join('');
 }
 
-/* ── card HTML ────────────────────────────────────────────────── */
+/* ── minimal card HTML ─────────────────────────────────────────── */
 function cardHTML(c) {
   const initials = c.name.split(' ').map(n=>n[0]).join('');
   const availCls = c.avail==='today'?'av-today':c.avail==='tomorrow'?'av-tomorrow':'av-week';
-  const availTxt = c.avail==='today'?'Today':c.avail==='tomorrow'?'Tomorrow':'This Week';
-  const starsN = Math.floor(c.rating);
-  const popPct = Math.min(100, c.bookings / 4.5);
-  const inCompare = compareList.includes(c.id);
-  const score = c.portfolioScore || 0;
-  const scoreColor = score>=95?'#4ade80':score>=85?'#e9b84a':'#9A9CAA';
-  const langStr = (c.languages||[]).slice(0,2).join(' · ');
+  const topSpec = c.specs && c.specs[0] ? c.specs[0] : c.type;
   return `
-    <article class="creator-card" onclick="window.open('profile.html?id=${c.id}','_blank')"
-      title="View ${c.name}'s profile"
-      style="cursor:pointer"
-    >
-      <div class="card-media">
-        <div class="card-img" style="background:linear-gradient(145deg,${c.c1} 0%,${hexA(c.c2,0.22)} 100%)">
-          <span class="card-initial">${initials}</span>
-          <svg class="card-svg" viewBox="0 0 320 178" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-            <circle cx="160" cy="89" r="100" fill="none" stroke="${c.c2}" stroke-width="0.6" opacity="0.18"/>
-            <circle cx="160" cy="89" r="70" fill="none" stroke="${c.c2}" stroke-width="0.6" opacity="0.14"/>
-            <circle cx="160" cy="89" r="44" fill="none" stroke="${c.c2}" stroke-width="0.6" opacity="0.10"/>
-            ${[0,1,2,3,4,5,6].map(i=>`<line x1="160" y1="89" x2="${160+110*Math.cos(i*Math.PI*2/7-Math.PI/2)}" y2="${89+110*Math.sin(i*Math.PI*2/7-Math.PI/2)}" stroke="${c.c2}" stroke-width="0.5" opacity="0.12"/>`).join('')}
-          </svg>
-          ${score>0?`<div class="portfolio-score" title="AI Portfolio Score">🏆 ${score}</div>`:''}
+    <article class="c-card" onclick="openDrawer(${c.id})" title="View ${c.name}'s profile">
+      <div class="c-av" style="background:${hexA(c.c1,0.22)};color:${c.c2}">${initials}</div>
+      <div class="c-info">
+        <div class="c-name">
+          ${c.name}
+          ${c.verified ? '<span class="c-vtick">✓</span>' : ''}
         </div>
-        <span class="avail-badge ${availCls}">${availTxt}</span>
-        <button class="save-btn" onclick="event.stopPropagation();this.classList.toggle('saved');this.textContent=this.classList.contains('saved')?'♥':'♡'" aria-label="Save">♡</button>
-      </div>
-      <div class="card-body">
-        <div class="card-row1">
-          <span class="card-name">${c.name}</span>
-          ${c.verified?'<span class="v-badge" title="Lumora Verified">✓</span>':''}
-        </div>
-        <p class="card-type">${c.type} · 📍 ${c.city}</p>
-        <div class="badge-row">
-          ${c.rush?'<span class="b-badge b-rush">⚡ Rush</span>':''}
-          ${c.instantConfirm?'<span class="b-badge b-instant">🟢 Instant</span>':''}
-          ${c.insurance?'<span class="b-badge b-insured">🛡 Insured</span>':''}
-          ${c.repeatDiscount>0?`<span class="b-badge b-discount">🔄 ${c.repeatDiscount}% off</span>`:''}
-        </div>
-        <div class="card-specs">${c.specs.slice(0,3).map(s=>`<span class="card-spec">${s}</span>`).join('')}</div>
-        ${langStr?`<p class="card-langs">🌐 ${langStr}</p>`:''}
-        <div class="pop-row">
-          <span>${c.bookings} bookings</span>
-          <div class="pop-bar"><div class="pop-fill" style="width:${popPct}%"></div></div>
-        </div>
-        <div class="card-footer">
-          <div class="card-rating">
-            <span class="c-stars">${'★'.repeat(starsN)}</span>
-            <span>${c.rating}</span>
-            <span class="c-reviews">(${c.reviews})</span>
-          </div>
-          <div class="card-price">£${c.price}<em>/hr</em></div>
-        </div>
-        <div class="card-actions">
-          <button class="btn-profile" onclick="event.stopPropagation();window.open('profile.html?id=${c.id}','_blank')">View Profile</button>
-          <button class="btn-chat-q" onclick="event.stopPropagation();openContact(${c.id})">💬 Chat</button>
-          <button class="btn-chat-q" style="background:${inCompare?'rgba(233,184,74,.15)':''};border-color:${inCompare?'var(--gold)':''}" onclick="event.stopPropagation();toggleCompare(${c.id})">${inCompare?'✓ Added':'+ Compare'}</button>
+        <div class="c-meta">${topSpec} · ${c.city}</div>
+        <div class="c-foot">
+          <span class="c-rating">★ ${c.rating}</span>
+          <span class="c-rev">(${c.reviews})</span>
+          <span class="c-price">from £${c.price}/hr</span>
         </div>
       </div>
+      <div class="c-avail ${availCls}" title="${c.avail==='today'?'Available today':c.avail==='tomorrow'?'Available tomorrow':'Available this week'}"></div>
     </article>`;
 }
 
+/* ── hexA helper ───────────────────────────────────────────────── */
 function hexA(hex, a) {
+  if (!hex || hex.length < 7) return `rgba(100,100,120,${a})`;
   const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
   return `rgba(${r},${g},${b},${a})`;
 }
 
-/* ── city chips ───────────────────────────────────────────────── */
-function initCityChips() {
-  document.querySelectorAll('.city-chip').forEach(btn => btn.addEventListener('click', () => {
-    document.querySelectorAll('.city-chip').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on'); filters.city = btn.dataset.city; applyFilters();
-  }));
-}
-
-/* ── feature toggles (Snappr gaps) ───────────────────────────── */
-function toggleFeat(key, row) {
-  filters[key] = !filters[key];
-  row.querySelector('.toggle-sw').classList.toggle('on', filters[key]);
-  applyFilters();
-}
-
-/* ── compare ──────────────────────────────────────────────────── */
-function toggleCompare(id) {
-  if (compareList.includes(id)) {
-    compareList = compareList.filter(x => x !== id);
-  } else {
-    if (compareList.length >= 3) { alert('You can compare up to 3 creators at a time.'); return; }
-    compareList.push(id);
-  }
-  updateCompareBar();
-  applyFilters();
-}
-function updateCompareBar() {
-  const bar = document.getElementById('compare-bar');
-  bar.classList.toggle('open', compareList.length > 0);
-  for (let i = 0; i < 3; i++) {
-    const slot = document.getElementById('cslot'+i);
-    if (compareList[i]) {
-      const c = creators.find(x=>x.id===compareList[i]);
-      slot.textContent = c ? c.name.split(' ').map(n=>n[0]).join('') : '';
-      slot.className = 'cmp-slot filled';
-    } else { slot.textContent = '+'; slot.className = 'cmp-slot'; }
-  }
-}
-function clearCompare() { compareList = []; updateCompareBar(); applyFilters(); }
-function openCompare() {
-  if (!compareList.length) return;
-  const items = compareList.map(id => creators.find(c=>c.id===id)).filter(Boolean);
-  const rows = [
-    ['Type', c=>c.type],
-    ['City', c=>c.city],
-    ['Rating', c=>'★ '+c.rating+' ('+c.reviews+' reviews)'],
-    ['Price/hr', c=>'£'+c.price],
-    ['Bookings', c=>c.bookings],
-    ['Portfolio Score', c=>c.portfolioScore ? '🏆 '+c.portfolioScore+'/100' : '—'],
-    ['Rush booking', c=>c.rush?'⚡ Yes':'No'],
-    ['Instant confirm', c=>c.instantConfirm?'🟢 Yes':'No'],
-    ['Insurance', c=>c.insurance?'🛡 Verified':'Unverified'],
-    ['Repeat discount', c=>c.repeatDiscount>0?c.repeatDiscount+'%':'—'],
-    ['Languages', c=>(c.languages||['English']).join(', ')],
-    ['Equipment', c=>(c.equipment||[]).slice(0,2).join(', ')],
-    ['Availability', c=>c.avail==='today'?'Today':c.avail==='tomorrow'?'Tomorrow':'This week'],
-  ];
-  const th = items.map(c=>`<th style="padding:10px 16px;text-align:left;font-size:.84rem;font-weight:700;border-bottom:1px solid var(--border)"><div style="background:${hexA(c.c2,.15)};color:${c.c2};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:6px">${c.name.split(' ').map(n=>n[0]).join('')}</div>${c.name}</th>`).join('');
-  const trs = rows.map(([label, fn])=>`<tr><td style="padding:9px 16px;font-size:.78rem;color:var(--sub);font-weight:600;white-space:nowrap;border-bottom:1px solid var(--border)">${label}</td>${items.map(c=>`<td style="padding:9px 16px;font-size:.82rem;border-bottom:1px solid var(--border)">${fn(c)}</td>`).join('')}</tr>`).join('');
-  const bookBtns = items.map(c=>`<td style="padding:12px 16px"><button onclick="window.location='profile.html?id=${c.id}'" style="width:100%;padding:9px;border-radius:9px;background:var(--gold);color:#07080D;font-weight:700;border:none;cursor:pointer;font-size:.82rem">Book ${c.name.split(' ')[0]}</button></td>`).join('');
-  document.getElementById('compare-content').innerHTML = `<table style="width:100%;border-collapse:collapse;min-width:400px"><thead><tr><th style="padding:10px 16px;text-align:left;font-size:.78rem;color:var(--sub);border-bottom:1px solid var(--border)">Feature</th>${th}</tr></thead><tbody>${trs}<tr><td></td>${bookBtns}</tr></tbody></table>`;
-  document.getElementById('compare-overlay').classList.add('open');
-}
-function closeCompare() { document.getElementById('compare-overlay').classList.remove('open'); }
-
-/* ── advantages vs Snappr ─────────────────────────────────────── */
-function renderAdvantages() {
-  const adv = window.LUMORA_ADVANTAGES || [];
-  document.getElementById('adv-grid').innerHTML = adv.map(a=>`
-    <div class="adv-card">
-      <div class="adv-icon">${a.icon}</div>
-      <div class="adv-title">${a.title}</div>
-      <div class="adv-desc">${a.desc}</div>
-    </div>`).join('');
-}
-
-/* ── rebook strip ─────────────────────────────────────────────── */
-function renderRebookStrip() {
-  const top3 = [...creators].sort((a,b)=>b.bookings-a.bookings).slice(0,3);
-  document.getElementById('rebook-strip').innerHTML = top3.map(c => {
-    const initials = c.name.split(' ').map(n=>n[0]).join('');
-    return `
-      <div class="rebook-card" onclick="window.open('profile.html?id=${c.id}','_blank')">
-        <div class="rb-avatar" style="background:${hexA(c.c2,0.2)};color:${c.c2}">${initials}</div>
-        <div class="rb-info">
-          <div class="rb-name">${c.name}</div>
-          <div class="rb-sub">${c.type} · £${c.price}/hr</div>
-        </div>
-        <span class="rb-badge">🔥 Hot</span>
-      </div>`;
-  }).join('');
-}
-
-/* ── active chip row ──────────────────────────────────────────── */
+/* ── active chips ──────────────────────────────────────────────── */
 function renderActiveChips() {
   const chips = [];
-  if (filters.avail) chips.push({label: filters.avail === 'today' ? 'Today' : filters.avail === 'tomorrow' ? 'Tomorrow' : 'This week', key:'avail'});
+  if (filters.avail) chips.push({label: filters.avail==='today'?'Today':filters.avail==='tomorrow'?'Tomorrow':'This week', key:'avail'});
   if (filters.budgetMin > 50) chips.push({label:`From £${filters.budgetMin}`, key:'bmin'});
   if (filters.budgetMax < 2000) chips.push({label:`Up to £${filters.budgetMax}`, key:'bmax'});
-  if (filters.dist < 50) chips.push({label:`${filters.dist}mi radius`, key:'dist'});
+  if (filters.dist < 50) chips.push({label:`${filters.dist}mi`, key:'dist'});
   filters.specs.forEach(s => chips.push({label:s, key:`spec:${s}`}));
   if (filters.type) chips.push({label:filters.type, key:'type'});
   if (filters.ratingMin > 0) chips.push({label:`${filters.ratingMin}★+`, key:'rating'});
@@ -1236,15 +1001,124 @@ function removeFilter(key) {
     filters[key]=false; const sw=document.getElementById('feat-'+key); if(sw) sw.classList.remove('on');
   }
   else if (key.startsWith('spec:')) {
-    const s = key.slice(5); filters.specs=filters.specs.filter(x=>x!==s);
+    const s=key.slice(5); filters.specs=filters.specs.filter(x=>x!==s);
     document.querySelectorAll('.f-chip').forEach(c=>{ if(c.dataset.spec===s) c.classList.remove('on'); });
   }
   applyFilters();
 }
 
-/* ── contact modal ────────────────────────────────────────────── */
+/* ── filter drawer ─────────────────────────────────────────────── */
+function openFilters() {
+  document.getElementById('filter-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFilters() {
+  document.getElementById('filter-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── profile drawer ────────────────────────────────────────────── */
+function openDrawer(id) {
+  const c = creators.find(x => x.id === id);
+  if (!c) return;
+  activeContactCreator = c;
+
+  const initials = c.name.split(' ').map(n=>n[0]).join('');
+  const availCls = c.avail==='today'?'av-today':c.avail==='tomorrow'?'av-tomorrow':'av-week';
+  const availTxt = c.avail==='today'?'Available today':c.avail==='tomorrow'?'Available tomorrow':'Available this week';
+  const score = c.portfolioScore || 0;
+  const langs = (c.languages || ['English']).join(' · ');
+  const equip = (c.equipment || []).slice(0,3).join(', ');
+  const bio = c.bio || `${c.name.split(' ')[0]} is a ${c.type.toLowerCase()} based in ${c.city} specialising in ${(c.specs||[]).slice(0,2).join(' and ')}.`;
+
+  const badgesHTML = [
+    c.rush ? '<span class="pd-badge pd-b-rush">⚡ Rush Booking</span>' : '',
+    c.instantConfirm ? '<span class="pd-badge pd-b-instant">🟢 Instant Confirm</span>' : '',
+    c.insurance ? '<span class="pd-badge pd-b-insured">🛡 Insured</span>' : '',
+    c.repeatDiscount > 0 ? `<span class="pd-badge pd-b-discount">🔄 ${c.repeatDiscount}% Repeat Discount</span>` : '',
+  ].filter(Boolean).join('');
+
+  const specsHTML = (c.specs || []).map(s => `<span class="pd-chip">${s}</span>`).join('');
+
+  document.getElementById('pd-panel').innerHTML = `
+    <div class="pd-top">
+      <button class="pd-close-btn" onclick="closeDrawer()">✕</button>
+      <div class="pd-av" style="background:${hexA(c.c1,0.22)};color:${c.c2};border-color:${hexA(c.c2,0.3)}">${initials}</div>
+      <div class="pd-name">
+        ${c.name}
+        ${c.verified ? '<span class="pd-vtick">✓</span>' : ''}
+      </div>
+      <div class="pd-type">${c.type} · 📍 ${c.loc || c.city}</div>
+    </div>
+
+    <div class="pd-stats">
+      <div class="pd-stat">
+        <div class="pd-stat-val">★ ${c.rating}</div>
+        <div class="pd-stat-lbl">Rating</div>
+      </div>
+      <div class="pd-stat">
+        <div class="pd-stat-val">${c.reviews}</div>
+        <div class="pd-stat-lbl">Reviews</div>
+      </div>
+      <div class="pd-stat">
+        <div class="pd-stat-val">${c.bookings}</div>
+        <div class="pd-stat-lbl">Bookings</div>
+      </div>
+      <div class="pd-stat">
+        <div class="pd-stat-val">£${c.price}</div>
+        <div class="pd-stat-lbl">per hour</div>
+      </div>
+    </div>
+
+    <div class="pd-section">
+      <div class="pd-sec-title">Availability &amp; Badges</div>
+      <div class="pd-avail-row">
+        <span class="pd-avail-badge ${availCls}">● ${availTxt}</span>
+        ${badgesHTML}
+      </div>
+    </div>
+
+    ${specsHTML ? `
+    <div class="pd-section">
+      <div class="pd-sec-title">Specialties</div>
+      <div class="pd-chips">${specsHTML}</div>
+    </div>` : ''}
+
+    <div class="pd-section">
+      <div class="pd-sec-title">About</div>
+      <p class="pd-bio">${bio}</p>
+    </div>
+
+    <div class="pd-section">
+      <div class="pd-sec-title">Details</div>
+      <div class="pd-kv">
+        ${langs ? `<div class="pd-kv-row"><span class="pd-kv-label">Languages</span><span class="pd-kv-val">${langs}</span></div>` : ''}
+        ${equip ? `<div class="pd-kv-row"><span class="pd-kv-label">Equipment</span><span class="pd-kv-val">${equip}</span></div>` : ''}
+        ${score > 0 ? `<div class="pd-kv-row"><span class="pd-kv-label">Portfolio</span><span class="pd-kv-val"><span class="pd-score">🏆 ${score}/100 AI score</span></span></div>` : ''}
+      </div>
+    </div>
+
+    <div style="height:80px"></div>
+
+    <div class="pd-cta">
+      <button class="pd-book-btn" onclick="window.location='profile.html?id=${c.id}#book'">Book Now</button>
+      <button class="pd-msg-btn" onclick="openContact(${c.id})">Message</button>
+      <a class="pd-profile-link" href="profile.html?id=${c.id}" target="_blank">Full profile →</a>
+    </div>
+  `;
+
+  document.getElementById('profile-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('profile-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── contact modal ─────────────────────────────────────────────── */
 function openContact(id) {
-  const c = creators.find(x=>x.id===id);
+  const c = id ? creators.find(x=>x.id===id) : activeContactCreator;
   if (!c) return;
   activeContactCreator = c;
   const initials = c.name.split(' ').map(n=>n[0]).join('');
@@ -1253,55 +1127,26 @@ function openContact(id) {
   av.style.background = hexA(c.c2, 0.2);
   av.style.color = c.c2;
   document.getElementById('modal-name').textContent = c.name;
-  document.getElementById('modal-sub').textContent = `${c.type} · ${c.loc}`;
+  document.getElementById('modal-sub').textContent = `${c.type} · ${c.loc || c.city}`;
   document.getElementById('wa-link').href = `https://wa.me/${c.wa}?text=Hi ${c.name.split(' ')[0]}, I found you on Lumora and I'm interested in booking you for a shoot. Are you available?`;
   document.getElementById('ig-link').href = `https://instagram.com/${c.ig}`;
   document.getElementById('contact-overlay').classList.add('open');
 }
 function closeContact() { document.getElementById('contact-overlay').classList.remove('open'); }
 
-/* ── lumora chat panel ────────────────────────────────────────── */
-function openLumoraChat() {
-  const c = activeContactCreator || creators[0];
-  const initials = c.name.split(' ').map(n=>n[0]).join('');
-  const av = document.getElementById('cp-av');
-  av.textContent = initials;
-  av.style.background = hexA(c.c2, 0.2); av.style.color = c.c2;
-  document.getElementById('cp-name').textContent = c.name;
-  document.getElementById('chat-panel').classList.add('open');
-}
-function closeChatPanel() { document.getElementById('chat-panel').classList.remove('open'); }
+/* ── load more ─────────────────────────────────────────────────── */
+function loadMore() { shownCount += 12; applyFilters(); }
 
-function sendMsg() {
-  const inp = document.getElementById('chat-in');
-  const txt = inp.value.trim();
-  if (!txt) return;
-  const msgs = document.getElementById('chat-msgs');
-  const div = document.createElement('div');
-  div.className = 'chat-msg out';
-  div.innerHTML = `<div class="bubble">${txt}</div><span class="chat-time">Just now · ✓ Sent</span>`;
-  msgs.appendChild(div);
-  inp.value = '';
-  msgs.scrollTop = msgs.scrollHeight;
-  // AI auto-reply
-  setTimeout(() => {
-    const replies = [
-      "That sounds wonderful! Could you tell me more about the date and venue?",
-      "I'd love to help with that! My rates start from £280/hr. Shall I send over my full package details?",
-      "Great to hear from you! I have availability on 15th and 20th August — would either of those work?",
-      "Thank you! I'll put together a custom quote for you. My typical turnaround for edited photos is 2 weeks. ✨",
-    ];
-    const r = document.createElement('div');
-    r.className = 'chat-msg in';
-    r.innerHTML = `<div class="bubble">${replies[Math.floor(Math.random()*replies.length)]}</div><span class="chat-time">Just now · <span style="color:var(--green)">✓✓ Seen</span></span>`;
-    msgs.appendChild(r);
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 1400);
-}
+/* ── keyboard escape ───────────────────────────────────────────── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeDrawer();
+    closeFilters();
+    closeContact();
+  }
+});
 
-function loadMore() { shownCount += 6; applyFilters(); }
-
-/* ── theme ────────────────────────────────────────────────────── */
+/* ── theme ─────────────────────────────────────────────────────── */
 function initTheme() {
   const btn = document.getElementById('theme-btn');
   const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
