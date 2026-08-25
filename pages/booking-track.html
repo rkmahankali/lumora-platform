@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track Booking — Lumora</title>
+<title>Track Booking — Klumora</title>
 <style>
 :root{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--gold:#E9B84A;--gold-bg:rgba(233,184,74,.10);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;--green:#4ade80;--amber:#fbbf24;--blue:#38bdf8;--purple:#a78bfa;--red:#f87171;--r:12px;--nav-h:64px}
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}}
@@ -182,7 +182,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 </head>
 <body>
 <nav>
-  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Lumora</a>
+  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Klumora</a>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-btn">☀️</button>
     <a href="dashboard-client.html" class="nav-btn nav-btn-outline">My Bookings</a>
@@ -352,8 +352,8 @@ const STATUS_MAP = {
   'confirmed':   {milestoneIdx:2, badge:'status-confirmed',  badgeTxt:'✅ Confirmed',         acIcon:'✅', acIconBg:'rgba(56,189,248,.12)',  acTitle:'Booking Confirmed!',       acSub:'Sophie has accepted your booking',          info:'Great news! <strong>Sophie has confirmed your booking</strong>. She\'ll reach out within 24 hours to schedule a pre-shoot consultation call where you\'ll discuss your vision, preferred shots, and logistics.', ctaTxt:'Message Sophie', ctaFn:'openChat()', editing:false, delivered:false},
   'pre-consult': {milestoneIdx:3, badge:'status-confirmed',  badgeTxt:'📞 Pre-consult Scheduled', acIcon:'💬', acIconBg:'rgba(56,189,248,.12)',  acTitle:'Pre-shoot Consultation',   acSub:'Scheduled for 12 August at 2pm BST',       info:'Your pre-shoot consultation is <strong>scheduled for 12 August at 2:00 PM BST</strong>. Sophie will video call you to discuss your preferred shots, locations, timing, and any special requests. Have your ideas ready!', ctaTxt:'Add to Calendar', ctaFn:'alert(\'Calendar invite sent to your email!\')', editing:false, delivered:false},
   'editing':     {milestoneIdx:5, badge:'status-in-progress',badgeTxt:'⚙️ Editing in Progress',  acIcon:'⚙️', acIconBg:'rgba(251,191,36,.12)', acTitle:'Editing in Progress',      acSub:'Sophie is working on your photos',          info:'Your shoot was a success! <strong>Sophie is editing your photos</strong> with her signature editorial style. She\'s working through 600+ RAW files applying custom retouching. Expected delivery: <strong>28 August 2026</strong>.', ctaTxt:'View Gallery', ctaFn:'document.getElementById(\'gallery-card\').scrollIntoView({behavior:\'smooth\'})', editing:true, delivered:false},
-  'delivered':   {milestoneIdx:6, badge:'status-delivered',  badgeTxt:'🎉 Gallery Delivered',    acIcon:'🖼', acIconBg:'rgba(74,222,128,.12)',  acTitle:'Your Gallery is Ready!',   acSub:'247 edited photos awaiting your approval', info:'<strong>Sophie has delivered your gallery!</strong> 247 professionally edited photos are now in your private Lumora gallery. Please review them and confirm receipt to release payment to Sophie.', ctaTxt:'Confirm & Approve Gallery', ctaFn:'confirmGallery()', editing:false, delivered:true},
-  'complete':    {milestoneIdx:8, badge:'status-complete',   badgeTxt:'⭐ Complete',            acIcon:'⭐', acIconBg:'rgba(233,184,74,.12)',  acTitle:'Booking Complete!',        acSub:'Payment released · Gallery saved forever', info:'Your booking is <strong>complete</strong>! Payment has been released to Sophie. Your gallery is saved permanently in your Lumora account. Thank you for choosing Lumora — we hope to see you again!', ctaTxt:'Leave a Review', ctaFn:'openReview()', editing:false, delivered:false},
+  'delivered':   {milestoneIdx:6, badge:'status-delivered',  badgeTxt:'🎉 Gallery Delivered',    acIcon:'🖼', acIconBg:'rgba(74,222,128,.12)',  acTitle:'Your Gallery is Ready!',   acSub:'247 edited photos awaiting your approval', info:'<strong>Sophie has delivered your gallery!</strong> 247 professionally edited photos are now in your private Klumora gallery. Please review them and confirm receipt to release payment to Sophie.', ctaTxt:'Confirm & Approve Gallery', ctaFn:'confirmGallery()', editing:false, delivered:true},
+  'complete':    {milestoneIdx:8, badge:'status-complete',   badgeTxt:'⭐ Complete',            acIcon:'⭐', acIconBg:'rgba(233,184,74,.12)',  acTitle:'Booking Complete!',        acSub:'Payment released · Gallery saved forever', info:'Your booking is <strong>complete</strong>! Payment has been released to Sophie. Your gallery is saved permanently in your Klumora account. Thank you for choosing Klumora — we hope to see you again!', ctaTxt:'Leave a Review', ctaFn:'openReview()', editing:false, delivered:false},
 };
 let currentStatus = 'editing';
 
@@ -361,7 +361,7 @@ let currentStatus = 'editing';
 window.addEventListener('DOMContentLoaded', () => {
   drawLogo(); initTheme();
   // Load from localStorage or use defaults
-  const b = JSON.parse(localStorage.getItem('lumora_active_booking') || '{}');
+  const b = JSON.parse(localStorage.getItem('klumora_active_booking') || '{}');
   if(b.ref){ document.getElementById('bh-ref').textContent = 'Booking ref: ' + b.ref; document.getElementById('booking-ref')?.textContent = b.ref; }
   if(b.date){ document.getElementById('bh-date').textContent = b.date; document.getElementById('sc-date').textContent = b.date; }
   if(b.pkg) document.getElementById('bh-pkg').textContent = b.pkg.name + ' (' + b.pkg.hrs + 'hrs)';
@@ -473,7 +473,7 @@ function renderGallery(s) {
     body.innerHTML = `<div class="delivery-confirmed">
       <div class="dc-icon">✅</div>
       <h3 class="dc-title">Gallery Approved!</h3>
-      <p class="dc-sub">You've confirmed your gallery. Payment has been released to Sophie. Your photos are saved permanently in your Lumora account.</p>
+      <p class="dc-sub">You've confirmed your gallery. Payment has been released to Sophie. Your photos are saved permanently in your Klumora account.</p>
       <button class="leave-review-btn" onclick="openReview()">⭐ Leave a Review for Sophie</button>
     </div>`;
   } else {

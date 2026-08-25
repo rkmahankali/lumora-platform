@@ -1,15 +1,15 @@
-# Lumora Platform
+# Klumora Platform
 
-**The UK's premier photography & videography marketplace.**
+**Your moments of glory, captured by the best professionals.**
 
-> Book world-class photographers and videographers in minutes, or build a thriving creative career — on the platform designed for both sides of the lens.
+> The UK's premier creator marketplace — where great moments meet elite photographers and videographers. Book instantly, zero upfront fees.
 
 ---
 
 ## Project Structure
 
 ```
-lumora-platform/
+klumora-platform/
 ├── index.html          # Main landing page
 ├── pages/
 │   └── onboarding.html # Photographer / Videographer onboarding
@@ -27,7 +27,7 @@ lumora-platform/
 | Photographer Dashboard | 🔜 Next | Earnings, calendar, bookings management |
 | Client Dashboard | 🔜 Next | Booking history, gallery, AI concierge |
 | Payments (Stripe) | 🔜 Next | Escrow, auto-release, invoicing |
-| Lumora AI | 🔜 Next | Claude API-powered concierge & ETA agent |
+| Kklumora AI | 🔜 Next | Claude API-powered concierge & ETA agent |
 | Mobile App | 🔜 Next | React Native (iOS + Android) |
 
 ## Tech Stack (Planned)
@@ -35,7 +35,7 @@ lumora-platform/
 - **Frontend:** Next.js 14 (App Router) + Tailwind CSS
 - **Backend:** Supabase (Postgres + Auth + Storage)
 - **Payments:** Stripe Connect (escrow)
-- **AI:** Anthropic Claude API (Lumora AI concierge)
+- **AI:** Anthropic Claude API (Kklumora AI concierge)
 - **Media:** Cloudinary (portfolio & gallery delivery)
 - **Maps:** Mapbox (location-aware search)
 - **Mobile:** React Native (Expo)
@@ -50,4 +50,4 @@ python3 -m http.server 4321 --directory .
 
 ---
 
-*Built with ❤️ · Lumora Ltd · London, UK · 2026*
+*Built with ❤️ · Kklumora Ltd · London, UK · 2026*

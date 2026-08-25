@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Book a Creator — Lumora</title>
+<title>Book a Creator — Klumora</title>
 <style>
 :root{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--gold:#E9B84A;--gold-bg:rgba(233,184,74,.10);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;--green:#4ade80;--red:#f87171;--r:12px;--nav-h:64px}
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}}
@@ -115,7 +115,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 </head>
 <body>
 <nav>
-  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Lumora</a>
+  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Klumora</a>
   <a href="profile.html" class="nav-back">← Back to Sophie Clarke</a>
   <div class="nav-right"><button class="theme-toggle" id="theme-btn">☀️</button></div>
 </nav>
@@ -170,7 +170,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
       <h1 class="panel-title">Secure checkout</h1>
       <p class="panel-sub">You're paying a 50% deposit today to confirm your booking.</p>
       <div class="deposit-note">
-        <strong>💡 How Lumora payments work:</strong> Your deposit is held securely in escrow. The balance is charged 7 days before the shoot. Funds are released to Sophie only after you confirm the delivery. <a href="#" style="color:var(--gold)">Learn more</a>
+        <strong>💡 How Klumora payments work:</strong> Your deposit is held securely in escrow. The balance is charged 7 days before the shoot. Funds are released to Sophie only after you confirm the delivery. <a href="#" style="color:var(--gold)">Learn more</a>
       </div>
       <div class="pay-tabs">
         <button class="pay-tab on" onclick="setPayTab(this,'card')">💳 Card</button>
@@ -221,7 +221,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
           <div class="next-step"><div class="ns-icon">📧</div><div class="ns-text"><div class="ns-title">Confirmation email sent</div><div class="ns-sub">Check your inbox for booking details and Sophie's contact info.</div></div></div>
           <div class="next-step"><div class="ns-icon">💬</div><div class="ns-text"><div class="ns-title">Pre-shoot consultation</div><div class="ns-sub">Sophie will message you within 2 hours to schedule a consultation call.</div></div></div>
           <div class="next-step"><div class="ns-icon">📸</div><div class="ns-text"><div class="ns-title">Shoot day</div><div class="ns-sub">Sophie arrives at your location and captures everything as planned.</div></div></div>
-          <div class="next-step"><div class="ns-icon">🖼</div><div class="ns-text"><div class="ns-title">Gallery delivered</div><div class="ns-sub">Edited photos delivered to your private Lumora gallery within 14 days.</div></div></div>
+          <div class="next-step"><div class="ns-icon">🖼</div><div class="ns-text"><div class="ns-title">Gallery delivered</div><div class="ns-sub">Edited photos delivered to your private Klumora gallery within 14 days.</div></div></div>
         </div>
       </div>
       <div class="confirm-btns">
@@ -253,10 +253,10 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
       <div class="os-total"><span>Total</span><span class="os-total-price" id="os-total">£1,882</span></div>
       <div class="os-deposit-row"><span>Deposit due today (50%)</span><strong id="os-deposit">£941</strong></div>
       <div class="security-badges">
-        <div class="sec-badge">🔒 <span>Lumora Escrow Protection</span></div>
+        <div class="sec-badge">🔒 <span>Klumora Escrow Protection</span></div>
         <div class="sec-badge">🛡 <span>SSL Secure · 256-bit encryption</span></div>
         <div class="sec-badge">↩ <span>Free cancellation 48hrs before shoot</span></div>
-        <div class="sec-badge">✓ <span>Lumora Verified Creator</span></div>
+        <div class="sec-badge">✓ <span>Klumora Verified Creator</span></div>
       </div>
     </div>
   </aside>
@@ -276,7 +276,7 @@ const PACKAGES = [{name:'Half Day',hrs:4,rate:245,base:980},{name:'Full Day',hrs
 window.addEventListener('DOMContentLoaded', () => {
   drawLogo(); initTheme();
   // Load booking draft from localStorage or use defaults
-  const draft = JSON.parse(localStorage.getItem('lumora_draft_booking') || '{}');
+  const draft = JSON.parse(localStorage.getItem('klumora_draft_booking') || '{}');
   const pkg = PACKAGES[draft.pkgIdx ?? 1];
   const fee = Math.round(pkg.base * 0.12);
   const total = pkg.base + fee;
@@ -357,10 +357,10 @@ function processPayment() {
     document.getElementById('booking-ref-display').textContent = bookingRef;
     // Save booking to localStorage
     const booking = { ...window._booking, ref: bookingRef, status: 'confirmed', createdAt: new Date().toISOString(), milestoneIdx: 2 };
-    localStorage.setItem('lumora_active_booking', JSON.stringify(booking));
-    const all = JSON.parse(localStorage.getItem('lumora_bookings') || '[]');
+    localStorage.setItem('klumora_active_booking', JSON.stringify(booking));
+    const all = JSON.parse(localStorage.getItem('klumora_bookings') || '[]');
     all.unshift(booking);
-    localStorage.setItem('lumora_bookings', JSON.stringify(all));
+    localStorage.setItem('klumora_bookings', JSON.stringify(all));
     goToStep(3);
   }, 2200);
 }

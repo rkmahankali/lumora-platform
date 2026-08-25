@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Log In — Lumora</title>
+<title>Log In — Klumora</title>
 <style>
 :root{--bg:#07080D;--srf:#111318;--srf2:#1A1D26;--border:rgba(255,255,255,.07);--gold:#E9B84A;--gold-bg:rgba(233,184,74,.10);--text:#E8E6DF;--sub:#9A9CAA;--muted:#4A4D5E;--green:#4ade80;--blue:#38bdf8;--nav-h:64px}
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F5F4F0;--srf:#fff;--srf2:#ECEAE3;--border:rgba(0,0,0,.08);--text:#1A1A2E;--sub:#606272;--muted:#BCBDCC;--gold-bg:rgba(233,184,74,.13)}}
@@ -62,7 +62,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 </head>
 <body>
 <nav>
-  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Lumora</a>
+  <a href="../index.html" class="nav-logo"><canvas id="logo-canvas" width="28" height="28"></canvas>Klumora</a>
   <button class="theme-toggle" id="theme-btn">☀️</button>
 </nav>
 
@@ -77,7 +77,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 
     <!-- Who are you? -->
     <div class="auth-title" id="auth-title">Welcome back</div>
-    <div class="auth-sub" id="auth-sub">Log in to your Lumora account</div>
+    <div class="auth-sub" id="auth-sub">Log in to your Klumora account</div>
 
     <!-- Role picker (signup only) -->
     <div class="role-picker" id="role-picker" style="display:none">
@@ -134,7 +134,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
     <!-- Success screen -->
     <div class="success-screen" id="success-screen">
       <div class="success-icon" id="success-icon">🎉</div>
-      <div class="success-title" id="success-title">Welcome to Lumora!</div>
+      <div class="success-title" id="success-title">Welcome to Klumora!</div>
       <div class="success-sub" id="success-sub">Taking you to your dashboard…</div>
       <button class="success-btn" id="success-btn" onclick="goToDashboard()">Go to Dashboard →</button>
     </div>
@@ -153,7 +153,7 @@ function setTab(tab, el) {
   el.classList.add('active');
   const isLogin = tab === 'login';
   document.getElementById('auth-title').textContent = isLogin ? 'Welcome back' : 'Create your account';
-  document.getElementById('auth-sub').textContent = isLogin ? 'Log in to your Lumora account' : 'Join thousands of creators and clients';
+  document.getElementById('auth-sub').textContent = isLogin ? 'Log in to your Klumora account' : 'Join thousands of creators and clients';
   document.getElementById('role-picker').style.display = isLogin ? 'none' : 'grid';
   document.getElementById('name-row').style.display = isLogin ? 'none' : 'flex';
   document.getElementById('confirm-pw-row').style.display = isLogin ? 'none' : 'block';
@@ -201,8 +201,8 @@ function submitAuth(e) {
     document.getElementById('success-icon').textContent = currentRole==='creator'?'🎬':'📸';
     document.getElementById('success-title').textContent = 'Account created!';
     document.getElementById('success-sub').textContent = currentRole==='creator'
-      ? 'Welcome to Lumora! Complete your creator profile to start receiving bookings.'
-      : 'Welcome to Lumora! Start exploring photographers and videographers near you.';
+      ? 'Welcome to Klumora! Complete your creator profile to start receiving bookings.'
+      : 'Welcome to Klumora! Start exploring photographers and videographers near you.';
     document.getElementById('success-btn').textContent = currentRole==='creator'?'Set Up Creator Profile →':'Start Exploring →';
     setTimeout(goToDashboard, 1800);
   }
@@ -229,7 +229,7 @@ function socialLogin(provider) {
   document.getElementById('success-screen').style.display = 'block';
   document.getElementById('success-icon').textContent = '✅';
   document.getElementById('success-title').textContent = `Signed in with ${provider}`;
-  document.getElementById('success-sub').textContent = `Your Lumora account is ready. Taking you to your dashboard…`;
+  document.getElementById('success-sub').textContent = `Your Klumora account is ready. Taking you to your dashboard…`;
   setTimeout(goToDashboard, 1400);
 }
 

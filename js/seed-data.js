@@ -1,5 +1,5 @@
 /**
- * Lumora Platform — Seed Data
+ * Klumora Platform — Seed Data
  * 50 photographers/videographers + 50 client users
  * Used by search.html, test-users.html, and dashboard pages
  */
@@ -11,7 +11,7 @@
            bookings, ig, wa, c1, c2, languages, equipment, portfolioScore,
            repeatDiscount, bio
 ───────────────────────────────────────────────────────────────────── */
-window.LUMORA_CREATORS = [
+window.KLUMORA_CREATORS = [
 
   // ── LONDON ───────────────────────────────────────────────────────
   {id:1,name:"Sophie Clarke",type:"Photographer",city:"London",loc:"Shoreditch, London",dist:1.2,
@@ -426,7 +426,7 @@ window.LUMORA_CREATORS = [
    Fields: id, name, initials, avatarColor, email, city, loc,
            joinedYear, bookings, spent, lastBookedId, favSpecs, notes
 ───────────────────────────────────────────────────────────────────── */
-window.LUMORA_CLIENTS = [
+window.KLUMORA_CLIENTS = [
   {id:1,name:"Emma Rivera",initials:"ER",avatarColor:"#e9b84a",email:"emma.r@gmail.com",city:"London",loc:"Kensington",joinedYear:2025,bookings:5,spent:8420,lastBookedId:1,favSpecs:["Weddings","Portraits"],notes:"VIP client, prefers Sophie Clarke"},
   {id:2,name:"James Thompson",initials:"JT",avatarColor:"#38bdf8",email:"james.t@outlook.com",city:"London",loc:"Mayfair",joinedYear:2026,bookings:2,spent:3764,lastBookedId:1,favSpecs:["Weddings","Events"]},
   {id:3,name:"Anya Kapoor",initials:"AK",avatarColor:"#4ade80",email:"anya.k@kapoor.co.uk",city:"London",loc:"Brixton",joinedYear:2025,bookings:3,spent:4280,lastBookedId:1,favSpecs:["Brand","Portraits"]},
@@ -480,11 +480,11 @@ window.LUMORA_CLIENTS = [
 ];
 
 /* ─────────────────────────────────────────────────────────────────────
-   LUMORA vs SNAPPR — PLATFORM ADVANTAGE MAP
+   KLUMORA vs SNAPPR — PLATFORM ADVANTAGE MAP
    Used by search.html feature comparison banner
 ───────────────────────────────────────────────────────────────────── */
-window.LUMORA_ADVANTAGES = [
-  {icon:"🎬",title:"Video + Drone",desc:"Snappr is photo-only. Lumora covers photographers, videographers, drone operators, and hybrid creators."},
+window.KLUMORA_ADVANTAGES = [
+  {icon:"🎬",title:"Video + Drone",desc:"Snappr is photo-only. Klumora covers photographers, videographers, drone operators, and hybrid creators."},
   {icon:"💬",title:"Direct chat",desc:"In-app messaging, WhatsApp & Instagram DM. Snappr has no direct creator contact."},
   {icon:"🤝",title:"Counter-offers",desc:"Negotiate packages and propose custom rates. Snappr has fixed pricing only."},
   {icon:"🔒",title:"Escrow payments",desc:"50% deposit held securely. Balance released only when client approves the gallery."},

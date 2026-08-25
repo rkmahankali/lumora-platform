@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Find a Creator — Lumora</title>
+  <title>Find a Creator — Klumora</title>
   <style>
     /* ── design tokens ──────────────────────────────────────────── */
     :root {
@@ -469,12 +469,12 @@
 <nav>
   <a href="../index.html" class="nav-logo">
     <canvas id="logo-canvas" width="28" height="28"></canvas>
-    Lumora
+    Klumora
   </a>
   <div class="nav-center">
     <a href="search.html" class="nav-link active">Find Creators</a>
     <a href="#" class="nav-link">How it Works</a>
-    <a href="#" class="nav-link">Lumora AI</a>
+    <a href="#" class="nav-link">Klumora AI</a>
   </div>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-btn" aria-label="Toggle theme">☀️</button>
@@ -673,7 +673,7 @@
             <div class="toggle-sw" id="feat-insurance"></div>
           </div>
           <div class="feat-toggle" onclick="toggleFeat('verified',this)">
-            <label>✓ Lumora Verified</label>
+            <label>✓ Klumora Verified</label>
             <div class="toggle-sw" id="feat-verified"></div>
           </div>
           <div class="feat-toggle" onclick="toggleFeat('discount',this)">
@@ -728,19 +728,19 @@
       <button class="c-opt lm" onclick="closeContact()">
         <div class="c-opt-icon">🔮</div>
         <div class="c-opt-text">
-          <span class="c-opt-label">Message on Lumora</span>
+          <span class="c-opt-label">Message on Klumora</span>
           <span class="c-opt-sub">Secure, AI-assisted messaging</span>
         </div>
       </button>
     </div>
-    <p class="modal-note">Lumora verifies all creators — safe to contact directly.</p>
+    <p class="modal-note">Klumora verifies all creators — safe to contact directly.</p>
   </div>
 </div>
 
 <script src="../js/seed-data.js"></script>
 <script>
 /* ── data ──────────────────────────────────────────────────────── */
-const creators = window.LUMORA_CREATORS || [];
+const creators = window.KLUMORA_CREATORS || [];
 
 /* ── filter state ──────────────────────────────────────────────── */
 let filters = {
@@ -1128,7 +1128,7 @@ function openContact(id) {
   av.style.color = c.c2;
   document.getElementById('modal-name').textContent = c.name;
   document.getElementById('modal-sub').textContent = `${c.type} · ${c.loc || c.city}`;
-  document.getElementById('wa-link').href = `https://wa.me/${c.wa}?text=Hi ${c.name.split(' ')[0]}, I found you on Lumora and I'm interested in booking you for a shoot. Are you available?`;
+  document.getElementById('wa-link').href = `https://wa.me/${c.wa}?text=Hi ${c.name.split(' ')[0]}, I found you on Klumora and I'm interested in booking you for a shoot. Are you available?`;
   document.getElementById('ig-link').href = `https://instagram.com/${c.ig}`;
   document.getElementById('contact-overlay').classList.add('open');
 }
