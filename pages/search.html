@@ -461,6 +461,140 @@
     @media(max-width:400px){
       .creators-grid{grid-template-columns:1fr}
     }
+
+    /* ── quick-add to team button ───────────────────────────────── */
+    .c-add-btn{
+      position:absolute;bottom:9px;right:10px;
+      width:22px;height:22px;border-radius:50%;
+      background:var(--gold);color:#07080D;
+      font-size:1rem;font-weight:900;line-height:1;
+      border:none;align-items:center;justify-content:center;
+      cursor:pointer;transition:transform .15s,background .15s;
+      display:none;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3);
+    }
+    .c-card:hover .c-add-btn{display:flex}
+    .c-add-btn:hover{transform:scale(1.18)}
+    .c-card.in-team{border-color:var(--gold) !important;box-shadow:0 0 0 2px rgba(233,184,74,.18) !important}
+    .c-card.in-team .c-add-btn{display:flex;background:var(--green);font-size:.58rem;font-weight:900}
+
+    /* ── team tray (UBER-style floating basket) ─────────────────── */
+    .team-tray{
+      position:fixed;bottom:0;left:0;right:0;z-index:290;
+      background:var(--srf);border-top:1.5px solid rgba(233,184,74,.35);
+      padding:14px 24px 18px;
+      box-shadow:0 -8px 40px rgba(0,0,0,.45);
+      transform:translateY(110%);
+      transition:transform .36s cubic-bezier(.22,1,.36,1);
+    }
+    .team-tray.show{transform:translateY(0)}
+    .tt-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .tt-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);flex-shrink:0}
+    .tt-avatars{display:flex;align-items:center;flex-shrink:0}
+    .tt-slot{
+      width:36px;height:36px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.7rem;font-weight:800;
+      border:2.5px solid var(--srf);
+      margin-right:-10px;position:relative;
+      cursor:pointer;transition:transform .15s;flex-shrink:0;
+    }
+    .tt-slot:hover{transform:scale(1.15);z-index:5}
+    .tt-slot .tt-x{
+      position:absolute;top:-3px;right:-3px;
+      width:14px;height:14px;border-radius:50%;
+      background:var(--red,#f87171);color:#fff;
+      font-size:.5rem;font-weight:900;
+      display:none;align-items:center;justify-content:center;
+      border:1.5px solid var(--srf);cursor:pointer;
+    }
+    .tt-slot:hover .tt-x{display:flex}
+    .tt-info{flex:1;min-width:140px}
+    .tt-names{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.35}
+    .tt-price{font-size:.72rem;color:var(--sub);margin-top:2px}
+    .tt-price strong{color:var(--gold)}
+    .tt-book-btn{
+      padding:13px 32px;border-radius:100px;
+      background:var(--gold);color:#07080D;
+      font-size:.9rem;font-weight:800;border:none;
+      cursor:pointer;white-space:nowrap;flex-shrink:0;
+      transition:opacity .15s,transform .15s;
+    }
+    .tt-book-btn:hover{opacity:.88;transform:scale(1.03)}
+    .tt-clear-btn{
+      font-size:.75rem;color:var(--muted);
+      background:none;border:none;cursor:pointer;
+      white-space:nowrap;flex-shrink:0;text-decoration:underline;
+    }
+    .tt-clear-btn:hover{color:#f87171}
+
+    /* team count in nav */
+    .team-nav-btn{
+      display:flex;align-items:center;gap:6px;
+      padding:8px 15px;border-radius:100px;font-size:.8rem;font-weight:700;
+      background:var(--srf2);border:1px solid var(--border);color:var(--sub);
+      cursor:pointer;transition:all .15s;
+    }
+    .team-nav-btn.has-team{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+    .team-nav-badge{
+      width:17px;height:17px;border-radius:50%;
+      background:var(--gold);color:#07080D;
+      font-size:.58rem;font-weight:900;
+      display:none;align-items:center;justify-content:center;
+    }
+    .team-nav-btn.has-team .team-nav-badge{display:flex}
+
+    /* ── mobile bottom sheet for profile drawer ─────────────────── */
+    @media(max-width:640px){
+      .pd-panel{
+        top:auto !important;bottom:0 !important;
+        left:0;right:0;
+        width:100vw !important;height:88vh !important;
+        border-left:none !important;
+        border-top:1px solid var(--border) !important;
+        border-radius:20px 20px 0 0 !important;
+        transform:translateY(110%) !important;
+      }
+      .profile-drawer.open .pd-panel{transform:translateY(0) !important}
+      .pd-handle{display:block !important}
+    }
+    .pd-handle{
+      display:none;width:36px;height:4px;
+      background:var(--border);border-radius:2px;
+      margin:10px auto -4px;
+    }
+
+    /* ── UBER-style mobile bottom nav ───────────────────────────── */
+    .mobile-bottom-nav{display:none}
+    @media(max-width:640px){
+      .mobile-bottom-nav{
+        display:flex;position:fixed;bottom:0;left:0;right:0;z-index:260;
+        background:var(--srf);border-top:1px solid var(--border);
+        padding:6px 0 env(safe-area-inset-bottom,4px);
+        box-shadow:0 -4px 24px rgba(0,0,0,.3);
+      }
+      body{padding-bottom:64px}
+      .team-tray.show{padding-bottom:calc(env(safe-area-inset-bottom,4px) + 70px)}
+      .mbn-tab{
+        flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+        padding:4px 0;border:none;background:none;cursor:pointer;
+        font-size:.57rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+        color:var(--sub);position:relative;transition:color .15s;font-family:inherit;
+      }
+      .mbn-tab.active,.mbn-tab:hover{color:var(--gold)}
+      .mbn-icon{font-size:1.25rem;line-height:1}
+      .mbn-dot{
+        position:absolute;top:1px;right:calc(50% - 16px);
+        min-width:15px;height:15px;border-radius:8px;padding:0 3px;
+        background:var(--gold);color:#07080D;
+        font-size:.5rem;font-weight:900;
+        display:none;align-items:center;justify-content:center;
+        border:1.5px solid var(--srf);
+      }
+      .mbn-dot.show{display:flex}
+      .nav-center,.nav-right .nav-btn-outline{display:none !important}
+      .search-main{padding:12px 10px 70px}
+      .creators-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}
+    }
   </style>
 </head>
 <body>
@@ -477,6 +611,9 @@
     <a href="#" class="nav-link">Klumora AI</a>
   </div>
   <div class="nav-right">
+    <button class="team-nav-btn" id="team-nav-btn" onclick="scrollToTeam()">
+      👥 Team <span class="team-nav-badge" id="team-nav-badge">0</span>
+    </button>
     <button class="theme-toggle" id="theme-btn" aria-label="Toggle theme">☀️</button>
     <a href="login.html" class="nav-btn nav-btn-outline" style="padding:8px 18px;border-radius:100px;font-size:.875rem">Log In</a>
     <a href="login.html?role=creator&mode=signup" class="nav-btn nav-btn-gold" style="padding:8px 18px;border-radius:100px;font-size:.875rem;font-weight:600">Join as Creator</a>
@@ -691,6 +828,7 @@
 <div class="profile-drawer" id="profile-drawer">
   <div class="pd-backdrop" onclick="closeDrawer()"></div>
   <div class="pd-panel" id="pd-panel">
+    <div class="pd-handle"></div>
     <!-- filled by JS -->
   </div>
 </div>
@@ -737,10 +875,153 @@
   </div>
 </div>
 
+<!-- ── UBER team tray ───────────────────────────────────────────── -->
+<div class="team-tray" id="team-tray">
+  <div class="tt-inner">
+    <span class="tt-label">Your Team</span>
+    <div class="tt-avatars" id="tt-avatars"></div>
+    <div class="tt-info">
+      <div class="tt-names" id="tt-names">—</div>
+      <div class="tt-price" id="tt-price"></div>
+    </div>
+    <button class="tt-book-btn" onclick="bookTeam()">📸 Book Team</button>
+    <button class="tt-clear-btn" onclick="clearTeam()">Clear all</button>
+  </div>
+</div>
+
+<!-- ── mobile UBER bottom nav ──────────────────────────────────── -->
+<nav class="mobile-bottom-nav">
+  <button class="mbn-tab active" id="mbn-explore" onclick="mbnSwitch('explore',this)">
+    <span class="mbn-icon">🔍</span>Explore
+  </button>
+  <button class="mbn-tab" id="mbn-team" onclick="mbnSwitch('team',this)">
+    <span class="mbn-icon">👥</span>Team
+    <span class="mbn-dot" id="mbn-team-dot">0</span>
+  </button>
+  <button class="mbn-tab" id="mbn-bookings" onclick="window.location='booking-track.html'">
+    <span class="mbn-icon">📅</span>Bookings
+  </button>
+  <button class="mbn-tab" id="mbn-profile" onclick="window.location='login.html'">
+    <span class="mbn-icon">👤</span>Profile
+  </button>
+</nav>
+
 <script src="../js/seed-data.js"></script>
 <script>
 /* ── data ──────────────────────────────────────────────────────── */
 const creators = window.KLUMORA_CREATORS || [];
+
+/* ── team state ─────────────────────────────────────────────────── */
+const teamSet = new Set();   // Set of creator ids
+
+function toggleTeam(id) {
+  if (teamSet.has(id)) teamSet.delete(id);
+  else if (teamSet.size >= 5) { alert('Max 5 creators per team booking.'); return; }
+  else teamSet.add(id);
+  updateTray();
+  applyFilters(); // re-render cards with in-team state
+}
+
+function updateTray() {
+  const tray = document.getElementById('team-tray');
+  const btn  = document.getElementById('team-nav-btn');
+  const badge = document.getElementById('team-nav-badge');
+  const mbnDot = document.getElementById('mbn-team-dot');
+  const team = [...teamSet].map(id => creators.find(c => c.id === id)).filter(Boolean);
+
+  if (!team.length) {
+    tray.classList.remove('show');
+    btn.classList.remove('has-team');
+    return;
+  }
+  tray.classList.add('show');
+  btn.classList.add('has-team');
+  badge.textContent = team.length;
+  if (mbnDot) { mbnDot.textContent = team.length; mbnDot.classList.add('show'); }
+
+  // avatars
+  document.getElementById('tt-avatars').innerHTML = team.map(c => {
+    const ini = c.name.split(' ').map(n=>n[0]).join('');
+    return `<div class="tt-slot" style="background:${hexA(c.c1,0.25)};color:${c.c2}" title="${c.name}">
+      ${ini}
+      <span class="tt-x" onclick="event.stopPropagation();toggleTeam(${c.id})">✕</span>
+    </div>`;
+  }).join('');
+
+  // names + price
+  const names = team.length <= 2 ? team.map(c=>c.name.split(' ')[0]).join(' & ')
+    : team.slice(0,-1).map(c=>c.name.split(' ')[0]).join(', ') + ' +' + (team.length-2) + ' more';
+  const minRate = Math.min(...team.map(c=>c.price));
+  const combinedEst = team.reduce((s,c)=>s+c.price,0);
+  document.getElementById('tt-names').textContent = names;
+  document.getElementById('tt-price').innerHTML =
+    `${team.length} creator${team.length>1?'s':''} · from <strong>£${minRate}/hr each</strong> · est. <strong>£${combinedEst}/hr combined</strong>`;
+}
+
+function clearTeam() {
+  teamSet.clear();
+  const mbnDot = document.getElementById('mbn-team-dot');
+  if (mbnDot) mbnDot.classList.remove('show');
+  updateTray();
+  applyFilters();
+}
+
+function bookTeam() {
+  const team = [...teamSet].map(id => creators.find(c=>c.id===id)).filter(Boolean);
+  if (!team.length) return;
+  const names = team.map(c=>c.name).join(', ');
+  const total = team.reduce((s,c)=>s+c.price,0);
+  alert(`🎉 Booking ${team.length} creator${team.length>1?'s':''}:\n${names}\n\nEstimated: £${total}/hr combined.\n\nProceeding to booking flow…`);
+  window.location = 'booking-flow.html';
+}
+
+function scrollToTeam() {
+  document.getElementById('team-tray').scrollIntoView({behavior:'smooth'});
+}
+
+function updatePdTeamBtn(id) {
+  const btn = document.getElementById('pd-team-btn');
+  if (!btn) return;
+  const inTeam = teamSet.has(id);
+  btn.textContent = inTeam ? '✓ In Team' : '+ Add to Team';
+  btn.style.borderColor = inTeam ? 'var(--green)' : '';
+  btn.style.color = inTeam ? 'var(--green)' : '';
+}
+
+/* ── mobile bottom nav ──────────────────────────────────────────── */
+function mbnSwitch(tab, el) {
+  document.querySelectorAll('.mbn-tab').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (tab === 'team') {
+    // scroll to tray or open filters
+    const tray = document.getElementById('team-tray');
+    if (tray.classList.contains('show')) tray.scrollIntoView({behavior:'smooth'});
+    else alert('Add creators to your team first by tapping "+" on any card.');
+  }
+}
+
+/* ── touch swipe-to-close profile drawer ────────────────────────── */
+(function initSwipe() {
+  let startY = 0, startX = 0;
+  document.addEventListener('touchstart', e => {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+  }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dy = e.changedTouches[0].clientY - startY;
+    const dx = e.changedTouches[0].clientX - startX;
+    const pd = document.getElementById('profile-drawer');
+    const fd = document.getElementById('filter-drawer');
+    if (Math.abs(dy) > Math.abs(dx)) {
+      // vertical swipe on mobile
+      if (dy > 60 && pd.classList.contains('open')) { closeDrawer(); }
+    } else {
+      // horizontal swipe
+      if (dx > 60 && fd.classList.contains('open')) { closeFilters(); }
+      if (dx < -60 && !pd.classList.contains('open')) { /* optional: swipe left to open drawer */ }
+    }
+  }, {passive:true});
+})();
 
 /* ── filter state ──────────────────────────────────────────────── */
 let filters = {
@@ -944,7 +1225,7 @@ function cardHTML(c) {
   const availCls = c.avail==='today'?'av-today':c.avail==='tomorrow'?'av-tomorrow':'av-week';
   const topSpec = c.specs && c.specs[0] ? c.specs[0] : c.type;
   return `
-    <article class="c-card" onclick="openDrawer(${c.id})" title="View ${c.name}'s profile">
+    <article class="c-card ${teamSet.has(c.id)?'in-team':''}" onclick="openDrawer(${c.id})" title="View ${c.name}'s profile">
       <div class="c-av" style="background:${hexA(c.c1,0.22)};color:${c.c2}">${initials}</div>
       <div class="c-info">
         <div class="c-name">
@@ -959,6 +1240,8 @@ function cardHTML(c) {
         </div>
       </div>
       <div class="c-avail ${availCls}" title="${c.avail==='today'?'Available today':c.avail==='tomorrow'?'Available tomorrow':'Available this week'}"></div>
+      <button class="c-add-btn" onclick="event.stopPropagation();toggleTeam(${c.id})" title="${teamSet.has(c.id)?'Remove from team':'Add to team'}">${teamSet.has(c.id)?'✓':'+'}
+      </button>
     </article>`;
 }
 
@@ -1103,8 +1386,9 @@ function openDrawer(id) {
     <div class="pd-cta">
       <button class="pd-book-btn" onclick="window.location='profile.html?id=${c.id}#book'">Book Now</button>
       <button class="pd-msg-btn" onclick="openContact(${c.id})">Message</button>
-      <a class="pd-profile-link" href="profile.html?id=${c.id}" target="_blank">Full profile →</a>
+      <button class="pd-msg-btn" id="pd-team-btn" style="flex:none;padding:12px 14px;border-radius:100px;font-size:.82rem;${teamSet.has(c.id)?'border-color:var(--green);color:var(--green)':''}" onclick="toggleTeam(${c.id});updatePdTeamBtn(${c.id})">${teamSet.has(c.id)?'✓ In Team':'+ Add to Team'}</button>
     </div>
+    <div style="padding:6px 24px 10px;text-align:center"><a class="pd-profile-link" href="profile.html?id=${c.id}" target="_blank">Full profile →</a></div>
   `;
 
   document.getElementById('profile-drawer').classList.add('open');

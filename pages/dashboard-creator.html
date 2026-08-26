@@ -161,6 +161,85 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 .ma-secondary{background:var(--srf2);color:var(--text)}
 /* notification dot */
 .notif-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;margin-left:5px;vertical-align:middle}
+
+/* ── partner program ───────────────────────────────────────────── */
+.tier-banner{background:linear-gradient(135deg,rgba(233,184,74,.1) 0%,rgba(167,139,250,.08) 100%);border:1px solid rgba(233,184,74,.22);border-radius:16px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.tier-icon{font-size:3rem;line-height:1}
+.tier-name{font-size:1.3rem;font-weight:900;color:var(--gold);font-family:Georgia,serif}
+.tier-desc{font-size:.8rem;color:var(--sub);margin-top:3px;line-height:1.5}
+.tier-progress{flex:1;min-width:200px}
+.tier-bar-wrap{height:8px;background:var(--srf2);border-radius:4px;margin:8px 0 4px;overflow:hidden}
+.tier-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),rgba(233,184,74,.5))}
+.tier-next{font-size:.72rem;color:var(--sub)}
+.partner-event-card{background:var(--srf);border:1px solid var(--border);border-radius:13px;padding:14px 16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.pe-badge{padding:2px 9px;border-radius:100px;font-size:.68rem;font-weight:800;flex-shrink:0}
+.pe-event{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:var(--blue)}
+.pe-training{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:var(--green)}
+.pe-competition{background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:var(--gold)}
+.pe-invite{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple)}
+.pe-date{width:48px;height:48px;background:var(--srf2);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex-shrink:0}
+.pe-d{font-size:1.15rem;font-weight:900;color:var(--gold);line-height:1}
+.pe-m{font-size:.58rem;text-transform:uppercase;color:var(--sub);letter-spacing:.04em}
+.pe-info{flex:1}
+.pe-title{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.pe-meta{font-size:.75rem;color:var(--sub);line-height:1.5}
+.pe-action{flex-shrink:0}
+.pe-btn{padding:8px 16px;border-radius:9px;font-size:.78rem;font-weight:700;border:1px solid var(--border);background:var(--srf2);cursor:pointer;transition:all .15s}
+.pe-btn:hover,.pe-btn.primary{background:var(--gold);color:#07080D;border-color:var(--gold)}
+
+/* ── network / referral ────────────────────────────────────────── */
+.ref-hero{background:linear-gradient(135deg,rgba(74,222,128,.07) 0%,rgba(56,189,248,.06) 100%);border:1px solid rgba(74,222,128,.15);border-radius:16px;padding:22px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ref-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.ref-stat{background:var(--srf);border:1px solid var(--border);border-radius:12px;padding:14px;flex:1;min-width:110px}
+.ref-stat-n{font-size:1.3rem;font-weight:800;font-family:Georgia,serif;color:var(--gold)}
+.ref-stat-l{font-size:.68rem;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+.ref-link-box{background:var(--srf2);border:1px solid var(--border);border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.ref-link-url{font-size:.8rem;color:var(--gold);font-family:monospace;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ref-copy-btn{padding:6px 14px;border-radius:8px;font-size:.75rem;font-weight:700;border:none;background:var(--gold);color:#07080D;cursor:pointer;flex-shrink:0;transition:opacity .15s}
+.ref-copy-btn:hover{opacity:.85}
+.ref-invite-form{background:var(--srf);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+.referred-creator{background:var(--srf);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rc-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+.rc-badge{padding:2px 8px;border-radius:100px;font-size:.67rem;font-weight:700}
+.rc-active{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);color:var(--green)}
+.rc-pending{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:var(--amber)}
+
+/* ── rate client modal ─────────────────────────────────────────── */
+.rate-stars{display:flex;gap:4px;margin:8px 0}
+.rate-star{font-size:1.8rem;cursor:pointer;transition:transform .1s;color:var(--muted);line-height:1}
+.rate-star.lit{color:var(--gold)}
+.rate-star:hover{transform:scale(1.15)}
+.rate-category-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.rate-cat{background:var(--srf2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.rate-cat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);margin-bottom:6px}
+.rate-cat-stars{display:flex;gap:2px}
+.rcs{font-size:1.1rem;cursor:pointer;color:var(--muted)}
+.rcs.lit{color:var(--gold)}
+
+/* ── mobile bottom nav ─────────────────────────────────────────── */
+.dash-mobile-nav{display:none}
+@media(max-width:640px){
+  .dash-mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:200;
+    background:var(--srf);border-top:1px solid var(--border);
+    padding:6px 0 env(safe-area-inset-bottom,4px);
+    box-shadow:0 -4px 24px rgba(0,0,0,.3);
+  }
+  body{padding-bottom:64px}
+  .dmn-tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:4px 0;border:none;background:none;cursor:pointer;
+    font-size:.57rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--sub);transition:color .15s;font-family:inherit;
+  }
+  .dmn-tab.active,.dmn-tab:hover{color:var(--gold)}
+  .dmn-icon{font-size:1.25rem;line-height:1}
+  .nav-links{display:none}
+  .dash-body{padding:0 12px 70px}
+  .tab-bar{padding:0 12px;-webkit-overflow-scrolling:touch}
+  .two-col{gap:14px}
+  .creator-header{padding:16px 12px}
+}
 @media(max-width:768px){.tab-bar{padding:0 16px;overflow-x:auto;gap:0}.dash-body{padding:0 16px 40px}.creator-header{padding:20px 16px}.alert-bar{padding:0 16px}.nav-links{display:none}.breakdown-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -221,10 +300,12 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 <div class="tab-bar">
   <div class="tab active" onclick="switchTab(0,this)">Earnings</div>
   <div class="tab" onclick="switchTab(1,this)">Requests <span class="tab-badge">2</span></div>
-  <div class="tab" onclick="switchTab(2,this)">Upcoming Shoots</div>
+  <div class="tab" onclick="switchTab(2,this)">Shoots</div>
   <div class="tab" onclick="switchTab(3,this)">Past Work</div>
   <div class="tab" onclick="switchTab(4,this)">Deliverables</div>
   <div class="tab" onclick="switchTab(5,this)">Reviews</div>
+  <div class="tab" onclick="switchTab(6,this)">🏆 Partner <span class="notif-dot"></span></div>
+  <div class="tab" onclick="switchTab(7,this)">🤝 Network</div>
 </div>
 
 <div class="dash-body">
@@ -422,7 +503,43 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 
   <!-- PAST WORK TAB -->
   <div class="tab-content" id="tab3">
-    <div class="sec-ey">Your portfolio — work by client</div>
+    <div class="sec-ey" style="margin-bottom:16px">Your portfolio — work by client</div>
+
+    <!-- Rate client row -->
+    <div style="background:rgba(233,184,74,.06);border:1px solid rgba(233,184,74,.18);border-radius:14px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:1.3rem">⭐</span>
+      <div style="flex:1">
+        <div style="font-size:.85rem;font-weight:700;margin-bottom:2px">Rate your recent clients</div>
+        <div style="font-size:.75rem;color:var(--sub)">Your feedback helps Klumora match creators with respectful, well-prepared clients.</div>
+      </div>
+    </div>
+
+    <!-- Awaiting client rating cards -->
+    <div class="sec-ey" style="margin-bottom:10px">Awaiting your rating (2)</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+      <div class="shoot-card" style="background:var(--srf);border:1px solid rgba(233,184,74,.2)">
+        <div class="shoot-date"><div class="shoot-d">14</div><div class="shoot-m">Aug</div></div>
+        <div class="shoot-info">
+          <div class="shoot-name">Emma Rivera — Wedding</div>
+          <div class="shoot-meta">Full Day · Kew Gardens · £1,882 · Payment released ✓</div>
+        </div>
+        <div class="shoot-actions">
+          <button class="sa-btn" style="background:var(--gold-bg);border-color:rgba(233,184,74,.3);color:var(--gold);font-weight:700" onclick="openRateClient('Emma Rivera','ER')">⭐ Rate Client</button>
+        </div>
+      </div>
+      <div class="shoot-card" style="background:var(--srf);border:1px solid rgba(233,184,74,.2)">
+        <div class="shoot-date"><div class="shoot-d">5</div><div class="shoot-m">Jul</div></div>
+        <div class="shoot-info">
+          <div class="shoot-name">Priya Sharma — Fashion Shoot</div>
+          <div class="shoot-meta">Half Day · Shoreditch · £920 · Payment released ✓</div>
+        </div>
+        <div class="shoot-actions">
+          <button class="sa-btn" style="background:var(--gold-bg);border-color:rgba(233,184,74,.3);color:var(--gold);font-weight:700" onclick="openRateClient('Priya Sharma','PS')">⭐ Rate Client</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-ey" style="margin-bottom:12px">Full portfolio by client</div>
     <div class="client-cards" id="past-work-grid"></div>
   </div>
 
@@ -568,6 +685,236 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
   </div>
 </div>
 
+  <!-- PARTNER PROGRAM TAB (tab6) -->
+  <div class="tab-content" id="tab6">
+
+    <!-- Tier banner -->
+    <div class="tier-banner">
+      <div class="tier-icon">🏆</div>
+      <div>
+        <div class="tier-name">Premium Creator</div>
+        <div class="tier-desc">You're in the top 15% of Klumora creators — unlocking partner events, advanced training, and priority placement.</div>
+      </div>
+      <div class="tier-progress">
+        <div style="font-size:.72rem;color:var(--sub);margin-bottom:4px">Progress to <strong style="color:var(--gold)">Studio Tier</strong></div>
+        <div class="tier-bar-wrap"><div class="tier-bar-fill" style="width:68%"></div></div>
+        <div class="tier-next">68 / 100 points — need 32 more · <a href="#" style="color:var(--gold)">How to earn →</a></div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0">
+        <span style="background:rgba(233,184,74,.12);border:1px solid rgba(233,184,74,.25);color:var(--gold);padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:700">✓ Premium</span>
+        <span style="background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.22);color:var(--green);padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:700">🛡 Insured</span>
+        <span style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.22);color:var(--blue);padding:4px 10px;border-radius:100px;font-size:.72rem;font-weight:700">⚡ Fast Responder</span>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="sec-ey" style="margin-bottom:12px">🎟 Partner Invitations — just for you</div>
+
+        <div class="partner-event-card">
+          <div class="pe-date"><div class="pe-d">12</div><div class="pe-m">Sep</div></div>
+          <div class="pe-info">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pe-badge pe-invite">🌟 VIP Invite</span><span class="pe-badge pe-event">Event</span></div>
+            <div class="pe-title">Klumora Creator Summit 2026 — London</div>
+            <div class="pe-meta">📍 The Shard, London · 09:00–18:00 · Free for Premium+ creators<br>Network with 200+ UK creators, brand reps & agency buyers. Exclusive portfolio showcase opportunity.</div>
+          </div>
+          <div class="pe-action"><button class="pe-btn primary" onclick="alert('✅ You\'re registered for the Creator Summit! Confirmation sent to your email.')">RSVP Free</button></div>
+        </div>
+
+        <div class="partner-event-card">
+          <div class="pe-date"><div class="pe-d">24</div><div class="pe-m">Sep</div></div>
+          <div class="pe-info">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pe-badge pe-training">Training</span></div>
+            <div class="pe-title">Advanced Wedding Photography Masterclass</div>
+            <div class="pe-meta">📍 Online · Live + recorded · 3hrs · Led by Marcus Aldridge (500+ weddings)<br>Lighting in low-light venues, managing wedding party dynamics, delivering galleries fast.</div>
+          </div>
+          <div class="pe-action"><button class="pe-btn" onclick="alert('📚 Enrolled! Link will be emailed 24hrs before.')">Enrol</button></div>
+        </div>
+
+        <div class="partner-event-card">
+          <div class="pe-date"><div class="pe-d">1</div><div class="pe-m">Oct</div></div>
+          <div class="pe-info">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pe-badge pe-competition">🏅 Competition</span></div>
+            <div class="pe-title">Klumora Photo of the Year 2026</div>
+            <div class="pe-meta">Open to all Premium & Studio creators · 1st prize: £5,000 + featured placement for 12 months<br>Submit up to 3 images. Public voting + judge panel. Deadline: 31 Oct 2026.</div>
+          </div>
+          <div class="pe-action"><button class="pe-btn" onclick="alert('🏅 Submission portal opening 1 Oct. You\'ll be notified!')">Enter</button></div>
+        </div>
+
+        <div class="partner-event-card">
+          <div class="pe-date"><div class="pe-d">15</div><div class="pe-m">Oct</div></div>
+          <div class="pe-info">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pe-badge pe-training">Training</span><span class="pe-badge pe-invite">Premium Only</span></div>
+            <div class="pe-title">Business Growth: Pricing, Packages & Retainer Clients</div>
+            <div class="pe-meta">📍 Online · 2hrs · Hosted by Klumora Business Team<br>How top creators charge 3× more — packages, value framing, retainer contract templates included.</div>
+          </div>
+          <div class="pe-action"><button class="pe-btn" onclick="alert('Enrolled! Recording available for 30 days after.')">Enrol</button></div>
+        </div>
+
+        <div class="partner-event-card">
+          <div class="pe-date"><div class="pe-d">5</div><div class="pe-m">Nov</div></div>
+          <div class="pe-info">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pe-badge pe-event">Brand Collab</span></div>
+            <div class="pe-title">Canon × Klumora — Studio Shoot Day</div>
+            <div class="pe-meta">📍 Canon House Studio, Reigate · 10 creators selected by Canon UK<br>Free access to the latest EOS R equipment. Your shots featured in Canon's 2027 campaign if selected.</div>
+          </div>
+          <div class="pe-action"><button class="pe-btn" onclick="alert('📸 Application submitted! Canon UK selects 10 creators by 1 Oct.')">Apply</button></div>
+        </div>
+      </div>
+
+      <!-- sidebar: tier perks -->
+      <div>
+        <div class="sec-ey" style="margin-bottom:12px">Your Premium Perks</div>
+        <div style="background:var(--srf);border:1px solid var(--border);border-radius:14px;padding:16px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="font-size:1.1rem;flex-shrink:0">🔝</span>
+              <div><div style="font-size:.84rem;font-weight:700">Priority search placement</div><div style="font-size:.73rem;color:var(--sub);margin-top:2px">Your profile appears in the top 15% of results for your specialties</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="font-size:1.1rem;flex-shrink:0">🎟</span>
+              <div><div style="font-size:.84rem;font-weight:700">Partner events & trainings</div><div style="font-size:.73rem;color:var(--sub);margin-top:2px">Exclusive invites to summits, masterclasses, brand collab days</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="font-size:1.1rem;flex-shrink:0">🏅</span>
+              <div><div style="font-size:.84rem;font-weight:700">Competition eligibility</div><div style="font-size:.73rem;color:var(--sub);margin-top:2px">Enter Photo of the Year and brand challenge competitions</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="font-size:1.1rem;flex-shrink:0">📞</span>
+              <div><div style="font-size:.84rem;font-weight:700">Dedicated creator success manager</div><div style="font-size:.73rem;color:var(--sub);margin-top:2px">Quarterly 1:1 calls to grow your bookings strategy</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="font-size:1.1rem;flex-shrink:0">💸</span>
+              <div><div style="font-size:.84rem;font-weight:700">Reduced platform fee: 9%</div><div style="font-size:.73rem;color:var(--sub);margin-top:2px">vs 12% for Basic creators — saves you ~£200/month at your volume</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;background:var(--srf);border:1px solid var(--border);border-radius:14px;padding:16px">
+          <div class="sec-ey" style="margin-bottom:10px">Unlock Studio Tier</div>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:.78rem;color:var(--sub)">
+            <div>✓ <span style="color:var(--green)">127 reviews (need 150)</span> — <strong style="color:var(--text)">23 to go</strong></div>
+            <div>✓ <span style="color:var(--green)">4.9 rating (need 4.8+)</span> — <strong style="color:var(--green)">Done</strong></div>
+            <div>✓ <span style="color:var(--gold)">234 bookings (need 250)</span> — <strong style="color:var(--text)">16 to go</strong></div>
+            <div>✓ <span style="color:var(--gold)">Insured (required)</span> — <strong style="color:var(--green)">Done</strong></div>
+            <div>✓ Complete 1 partner training — <strong style="color:var(--text)">Pending</strong></div>
+          </div>
+          <button style="width:100%;margin-top:14px;padding:10px;border-radius:11px;background:linear-gradient(135deg,var(--gold),rgba(233,184,74,.7));color:#07080D;font-size:.84rem;font-weight:800;border:none;cursor:pointer" onclick="alert('Your Studio Tier application has been submitted! Our team reviews monthly.')">Apply for Studio Early Access</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NETWORK / REFER TAB (tab7) -->
+  <div class="tab-content" id="tab7">
+
+    <!-- referral hero -->
+    <div class="ref-hero">
+      <div style="font-size:2.5rem;line-height:1">🤝</div>
+      <div style="flex:1">
+        <div style="font-size:1.1rem;font-weight:800;font-family:Georgia,serif;margin-bottom:4px">Refer creators. Earn together.</div>
+        <div style="font-size:.82rem;color:var(--sub);line-height:1.55">Every creator you refer who joins and completes their first 3 bookings earns you <strong style="color:var(--gold)">£150 bonus</strong>. For partner events and complex shoots, invite trusted creators to co-deliver with you.</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:1.6rem;font-weight:900;font-family:Georgia,serif;color:var(--gold)">£450</div>
+        <div style="font-size:.72rem;color:var(--sub)">earned from referrals</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <!-- referral stats -->
+        <div class="ref-stats">
+          <div class="ref-stat"><div class="ref-stat-n">7</div><div class="ref-stat-l">Creators referred</div></div>
+          <div class="ref-stat"><div class="ref-stat-n">5</div><div class="ref-stat-l">Now active</div></div>
+          <div class="ref-stat"><div class="ref-stat-n">£450</div><div class="ref-stat-l">Bonus earned</div></div>
+          <div class="ref-stat"><div class="ref-stat-n">2</div><div class="ref-stat-l">Pending</div></div>
+        </div>
+
+        <!-- referral link -->
+        <div class="sec-ey" style="margin-bottom:10px">Your referral link</div>
+        <div class="ref-link-box">
+          <div class="ref-link-url">klumora.com/join?ref=sophie-clarke-PRE</div>
+          <button class="ref-copy-btn" onclick="copyRef()">Copy Link</button>
+        </div>
+        <div style="display:flex;gap:7px;margin-bottom:20px;flex-wrap:wrap">
+          <button style="padding:8px 16px;border-radius:9px;font-size:.78rem;font-weight:700;border:1px solid var(--border);background:var(--srf2);cursor:pointer" onclick="alert('Opening WhatsApp share…')">📱 WhatsApp</button>
+          <button style="padding:8px 16px;border-radius:9px;font-size:.78rem;font-weight:700;border:1px solid var(--border);background:var(--srf2);cursor:pointer" onclick="alert('Opening email draft…')">✉️ Email</button>
+          <button style="padding:8px 16px;border-radius:9px;font-size:.78rem;font-weight:700;border:1px solid var(--border);background:var(--srf2);cursor:pointer" onclick="alert('Link copied!')">🔗 Copy</button>
+        </div>
+
+        <!-- invite form -->
+        <div class="sec-ey" style="margin-bottom:10px">Invite a creator directly</div>
+        <div class="ref-invite-form">
+          <div class="form-row"><div class="form-label">Creator name</div><input class="form-input" type="text" placeholder="e.g. Marcus Bell" id="ref-name"></div>
+          <div class="form-row" style="margin-bottom:0"><div class="form-label">Email or phone</div>
+            <div style="display:flex;gap:8px">
+              <input class="form-input" type="text" placeholder="email@example.com or +447…" id="ref-contact" style="flex:1">
+              <button style="padding:10px 20px;border-radius:10px;background:var(--gold);color:#07080D;font-size:.84rem;font-weight:800;border:none;cursor:pointer;flex-shrink:0;white-space:nowrap" onclick="sendInvite()">Send Invite</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- co-deliver invitation -->
+        <div class="sec-ey" style="margin-bottom:10px">Invite to co-deliver a shoot</div>
+        <div style="background:var(--srf);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:20px">
+          <div style="font-size:.8rem;color:var(--sub);margin-bottom:12px;line-height:1.55">Collaborating with another creator? Invite them to join you on an active booking. They'll receive a co-creator invitation and the booking split is agreed before confirming.</div>
+          <div class="form-row"><div class="form-label">Booking</div>
+            <select class="form-input"><option>Emma Rivera Wedding — 14 Aug 2026</option><option>Anya Kapoor Brand — 3 Sep 2026</option></select>
+          </div>
+          <div class="form-row"><div class="form-label">Invite creator (email)</div>
+            <div style="display:flex;gap:8px">
+              <input class="form-input" type="text" placeholder="Creator's email or Klumora profile" style="flex:1">
+              <button style="padding:10px 18px;border-radius:10px;background:var(--srf2);border:1px solid var(--border);color:var(--text);font-size:.82rem;font-weight:700;cursor:pointer;flex-shrink:0;white-space:nowrap" onclick="alert('Co-creator invitation sent! They\'ll receive a booking collaboration request.')">📨 Invite</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- referred creators list -->
+      <div>
+        <div class="sec-ey" style="margin-bottom:12px">Your network (7 creators)</div>
+        <div id="referred-list">
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(56,189,248,.15);color:var(--blue)">MB</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Marcus Bell</div><div style="font-size:.72rem;color:var(--sub)">Photographer · Manchester · 12 bookings</div></div>
+            <span class="rc-badge rc-active">● Active</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(74,222,128,.15);color:var(--green)">LK</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Lena Kim</div><div style="font-size:.72rem;color:var(--sub)">Videographer · Birmingham · 8 bookings</div></div>
+            <span class="rc-badge rc-active">● Active</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(251,191,36,.15);color:var(--amber)">JO</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Jay Okonkwo</div><div style="font-size:.72rem;color:var(--sub)">Drone Operator · London · 6 bookings</div></div>
+            <span class="rc-badge rc-active">● Active</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(167,139,250,.15);color:var(--purple)">AR</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Aisha Razaq</div><div style="font-size:.72rem;color:var(--sub)">Fashion · London · 19 bookings</div></div>
+            <span class="rc-badge rc-active">● Active</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(74,222,128,.15);color:var(--green)">TN</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Tom Nakamura</div><div style="font-size:.72rem;color:var(--sub)">Events · Bristol · 3 bookings</div></div>
+            <span class="rc-badge rc-active">● Active</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(251,191,36,.1);color:var(--amber)">FO</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Fatima Osei</div><div style="font-size:.72rem;color:var(--sub)">Weddings · Leeds · invited 3 days ago</div></div>
+            <span class="rc-badge rc-pending">⏳ Pending</span>
+          </div>
+          <div class="referred-creator">
+            <div class="rc-av" style="background:rgba(154,156,170,.12);color:var(--sub)">RS</div>
+            <div style="flex:1"><div style="font-size:.85rem;font-weight:700">Ravi Sharma</div><div style="font-size:.72rem;color:var(--sub)">Architecture · London · invited 1 wk ago</div></div>
+            <span class="rc-badge rc-pending">⏳ Pending</span>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:.72rem;color:var(--sub);text-align:center">5 active × £150 referral bonus = <strong style="color:var(--gold)">£450 earned</strong></div>
+      </div>
+    </div>
+  </div>
+
 <!-- counter modal -->
 <div class="modal-bg" id="counter-modal">
   <div class="modal">
@@ -581,6 +928,80 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
     </div>
   </div>
 </div>
+
+<!-- ── rate client modal ──────────────────────────────────────── -->
+<div class="modal-bg" id="rate-client-modal">
+  <div class="modal" style="max-width:460px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+      <div id="rc-modal-av" style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;background:rgba(56,189,248,.15);color:var(--blue);flex-shrink:0"></div>
+      <div>
+        <div class="modal-title" style="margin-bottom:0;font-size:1rem" id="rc-modal-name">Rate client</div>
+        <div style="font-size:.75rem;color:var(--sub)">Your rating is private and helps Klumora improve client quality</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('rate-client-modal')" style="margin-left:auto">✕</button>
+    </div>
+
+    <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--sub);margin-bottom:6px">Overall experience</div>
+    <div class="rate-stars" id="overall-stars">
+      <span class="rate-star" data-v="1">★</span>
+      <span class="rate-star" data-v="2">★</span>
+      <span class="rate-star" data-v="3">★</span>
+      <span class="rate-star" data-v="4">★</span>
+      <span class="rate-star" data-v="5">★</span>
+    </div>
+    <div id="overall-label" style="font-size:.78rem;color:var(--sub);margin-bottom:16px;min-height:18px"></div>
+
+    <div class="rate-category-grid">
+      <div class="rate-cat">
+        <div class="rate-cat-label">🤝 Welcome &amp; Reception</div>
+        <div class="rate-cat-stars" id="cat-welcome">
+          <span class="rcs" data-c="welcome" data-v="1">★</span><span class="rcs" data-c="welcome" data-v="2">★</span><span class="rcs" data-c="welcome" data-v="3">★</span><span class="rcs" data-c="welcome" data-v="4">★</span><span class="rcs" data-c="welcome" data-v="5">★</span>
+        </div>
+      </div>
+      <div class="rate-cat">
+        <div class="rate-cat-label">🙏 Respect &amp; Courtesy</div>
+        <div class="rate-cat-stars" id="cat-respect">
+          <span class="rcs" data-c="respect" data-v="1">★</span><span class="rcs" data-c="respect" data-v="2">★</span><span class="rcs" data-c="respect" data-v="3">★</span><span class="rcs" data-c="respect" data-v="4">★</span><span class="rcs" data-c="respect" data-v="5">★</span>
+        </div>
+      </div>
+      <div class="rate-cat">
+        <div class="rate-cat-label">📋 Brief Clarity</div>
+        <div class="rate-cat-stars" id="cat-brief">
+          <span class="rcs" data-c="brief" data-v="1">★</span><span class="rcs" data-c="brief" data-v="2">★</span><span class="rcs" data-c="brief" data-v="3">★</span><span class="rcs" data-c="brief" data-v="4">★</span><span class="rcs" data-c="brief" data-v="5">★</span>
+        </div>
+      </div>
+      <div class="rate-cat">
+        <div class="rate-cat-label">💳 Payment Promptness</div>
+        <div class="rate-cat-stars" id="cat-payment">
+          <span class="rcs" data-c="payment" data-v="1">★</span><span class="rcs" data-c="payment" data-v="2">★</span><span class="rcs" data-c="payment" data-v="3">★</span><span class="rcs" data-c="payment" data-v="4">★</span><span class="rcs" data-c="payment" data-v="5">★</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row" style="margin-top:14px">
+      <div class="form-label">Notes (optional)</div>
+      <textarea class="form-input" rows="2" placeholder="Any context about this client that helps future creators…" id="rc-notes" style="resize:vertical"></textarea>
+    </div>
+    <div class="form-row" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--sub);cursor:pointer">
+        <input type="checkbox" id="rc-rebook" style="accent-color:var(--gold)"> I'd happily work with this client again
+      </label>
+    </div>
+    <div class="modal-actions" style="margin-top:18px">
+      <button class="ma-btn ma-secondary" onclick="closeModal('rate-client-modal')">Cancel</button>
+      <button class="ma-btn ma-primary" onclick="submitClientRating()">Submit Rating</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── mobile UBER bottom nav ────────────────────────────────── -->
+<nav class="dash-mobile-nav">
+  <button class="dmn-tab active" onclick="dmSwitch(0,this)"><span class="dmn-icon">💰</span>Earnings</button>
+  <button class="dmn-tab" onclick="switchTab(1,null);dmSwitch(1,this)"><span class="dmn-icon">📥</span>Requests</button>
+  <button class="dmn-tab" onclick="switchTab(2,null);dmSwitch(2,this)"><span class="dmn-icon">📅</span>Shoots</button>
+  <button class="dmn-tab" onclick="switchTab(6,null);dmSwitch(6,this)"><span class="dmn-icon">🏆</span>Partner</button>
+  <button class="dmn-tab" onclick="switchTab(7,null);dmSwitch(7,this)"><span class="dmn-icon">🤝</span>Network</button>
+</nav>
 
 <!-- creator chat panel -->
 <div style="display:none;position:fixed;bottom:0;right:24px;z-index:400;width:330px;height:440px;background:var(--srf);border:1px solid var(--border);border-radius:16px 16px 0 0;box-shadow:0 -6px 32px rgba(0,0,0,.4);flex-direction:column;overflow:hidden" id="chat-panel-c">
@@ -698,6 +1119,89 @@ function sendCMsg(){
 function drawLogo(){const c=document.getElementById('logo-canvas');if(!c)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,28,28);ctx.strokeStyle='#E9B84A';ctx.lineWidth=1.5;for(let i=0;i<7;i++){ctx.save();ctx.translate(14,14);ctx.rotate(i*Math.PI*2/7);ctx.beginPath();ctx.moveTo(-6,0);ctx.lineTo(0,-11);ctx.lineTo(6,0);ctx.closePath();ctx.fillStyle=`rgba(233,184,74,${.55+i*.07})`;ctx.fill();ctx.stroke();ctx.restore();}}
 function initTheme(){const btn=document.getElementById('theme-btn');let isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';btn.addEventListener('click',()=>{isDark=!isDark;document.documentElement.dataset.theme=isDark?'dark':'light';btn.textContent=isDark?'☀️':'🌙';});}
 document.getElementById('counter-modal').addEventListener('click',function(e){if(e.target===this)closeModal('counter-modal');});
+document.getElementById('rate-client-modal').addEventListener('click',function(e){if(e.target===this)closeModal('rate-client-modal');});
+
+/* ── rate client ─────────────────────────────────────────────────── */
+let ratingOverall = 0;
+const catRatings = {welcome:0, respect:0, brief:0, payment:0};
+const overallLabels = ['','Poor experience','Below expectations','Good experience','Great client!','Exceptional — will prioritise!'];
+
+function openRateClient(name, initials) {
+  ratingOverall = 0; catRatings.welcome=catRatings.respect=catRatings.brief=catRatings.payment=0;
+  document.querySelectorAll('.rate-star').forEach(s=>{s.classList.remove('lit')});
+  document.querySelectorAll('.rcs').forEach(s=>{s.classList.remove('lit')});
+  document.getElementById('overall-label').textContent='';
+  document.getElementById('rc-notes').value='';
+  document.getElementById('rc-rebook').checked=false;
+  document.getElementById('rc-modal-av').textContent = initials;
+  document.getElementById('rc-modal-name').textContent = 'Rate ' + name;
+  document.getElementById('rate-client-modal').classList.add('open');
+}
+
+// overall stars
+document.querySelectorAll('.rate-star').forEach(star => {
+  star.addEventListener('click', () => {
+    ratingOverall = +star.dataset.v;
+    document.querySelectorAll('.rate-star').forEach((s,i) => s.classList.toggle('lit', i < ratingOverall));
+    document.getElementById('overall-label').textContent = overallLabels[ratingOverall] || '';
+  });
+  star.addEventListener('mouseenter', () => {
+    const v = +star.dataset.v;
+    document.querySelectorAll('.rate-star').forEach((s,i) => s.classList.toggle('lit', i < v));
+  });
+  star.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.rate-star').forEach((s,i) => s.classList.toggle('lit', i < ratingOverall));
+  });
+});
+
+// category stars
+document.querySelectorAll('.rcs').forEach(star => {
+  star.addEventListener('click', () => {
+    const cat = star.dataset.c, val = +star.dataset.v;
+    catRatings[cat] = val;
+    document.querySelectorAll(`.rcs[data-c="${cat}"]`).forEach((s,i) => s.classList.toggle('lit', i < val));
+  });
+});
+
+function submitClientRating() {
+  if (!ratingOverall) { alert('Please give an overall star rating first.'); return; }
+  const rebook = document.getElementById('rc-rebook').checked;
+  const name = document.getElementById('rc-modal-name').textContent.replace('Rate ','');
+  closeModal('rate-client-modal');
+  alert(`✅ Rating submitted for ${name}!\n\nOverall: ${ratingOverall}/5 · ${overallLabels[ratingOverall]}\nWould rebook: ${rebook?'Yes':'No'}\n\nThank you — this helps maintain Klumora's quality standards.`);
+  // Remove from "awaiting rating" list (demo)
+  document.querySelectorAll('.shoot-actions button').forEach(btn => {
+    if (btn.textContent.includes('Rate Client') && btn.closest('.shoot-card')) {
+      const card = btn.closest('.shoot-card');
+      if (card && card.querySelector('.shoot-name').textContent.includes(name.split(' ')[0])) {
+        card.style.opacity='.5'; card.style.pointerEvents='none';
+        btn.textContent='✓ Rated';
+      }
+    }
+  });
+}
+
+/* ── referral ─────────────────────────────────────────────────────── */
+function copyRef() {
+  const url = 'https://klumora.com/join?ref=sophie-clarke-PRE';
+  try { navigator.clipboard.writeText(url); } catch(e) {}
+  const btn = event.target; btn.textContent='Copied!'; btn.style.background='var(--green)';
+  setTimeout(()=>{ btn.textContent='Copy Link'; btn.style.background=''; }, 2000);
+}
+function sendInvite() {
+  const name = document.getElementById('ref-name').value.trim();
+  const contact = document.getElementById('ref-contact').value.trim();
+  if (!name || !contact) { alert('Please enter the creator\'s name and email/phone.'); return; }
+  document.getElementById('ref-name').value=''; document.getElementById('ref-contact').value='';
+  alert(`✅ Invitation sent to ${name}!\n\nThey'll receive your personal Klumora invite link. When they complete 3 bookings you'll earn £150.`);
+}
+
+/* ── mobile bottom nav (dashboard) ─────────────────────────────── */
+function dmSwitch(idx, el) {
+  document.querySelectorAll('.dmn-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  switchTab(idx, null);
+}
 </script>
 </body>
 </html>
